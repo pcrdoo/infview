@@ -1,0 +1,4 @@
+Broj stanovnika,Ime,Ruzan
+2000000,Beograd,false
+150000,Novi Śad,true
+12345,Katmandu,true

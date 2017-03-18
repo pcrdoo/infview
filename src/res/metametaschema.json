@@ -1,0 +1,89 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "warehouse_name": {
+            "type": "string"
+        },
+        "warehouse_location": {
+            "type": "string"
+        },
+        "packages": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "entities": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "attributes": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "enum": [
+                                                    "String",
+                                                    "Int",
+                                                    "DateTime",
+                                                    "Boolean"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "name",
+                                            "type"
+                                        ]
+                                    }
+                                },
+                                "relations": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "objectEntity": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "name",
+                                            "objectEntity"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "attributes",
+                                "relations"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "entities"
+                ]
+            }
+        }
+    },
+    "required": [
+        "warehouse_name",
+      	"warehouse_location",
+        "packages"
+    ]
+}

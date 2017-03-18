@@ -1,0 +1,68 @@
+{
+    "warehouse_location": "mocks/MojaBaza",
+    "warehouse_name": "MojaBaza",
+    "packages": [
+        {
+            "name": "Geografija",
+            "entities": [
+                {
+                    "name": "Drzava",
+                    "attributes": [
+                        {
+                            "name": "Povrsina",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "Ime",
+                            "type": "String"
+                        }
+                    ],
+                    "relations": [
+                        {
+                            "name": "Glavni grad",
+                            "objectEntity": "Grad"
+                        }
+                    ]
+                },
+                {
+                    "name": "Grad",
+                    "attributes": [
+                        {
+                            "name": "Broj stanovnika",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "Ime",
+                            "type": "String"
+                        },
+                        {
+                            "name": "Ruzan",
+                            "type": "Boolean"
+                        }
+                    ],
+                    "relations": []
+                }
+            ]
+        },
+        {
+            "name": "Sport",
+            "entities": [
+                {
+                    "name": "FudbalskiKlub",
+                    "attributes": [
+                        {
+                            "name": "Godina osnivanja",
+                            "type": "DateTime"
+                        },
+                        {
+                            "name": "Ime",
+                            "type": "String"
+                        }
+                    ],
+                    "relations": []
+                }
+            ]
+        }
+    ]
+}
+

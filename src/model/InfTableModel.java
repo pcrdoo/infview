@@ -48,5 +48,10 @@ public class InfTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
     	return entity.getAttributes().get(columnIndex).getValueClass();
     }
+	
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return true;
+    }
 
 }

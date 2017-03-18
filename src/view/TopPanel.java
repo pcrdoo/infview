@@ -7,10 +7,9 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JPanel;
-
-import controller.TopPanelController;
 
 /** @pdOid d741f619-ce90-417f-8eae-517dd3ebf0c8 */
 public class TopPanel extends JPanel {
@@ -23,5 +22,4 @@ public class TopPanel extends JPanel {
 		tablePanel = new TablePanel();
 		this.add(tablePanel);
 	}
-
 }
