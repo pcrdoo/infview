@@ -1,6 +1,8 @@
 package model;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Entity extends InfResource {
 	
@@ -14,6 +16,11 @@ public class Entity extends InfResource {
        relations = new ArrayList<Relation>();
        entries = new ArrayList<Entry>();
    }
+
+	@Override
+	protected List<? extends InfResource> getChildren() {
+		return Stream.concat(this.attributes.stream(), this.relations.stream()).collect(Collectors.toList());
+	}
    
    public ArrayList<Attribute> getAttributes() {
       if (attributes == null)

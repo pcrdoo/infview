@@ -22,6 +22,11 @@ public abstract class InfResource implements TreeNode {
 		System.err.println("OgiException: INFRESOURCE HAS NO CHILDREN!");
 		return null;
 	}
+	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 
 	@Override
 	public TreeNode getChildAt(int childIndex) {
@@ -45,12 +50,13 @@ public abstract class InfResource implements TreeNode {
 
 	@Override
 	public boolean getAllowsChildren() {
-		return true; //TODO
+		return (this instanceof Warehouse || this instanceof Package || this instanceof Entity);
 	}
 
 	@Override
 	public boolean isLeaf() {
-		return this.getChildren().isEmpty();
+		System.out.println(this);
+		return this instanceof Attribute || this instanceof Relation || this.getChildren().isEmpty();
 	}
 
 	@Override

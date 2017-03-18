@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import constants.Constants;
 import controller.MainController;
+import view.tree.TreeView;
 
 import java.awt.BorderLayout;
 import java.util.*;
