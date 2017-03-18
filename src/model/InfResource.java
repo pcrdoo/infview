@@ -55,7 +55,6 @@ public abstract class InfResource implements TreeNode {
 
 	@Override
 	public boolean isLeaf() {
-		System.out.println(this);
 		return this instanceof Attribute || this instanceof Relation || this.getChildren().isEmpty();
 	}
 
