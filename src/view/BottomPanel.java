@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import controller.BottomPanelController;
 import model.Entity;
 import model.InfTableModel;
+import model.Warehouse;
 
 public class BottomPanel extends JPanel {
 
@@ -34,7 +34,8 @@ public class BottomPanel extends JPanel {
 	}
 
 	private void initTable() {
-		tableModel = new InfTableModel(new Entity());
+		Entity mock = Warehouse.getInstance().getPackages().get(0).getEntities().get(0);
+		tableModel = new InfTableModel(mock);
 		table = new JTable(tableModel);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);

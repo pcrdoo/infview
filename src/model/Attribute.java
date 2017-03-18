@@ -9,4 +9,14 @@ public class Attribute extends InfResource {
 		this.name = name;
 		this.valueClass = valueClass;
 	}
+	
+
+	public Class<?> getValueClass() {
+		return valueClass;
+	}
+
+	public void setValueClass(Class<?> valueClass) {
+		this.valueClass = valueClass;
+	}
+
 }

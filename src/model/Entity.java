@@ -4,19 +4,20 @@ import java.util.*;
 
 public class Entity extends InfResource {
 	
-   private HashSet<Attribute> attributes;
-   private HashSet<Relation> relations;
-   private HashSet<Entry> entries;
+   private ArrayList<Attribute> attributes;
+   private ArrayList<Relation> relations;
+   private ArrayList<Entry> entries;
    
-   public Entity() {
-       attributes = new HashSet<Attribute>();
-       relations = new HashSet<Relation>();
-       entries = new HashSet<Entry>();
+   public Entity(String name) {
+	   this.name = name;
+       attributes = new ArrayList<Attribute>();
+       relations = new ArrayList<Relation>();
+       entries = new ArrayList<Entry>();
    }
    
-   public HashSet<Attribute> getAttributes() {
+   public ArrayList<Attribute> getAttributes() {
       if (attributes == null)
-         attributes = new HashSet<Attribute>();
+         attributes = new ArrayList<Attribute>();
       return attributes;
    }
    
@@ -24,7 +25,7 @@ public class Entity extends InfResource {
       if (newAttribute == null)
          return;
       if (this.attributes == null)
-         this.attributes = new HashSet<Attribute>();
+         this.attributes = new ArrayList<Attribute>();
       if (!this.attributes.contains(newAttribute))
          this.attributes.add(newAttribute);
    }
@@ -42,9 +43,9 @@ public class Entity extends InfResource {
          attributes.clear();
    }
    
-   public HashSet<Relation> getRelations() {
+   public ArrayList<Relation> getRelations() {
       if (relations == null)
-         relations = new HashSet<Relation>();
+         relations = new ArrayList<Relation>();
       return relations;
    }
    
@@ -52,7 +53,7 @@ public class Entity extends InfResource {
       if (newRelation == null)
          return;
       if (this.relations == null)
-         this.relations = new HashSet<Relation>();
+         this.relations = new ArrayList<Relation>();
       if (!this.relations.contains(newRelation))
          this.relations.add(newRelation);
    }
@@ -70,17 +71,17 @@ public class Entity extends InfResource {
          relations.clear();
    }
    
-   public HashSet<Entry> getEntries() {
+   public ArrayList<Entry> getEntries() {
       if (entries == null)
-    	  entries = new HashSet<Entry>();
+    	  entries = new ArrayList<Entry>();
       return entries;
    }
    
-   public void addAttribute(Entry newEntry) {
+   public void addEntry(Entry newEntry) {
       if (newEntry == null)
          return;
       if (this.entries == null)
-         this.entries = new HashSet<Entry>();
+         this.entries = new ArrayList<Entry>();
       if (!this.entries.contains(newEntry))
          this.entries.add(newEntry);
    }
