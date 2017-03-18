@@ -9,8 +9,10 @@ package view;
 import controller.ToolBarController;
 import java.util.*;
 
+import javax.swing.JToolBar;
+
 /** @pdOid c19e4848-2d45-460b-a492-1df0b0353d84 */
-public class ToolBarView {
+public class ToolBarView extends JToolBar{
    /** @pdRoleInfo migr=no name=ToolBarController assc=association3 mult=1..1 type=Composition */
    private ToolBarController toolBarController;
 

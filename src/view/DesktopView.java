@@ -9,8 +9,10 @@ package view;
 import controller.DesktopController;
 import java.util.*;
 
+import javax.swing.JDesktopPane;
+
 /** @pdOid 0766f4e2-c230-4fad-8be5-69774bd2dbf4 */
-public class DesktopView {
+public class DesktopView extends JDesktopPane{
    /** @pdRoleInfo migr=no name=TopPanel assc=association12 mult=1..1 type=Composition */
    private TopPanel topPanel;
    /** @pdRoleInfo migr=no name=DesktopController assc=association4 mult=1..1 type=Composition */
