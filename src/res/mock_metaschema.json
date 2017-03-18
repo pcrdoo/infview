@@ -1,6 +1,7 @@
 {
-    "warehouse_location": "mocks/MojaBaza",
-    "warehouse_name": "MojaBaza",
+    "location": "mocks/MojaBaza",
+    "name": "MojaBaza",
+    "description": "Desc",
     "packages": [
         {
             "name": "Geografija",
@@ -52,7 +53,7 @@
                     "attributes": [
                         {
                             "name": "Godina osnivanja",
-                            "type": "DateTime"
+                            "type": "Int"
                         },
                         {
                             "name": "Ime",

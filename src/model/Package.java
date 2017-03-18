@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream; 
+import java.util.stream.Stream;
 
 public class Package extends InfResource {
 
@@ -43,5 +43,29 @@ public class Package extends InfResource {
 
 	public void setSubPackages(ArrayList<Package> subPackages) {
 		this.subPackages = subPackages;
+	}
+
+	public String toIndentedString(int indentSpaces) {
+		ArrayList<String> packagesString = new ArrayList<>();
+		for (Package p : subPackages) {
+			packagesString.add(p.toIndentedString(8));
+		}
+		String packageStr = String.join("\n", packagesString);
+
+		ArrayList<String> entitiesString = new ArrayList<>();
+		for (Entity e : entities) {
+			entitiesString.add(e.toIndentedString(8));
+		}
+		String entityStr = String.join("\n", entitiesString);
+
+		return indentStringRepresentation(String.format(
+				"Package \"%s\" {\n" +
+				"    packages = [\n" +
+				"%s\n" +
+				"    ]\n" +
+				"    entities = [\n" +
+				"%s\n" +
+				"    ]\n" +
+				"}", name, packageStr, entityStr), indentSpaces);
 	}
 }

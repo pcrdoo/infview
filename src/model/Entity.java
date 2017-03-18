@@ -106,4 +106,27 @@ public class Entity extends InfResource {
     	  entries.clear();
    }
 
+   public String toIndentedString(int indentSpaces) {
+	   ArrayList<String> relationStrings = new ArrayList<>();
+	   for (Relation r : relations) {
+		   relationStrings.add(r.toIndentedString(8));
+	   }
+	   String relationsStr = String.join("\n", relationStrings);
+	   
+	   ArrayList<String> attributeStrings = new ArrayList<>();
+	   for (Attribute a : attributes) {
+		   attributeStrings.add(a.toIndentedString(8));
+	   }
+	   String attributesStr = String.join("\n", attributeStrings);
+	   
+	   return indentStringRepresentation(String.format(
+			   "Entity \"%s\" {\n" +
+	           "    attributes = [\n" +
+			   "%s\n" +
+	           "    ]\n" +
+			   "    relations = [\n" +
+	           "%s\n" +
+	           "    ]\n" +
+			   "}", name, attributesStr, relationsStr), indentSpaces);
+   }
 }

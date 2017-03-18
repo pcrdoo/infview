@@ -24,11 +24,6 @@ public abstract class InfResource implements TreeNode {
 	}
 	
 	@Override
-	public String toString() {
-		return this.name;
-	}
-
-	@Override
 	public TreeNode getChildAt(int childIndex) {
 		return this.getChildren().get(childIndex);
 	}
@@ -70,5 +65,24 @@ public abstract class InfResource implements TreeNode {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	public String indentStringRepresentation(String s, int indentSpaces) {
+		String[] lines = s.split("\n");
+		String indentString = "";
+		for (int i = 0; i < indentSpaces; i++) {
+			indentString += " ";
+		}
+		for (int i = 0; i < lines.length; i++) {
+			lines[i] = indentString + lines[i];
+		}
+		
+		return String.join("\n", lines);
+	}
+	
+	public abstract String toIndentedString(int indentSpaces);
+	
+	@Override
+	public String toString() {
+		return toIndentedString(0);
+	}
 }
