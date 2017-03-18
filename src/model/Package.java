@@ -1,6 +1,6 @@
 package model;
 
-import java.util.*;
+import java.util.*; 
 
 public class Package extends InfResource {
 
@@ -9,6 +9,8 @@ public class Package extends InfResource {
 
 	public Package(String name) {
 		this.name = name;
+		entities = new ArrayList<>();
+		subPackages = new ArrayList<>();
 	}
 
 	public ArrayList<Entity> getEntities() {
