@@ -1,38 +1,28 @@
-/***********************************************************************
- * Module:  Entity.java
- * Author:  Random
- * Purpose: Defines the Class Entity
- ***********************************************************************/
-
 package model;
 
 import java.util.*;
 
-/** @pdOid 8161b71e-16ef-4895-9c28-ab1cb625c70f */
 public class Entity extends InfResource {
-   /** @pdRoleInfo migr=no name=Attribute assc=association2 coll=java.util.Collection impl=java.util.ArrayList mult=0..* type=Composition */
-   private java.util.Collection<Attribute> attributes;
-   /** @pdRoleInfo migr=no name=Relation assc=association3 coll=java.util.Collection impl=java.util.ArrayList mult=0..* type=Composition */
-   private java.util.Collection<Relation> relations;
+	
+   private ArrayList<Attribute> attributes;
+   private ArrayList<Relation> relations;
    
-   
-   /** @pdGenerated default getter */
-   public java.util.Collection<Attribute> getAttributes() {
+   public ArrayList<Attribute> getAttributes() {
       if (attributes == null)
-         attributes = new java.util.ArrayList<Attribute>();
+         attributes = new ArrayList<Attribute>();
       return attributes;
    }
    
    /** @pdGenerated default iterator getter */
    public java.util.Iterator getIteratorAttributes() {
       if (attributes == null)
-         attributes = new java.util.ArrayList<Attribute>();
+         attributes = new ArrayList<Attribute>();
       return attributes.iterator();
    }
    
    /** @pdGenerated default setter
      * @param newAttributes */
-   public void setAttributes(java.util.Collection<Attribute> newAttributes) {
+   public void setAttributes(ArrayList<Attribute> newAttributes) {
       removeAllAttributes();
       for (java.util.Iterator iter = newAttributes.iterator(); iter.hasNext();)
          addAttributes((Attribute)iter.next());
@@ -44,7 +34,7 @@ public class Entity extends InfResource {
       if (newAttribute == null)
          return;
       if (this.attributes == null)
-         this.attributes = new java.util.ArrayList<Attribute>();
+         this.attributes = new ArrayList<Attribute>();
       if (!this.attributes.contains(newAttribute))
          this.attributes.add(newAttribute);
    }
@@ -65,22 +55,22 @@ public class Entity extends InfResource {
          attributes.clear();
    }
    /** @pdGenerated default getter */
-   public java.util.Collection<Relation> getRelations() {
+   public ArrayList<Relation> getRelations() {
       if (relations == null)
-         relations = new java.util.ArrayList<Relation>();
+         relations = new ArrayList<Relation>();
       return relations;
    }
    
    /** @pdGenerated default iterator getter */
    public java.util.Iterator getIteratorRelations() {
       if (relations == null)
-         relations = new java.util.ArrayList<Relation>();
+         relations = new ArrayList<Relation>();
       return relations.iterator();
    }
    
    /** @pdGenerated default setter
      * @param newRelations */
-   public void setRelations(java.util.Collection<Relation> newRelations) {
+   public void setRelations(ArrayList<Relation> newRelations) {
       removeAllRelations();
       for (java.util.Iterator iter = newRelations.iterator(); iter.hasNext();)
          addRelations((Relation)iter.next());
@@ -92,7 +82,7 @@ public class Entity extends InfResource {
       if (newRelation == null)
          return;
       if (this.relations == null)
-         this.relations = new java.util.ArrayList<Relation>();
+         this.relations = new ArrayList<Relation>();
       if (!this.relations.contains(newRelation))
          this.relations.add(newRelation);
    }
