@@ -4,44 +4,32 @@ import java.util.*;
 
 public class Entity extends InfResource {
 	
-   private ArrayList<Attribute> attributes;
-   private ArrayList<Relation> relations;
+   private HashSet<Attribute> attributes;
+   private HashSet<Relation> relations;
+   private HashSet<Entry> entries;
    
-   public ArrayList<Attribute> getAttributes() {
+   public Entity() {
+       attributes = new HashSet<Attribute>();
+       relations = new HashSet<Relation>();
+       entries = new HashSet<Entry>();
+   }
+   
+   public HashSet<Attribute> getAttributes() {
       if (attributes == null)
-         attributes = new ArrayList<Attribute>();
+         attributes = new HashSet<Attribute>();
       return attributes;
    }
    
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorAttributes() {
-      if (attributes == null)
-         attributes = new ArrayList<Attribute>();
-      return attributes.iterator();
-   }
-   
-   /** @pdGenerated default setter
-     * @param newAttributes */
-   public void setAttributes(ArrayList<Attribute> newAttributes) {
-      removeAllAttributes();
-      for (java.util.Iterator iter = newAttributes.iterator(); iter.hasNext();)
-         addAttributes((Attribute)iter.next());
-   }
-   
-   /** @pdGenerated default add
-     * @param newAttribute */
-   public void addAttributes(Attribute newAttribute) {
+   public void addAttribute(Attribute newAttribute) {
       if (newAttribute == null)
          return;
       if (this.attributes == null)
-         this.attributes = new ArrayList<Attribute>();
+         this.attributes = new HashSet<Attribute>();
       if (!this.attributes.contains(newAttribute))
          this.attributes.add(newAttribute);
    }
    
-   /** @pdGenerated default remove
-     * @param oldAttribute */
-   public void removeAttributes(Attribute oldAttribute) {
+   public void removeAttribute(Attribute oldAttribute) {
       if (oldAttribute == null)
          return;
       if (this.attributes != null)
@@ -49,47 +37,27 @@ public class Entity extends InfResource {
             this.attributes.remove(oldAttribute);
    }
    
-   /** @pdGenerated default removeAll */
    public void removeAllAttributes() {
       if (attributes != null)
          attributes.clear();
    }
-   /** @pdGenerated default getter */
-   public ArrayList<Relation> getRelations() {
+   
+   public HashSet<Relation> getRelations() {
       if (relations == null)
-         relations = new ArrayList<Relation>();
+         relations = new HashSet<Relation>();
       return relations;
    }
    
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorRelations() {
-      if (relations == null)
-         relations = new ArrayList<Relation>();
-      return relations.iterator();
-   }
-   
-   /** @pdGenerated default setter
-     * @param newRelations */
-   public void setRelations(ArrayList<Relation> newRelations) {
-      removeAllRelations();
-      for (java.util.Iterator iter = newRelations.iterator(); iter.hasNext();)
-         addRelations((Relation)iter.next());
-   }
-   
-   /** @pdGenerated default add
-     * @param newRelation */
-   public void addRelations(Relation newRelation) {
+   public void addRelation(Relation newRelation) {
       if (newRelation == null)
          return;
       if (this.relations == null)
-         this.relations = new ArrayList<Relation>();
+         this.relations = new HashSet<Relation>();
       if (!this.relations.contains(newRelation))
          this.relations.add(newRelation);
    }
    
-   /** @pdGenerated default remove
-     * @param oldRelation */
-   public void removeRelations(Relation oldRelation) {
+   public void removeRelation(Relation oldRelation) {
       if (oldRelation == null)
          return;
       if (this.relations != null)
@@ -97,10 +65,37 @@ public class Entity extends InfResource {
             this.relations.remove(oldRelation);
    }
    
-   /** @pdGenerated default removeAll */
    public void removeAllRelations() {
       if (relations != null)
          relations.clear();
+   }
+   
+   public HashSet<Entry> getEntries() {
+      if (entries == null)
+    	  entries = new HashSet<Entry>();
+      return entries;
+   }
+   
+   public void addAttribute(Entry newEntry) {
+      if (newEntry == null)
+         return;
+      if (this.entries == null)
+         this.entries = new HashSet<Entry>();
+      if (!this.entries.contains(newEntry))
+         this.entries.add(newEntry);
+   }
+   
+   public void removeEntry(Entry oldEntry) {
+      if (oldEntry == null)
+         return;
+      if (this.entries != null)
+         if (this.entries.contains(oldEntry))
+            this.entries.remove(oldEntry);
+   }
+   
+   public void removeAllEntries() {
+      if (entries != null)
+    	  entries.clear();
    }
 
 }

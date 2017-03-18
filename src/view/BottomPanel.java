@@ -6,12 +6,41 @@
 
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import controller.BottomPanelController;
-import java.util.*;
+import model.Entity;
+import model.InfTableModel;
 
-/** @pdOid c2cdbb07-fbfc-4d59-8278-36af520b4b8a */
-public class BottomPanel {
-   /** @pdRoleInfo migr=no name=BottomPanelController assc=association7 mult=1..1 type=Composition */
-   private BottomPanelController bottomPanelController;
+public class BottomPanel extends JPanel {
 
+	// private BottomPanelController bottomPanelController;
+	private JTable table;
+	private InfTableModel tableModel;
+	private JLabel info;
+
+	public BottomPanel() {
+		this.setLayout(new BorderLayout());
+		info = new JLabel("Ako heder danas ja");
+		initTable();
+		add(info, BorderLayout.NORTH);
+		add(new JScrollPane(table), BorderLayout.SOUTH);
+	}
+
+	private void initTable() {
+		tableModel = new InfTableModel(new Entity());
+		table = new JTable(tableModel);
+		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
+		table.setFillsViewportHeight(true);
+	}
+	
+	public JTable getTable() {
+		return table;
+	}
 }

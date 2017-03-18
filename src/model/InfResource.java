@@ -6,7 +6,7 @@ import javax.swing.tree.TreeNode;
 
 public abstract class InfResource implements TreeNode {
 	
-	private String name;
+	protected String name;
 	private InfResource parent;
 	
 	public InfResource() {

@@ -10,15 +10,17 @@ import controller.DesktopController;
 import java.util.*;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JPanel;
 
-/** @pdOid 0766f4e2-c230-4fad-8be5-69774bd2dbf4 */
-public class DesktopView extends JDesktopPane{
-   /** @pdRoleInfo migr=no name=TopPanel assc=association12 mult=1..1 type=Composition */
-   private TopPanel topPanel;
-   /** @pdRoleInfo migr=no name=DesktopController assc=association4 mult=1..1 type=Composition */
-   private DesktopController desktopController;
-   
-   /** @pdRoleInfo migr=no name=BottomPanel assc=association13 mult=1..1 type=Composition */
-   public BottomPanel bottomPanel;
+public class DesktopView extends JPanel {
+	private DesktopController desktopController;
+	private TopPanel topPanel;
+	private BottomPanel bottomPanel;
+	public DesktopView() {
+		topPanel = new TopPanel();
+		bottomPanel = new BottomPanel();
+		this.add(topPanel);
+		this.add(bottomPanel);
+	}
 
 }
