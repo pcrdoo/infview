@@ -32,6 +32,16 @@ public class Entry {
 	}
 
 
+	public HashMap<Attribute, Object> getAttributes() {
+		return attributes;
+	}
+
+
+	public HashMap<Relation, Entry> getRelations() {
+		return relations;
+	}
+
+
 	private Entity getEntity() {
 		return entity;
 	}

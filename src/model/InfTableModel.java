@@ -29,7 +29,24 @@ public class InfTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return "KLIKA";
+		Entry entry = entity.getEntries().get(rowIndex);
+		Attribute attribute = entity.getAttributes().get(columnIndex);
+		return entry.getAttributes().get(attribute);
 	}
+	
+	@Override
+    public String getColumnName(int column) {
+		if(column >= entity.getAttributes().size()) {
+			return null;
+		}
+		return entity.getAttributes().get(column).getName();
+    }
+
+    // public int findColumn(String columnName)
+
+	@Override
+    public Class<?> getColumnClass(int columnIndex) {
+    	return entity.getAttributes().get(columnIndex).getValueClass();
+    }
 
 }

@@ -57,4 +57,13 @@ public abstract class InfResource implements TreeNode {
 	public Enumeration children() {
 		return null; //TODO
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

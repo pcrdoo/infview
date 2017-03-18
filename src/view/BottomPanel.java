@@ -7,6 +7,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
@@ -21,27 +22,12 @@ import model.Warehouse;
 public class BottomPanel extends JPanel {
 
 	// private BottomPanelController bottomPanelController;
-	private JTable table;
-	private InfTableModel tableModel;
-	private JLabel info;
+	private TablePanel tablePanel;
 
 	public BottomPanel() {
-		this.setLayout(new BorderLayout());
-		info = new JLabel("Ako heder danas ja");
-		initTable();
-		add(info, BorderLayout.NORTH);
-		add(new JScrollPane(table), BorderLayout.SOUTH);
+		this.setBackground(Color.BLUE);
+		tablePanel = new TablePanel();
+		this.add(tablePanel);
 	}
 
-	private void initTable() {
-		Entity mock = Warehouse.getInstance().getPackages().get(0).getEntities().get(0);
-		tableModel = new InfTableModel(mock);
-		table = new JTable(tableModel);
-		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
-		table.setFillsViewportHeight(true);
-	}
-	
-	public JTable getTable() {
-		return table;
-	}
 }
