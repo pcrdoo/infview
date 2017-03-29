@@ -2,6 +2,8 @@ package model;
 
 import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import model.Package;
 
@@ -12,6 +14,7 @@ public class Warehouse extends InfResource {
 
 	private static Warehouse instance;
 	private ArrayList<Package> packages;
+	private ArrayList<Entity> entities;
 
 	private Warehouse(String name) {
 		super(name, null);
@@ -27,7 +30,7 @@ public class Warehouse extends InfResource {
 
 	@Override
 	public List<? extends InfResource> getChildren() {
-		return this.packages;
+		return Stream.concat(this.packages.stream(), this.entities.stream()).collect(Collectors.toList());
 	}
 
 	/**
@@ -48,6 +51,14 @@ public class Warehouse extends InfResource {
 
 	public void addPackage(Package pakage) {
 		this.packages.add(pakage);
+	}
+
+	public ArrayList<Entity> getEntities() {
+		return this.entities;
+	}
+
+	public void addPackage(Entity entity) {
+		this.entities.add(entity);
 	}
 
 	public String toIndentedString(int indentSpaces) {
