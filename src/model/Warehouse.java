@@ -26,7 +26,7 @@ public class Warehouse extends InfResource {
 	}
 
 	@Override
-	protected List<? extends InfResource> getChildren() {
+	public List<? extends InfResource> getChildren() {
 		return this.packages;
 	}
 

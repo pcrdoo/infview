@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import constants.Constants;
 import controller.MainController;
+import model.Entity;
 import view.tree.TreeView;
 
 import java.awt.BorderLayout;
@@ -53,5 +54,10 @@ public class MainView extends JFrame{
 
 		// Attaches the listeners.
 		this.controller = new MainController(this);
+	}
+	
+	public void doTableOpen(Entity entity) {
+		//TODO : Midza
+		System.out.println("otvaram " + entity.getName() + "...");
 	}
 }

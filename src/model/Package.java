@@ -16,7 +16,7 @@ public class Package extends InfResource {
 	}
 
 	@Override
-	protected List<? extends InfResource> getChildren() {
+	public List<? extends InfResource> getChildren() {
 		return Stream.concat(this.entities.stream(), this.subPackages.stream()).collect(Collectors.toList());
 	}
 

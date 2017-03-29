@@ -18,7 +18,7 @@ public class Entity extends InfResource {
    }
 
 	@Override
-	protected List<? extends InfResource> getChildren() {
+	public List<? extends InfResource> getChildren() {
 		return Stream.concat(this.attributes.stream(), this.relations.stream()).collect(Collectors.toList());
 	}
    

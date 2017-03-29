@@ -35,7 +35,8 @@ public class TreeView extends JPanel {
 	private void initialize() {
 		this.setPreferredSize(Constants.TREE_SIZE);
 		
-		Warehouse root = Warehouse.getInstance();
+		InfNode root = new InfNode(Warehouse.getInstance());
+		root.populate();
 		DefaultTreeModel model = new DefaultTreeModel(root);
 		this.tree = new InfTree();
 		this.tree.setModel(model);
@@ -61,5 +62,7 @@ public class TreeView extends JPanel {
 
 		this.add(treeScrollPane, BorderLayout.NORTH);
 	}
-
+	public InfTree getTree() {
+		return this.tree;
+	}
 }
