@@ -36,7 +36,7 @@ public class MainView extends JFrame{
 		this.setTitle("InfView");
 		this.setSize(Constants.WINDOW_SIZE);
 		this.setLocationRelativeTo(null);
-		this.setLayout(new MigLayout("fill", "0[grow 30]5[grow 70]0", "0[grow 10]0[grow 90]0"));
+		this.setLayout(new MigLayout("fill", "0[100, grow 30]5[700, grow 70]0", "0[grow 10]0[grow 90]0"));
 		// Adds the menu bar.
 		this.menuBarView = new MenuBarView();
 		//this.setJMenuBar(menuBarView);
@@ -75,6 +75,7 @@ public class MainView extends JFrame{
 	
 	public void doTableOpen(Entity entity) {
 		desktopView.getTopPanel().addTab(entity);
+		desktopView.getBottomPanel().addTab(entity);
 		System.out.println("otvaram " + entity.getName() + "...");
 	}
 }

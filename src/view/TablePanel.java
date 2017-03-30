@@ -1,17 +1,13 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.Font;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import model.Entity;
 import model.InfTableModel;
-import model.Warehouse;
 import net.miginfocom.swing.MigLayout;
 
 public class TablePanel extends JPanel {
@@ -33,6 +29,8 @@ public class TablePanel extends JPanel {
 		table = new JTable(tableModel);
 		//table.setPreferredScrollableViewportSize(new Dimension(900, 300));
 		table.setFillsViewportHeight(true);
+		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer())
+	    .setHorizontalAlignment(JLabel.CENTER);
 	}
 	
 	public JTable getTable() {

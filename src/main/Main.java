@@ -33,17 +33,6 @@ public class Main {
 		mainView.setVisible(true);
 	}
 
-	public static void mock() {
-		Package pkg = new Package("Paket");
-		Warehouse.getInstance().getPackages().add(pkg);
-		Entity grad = new Entity("Grad");
-		pkg.addEntity(grad);
-		grad.addAttribute(new Attribute("Ime", String.class));
-		grad.addAttribute(new Attribute("Povrsina", Float.class));
-		grad.addAttribute(new Attribute("Ruzan", Boolean.class));
-		grad.addEntry(spawnEntry(grad, "Beograd", 250.12f, true));
-	}
-
 	public static void mock2() {
 		Package geo = Warehouse.getInstance().getPackages().get(0);
 		Package sport = Warehouse.getInstance().getPackages().get(1);
@@ -90,13 +79,4 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	private static Entry spawnEntry(Entity grad, String ime, float povrsina, boolean sranje) {
-		ArrayList<Attribute> attrs = grad.getAttributes();
-		Entry entri = new Entry(grad);
-		entri.addAttribute(attrs.get(0), ime);
-		entri.addAttribute(attrs.get(1), povrsina);
-		entri.addAttribute(attrs.get(2), sranje);
-		return entri;
-	}
-	
 }

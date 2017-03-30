@@ -19,15 +19,17 @@ public class DesktopView extends JPanel {
 	private TopPanel topPanel;
 	private BottomPanel bottomPanel;
 	public DesktopView() {
-		this.setLayout(new MigLayout("fill", "5[]5", "5[grow 10]5[grow 10]5"));
+		this.setLayout(new MigLayout("fill", "5[]5", "5[100, grow 10]5[100, grow 10]5"));
 		topPanel = new TopPanel();
 		bottomPanel = new BottomPanel();
 		this.add(topPanel, "grow, wrap");
 		this.add(bottomPanel, "grow");
 	}
 	public TopPanel getTopPanel() {
-		// TODO Auto-generated method stub
 		return topPanel;
+	}
+	public TabbedTables getBottomPanel() {
+		return bottomPanel;
 	}
 
 }
