@@ -16,6 +16,19 @@ public class Entity extends InfResource {
        relations = new ArrayList<Relation>();
        entries = new ArrayList<Entry>();
    }
+   
+   @Override
+   public boolean equals(Object o) {
+	   if(!(o instanceof Entity)) {
+		   return false;
+	   }
+	   Entity e = (Entity)o;
+	   if(name.equals(e.name) && attributes.equals(e.attributes) &&
+			   relations.equals(e.relations) && entries.equals(e.entries)) {
+		   return true;
+	   }
+	   return false;
+   }
 
 	@Override
 	public List<? extends InfResource> getChildren() {

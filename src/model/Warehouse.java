@@ -19,6 +19,7 @@ public class Warehouse extends InfResource {
 	private Warehouse(String name) {
 		super(name, null);
 		this.packages = new ArrayList<Package>();
+		this.entities = new ArrayList<Entity>();
 	}
 
 	public static Warehouse getInstance() {

@@ -9,6 +9,8 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 import controller.ToolBarController;
@@ -20,6 +22,10 @@ public class ToolBarView extends JToolBar{
    
    public ToolBarView() {
 		this.setBackground(Color.BLACK);
+		JButton mock = new JButton();
+		mock.setToolTipText("Mock");
+		mock.setIcon(new ImageIcon(this.getClass().getResource("/res/warehouse.png")));
+		add(mock);
    }
 
 }

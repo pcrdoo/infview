@@ -5,14 +5,14 @@ import javax.swing.table.AbstractTableModel;
 import controller.InfTableModelController;
 
 public class InfTableModel extends AbstractTableModel {
-	
+
 	private Entity entity;
-	
+
 	public InfTableModel(Entity entity) {
 		addTableModelListener(new InfTableModelController());
 		this.entity = entity;
 	}
-	
+
 	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}
@@ -33,25 +33,32 @@ public class InfTableModel extends AbstractTableModel {
 		Attribute attribute = entity.getAttributes().get(columnIndex);
 		return entry.getAttributes().get(attribute);
 	}
-	
+
 	@Override
-    public String getColumnName(int column) {
-		if(column >= entity.getAttributes().size()) {
+	public String getColumnName(int column) {
+		if (column >= entity.getAttributes().size()) {
 			return null;
 		}
 		return entity.getAttributes().get(column).getName();
-    }
+	}
 
-    // public int findColumn(String columnName)
+	// public int findColumn(String columnName)
 
 	@Override
-    public Class<?> getColumnClass(int columnIndex) {
-    	return entity.getAttributes().get(columnIndex).getValueClass();
-    }
-	
+	public Class<?> getColumnClass(int columnIndex) {
+		return entity.getAttributes().get(columnIndex).getValueClass();
+	}
+
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true;
-    }
+		return false;
+	}
+
+	@Override
+	public void setValueAt(Object value, int row, int col) {
+		Attribute attr = entity.getAttributes().get(col);
+		Object obj = entity.getEntries().get(row).getAttributes().put(attr, value);
+		fireTableCellUpdated(row, col);
+	}
 
 }

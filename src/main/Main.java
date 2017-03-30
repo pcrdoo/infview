@@ -40,7 +40,7 @@ public class Main {
 		pkg.addEntity(grad);
 		grad.addAttribute(new Attribute("Ime", String.class));
 		grad.addAttribute(new Attribute("Povrsina", Float.class));
-		grad.addAttribute(new Attribute("Sranje", Boolean.class));
+		grad.addAttribute(new Attribute("Ruzan", Boolean.class));
 		grad.addEntry(spawnEntry(grad, "Beograd", 250.12f, true));
 	}
 

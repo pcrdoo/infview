@@ -2,6 +2,7 @@ package view.tree;
 
 import controller.TreeController;
 import model.Warehouse;
+import net.miginfocom.swing.MigLayout;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -33,7 +34,7 @@ public class TreeView extends JPanel {
 	}
 	
 	private void initialize() {
-		this.setPreferredSize(Constants.TREE_SIZE);
+		//this.setPreferredSize(Constants.TREE_SIZE);
 		
 		InfNode root = new InfNode(Warehouse.getInstance());
 		root.populate();
@@ -50,17 +51,17 @@ public class TreeView extends JPanel {
 		selectionModel.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		this.tree.setSelectionModel(selectionModel);
 
-		this.setLayout(new BorderLayout());
-		this.setMinimumSize(new Dimension(1000, 1000));
+		this.setLayout(new MigLayout("fill", "0[]0", "0[]0"));
+		//this.setMinimumSize(new Dimension(1000, 1000));
 
 		JScrollPane treeScrollPane = new JScrollPane(tree);
 
-		treeScrollPane.setSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
-		treeScrollPane.setMaximumSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
-		treeScrollPane.setMinimumSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
-		treeScrollPane.setPreferredSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
+		//treeScrollPane.setSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
+		//treeScrollPane.setMaximumSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
+		//treeScrollPane.setMinimumSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
+		//treeScrollPane.setPreferredSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
 
-		this.add(treeScrollPane, BorderLayout.NORTH);
+		this.add(treeScrollPane, "cell 0 0, grow");
 	}
 	public InfTree getTree() {
 		return this.tree;
