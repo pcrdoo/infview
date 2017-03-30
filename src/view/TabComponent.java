@@ -12,7 +12,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import controller.TabComponentController;
-import javafx.scene.text.Font;
 import model.Entity;
 import net.miginfocom.swing.MigLayout;
 
