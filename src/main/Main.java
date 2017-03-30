@@ -27,13 +27,12 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		mock2();
 		MainView mainView = MainView.getInstance();
 		mainView.setVisible(true);
+		//mock();
 	}
 
-	public static void mock2() {
+	public static void mock() {
 		Package geo = Warehouse.getInstance().getPackages().get(0);
 		Package sport = Warehouse.getInstance().getPackages().get(1);
 		doLoad("src/res/mocks/MojaBaza/Drzava.txt,Drzava", geo);

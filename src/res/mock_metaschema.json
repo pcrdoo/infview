@@ -1,69 +1,114 @@
 {
-    "location": "mocks/MojaBaza",
-    "name": "MojaBaza",
-    "description": "Desc",
-    "packages": [
+  "location": "mocks/MojaBaza",
+  "name": "MojaBaza",
+  "description": "Desc",
+  "entities": [
+    {
+      "name": "Fakultet",
+      "attributes": [
         {
-            "name": "Geografija",
-            "entities": [
-                {
-                    "name": "Drzava",
-                    "attributes": [
-                        {
-                            "name": "Povrsina",
-                            "type": "Int"
-                        },
-                        {
-                            "name": "Ime",
-                            "type": "String"
-                        }
-                    ],
-                    "relations": [
-                        {
-                            "name": "Glavni grad",
-                            "objectEntity": "Grad"
-                        }
-                    ]
-                },
-                {
-                    "name": "Grad",
-                    "attributes": [
-                        {
-                            "name": "Broj stanovnika",
-                            "type": "Int"
-                        },
-                        {
-                            "name": "Ime",
-                            "type": "String"
-                        },
-                        {
-                            "name": "Ruzan",
-                            "type": "Boolean"
-                        }
-                    ],
-                    "relations": []
-                }
-            ]
+          "name": "Ime",
+          "type": "String"
+        }
+      ],
+      "relations": [
+        {
+          "name": "Univerzitet",
+          "objectEntity": "Univerzitet"
+        }
+      ]
+    },
+    {
+      "name": "Univerzitet",
+      "attributes": [
+        {
+          "name": "Ime",
+          "type": "String"
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "name": "Geografija",
+      "entities": [
+        {
+          "name": "Drzava",
+          "attributes": [
+            {
+              "name": "Povrsina",
+              "type": "Int"
+            },
+            {
+              "name": "Ime",
+              "type": "String"
+            }
+          ],
+          "relations": [
+            {
+              "name": "Glavni grad",
+              "objectEntity": "Grad"
+            }
+          ]
         },
         {
-            "name": "Sport",
-            "entities": [
-                {
-                    "name": "FudbalskiKlub",
-                    "attributes": [
-                        {
-                            "name": "Godina osnivanja",
-                            "type": "Int"
-                        },
-                        {
-                            "name": "Ime",
-                            "type": "String"
-                        }
-                    ],
-                    "relations": []
-                }
-            ]
+          "name": "Grad",
+          "attributes": [
+            {
+              "name": "Broj stanovnika",
+              "type": "Int"
+            },
+            {
+              "name": "Ime",
+              "type": "String"
+            },
+            {
+              "name": "Ruzan",
+              "type": "Boolean"
+            }
+          ],
+          "relations": []
         }
-    ]
+      ]
+    },
+    {
+      "name": "Sport",
+      "entities": [
+        {
+          "name": "FudbalskiKlub",
+          "attributes": [
+            {
+              "name": "Godina osnivanja",
+              "type": "Int"
+            },
+            {
+              "name": "Ime",
+              "type": "String"
+            }
+          ],
+          "relations": []
+        }
+      ],
+      "packages": [
+        {
+          "name": "Tenis",
+          "entities": [
+            {
+              "name": "Teniser",
+              "attributes": [
+                {
+                  "name": "Ime",
+                  "type": "String"
+                },
+                {
+                  "name": "Reket",
+                  "type": "String"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
-
