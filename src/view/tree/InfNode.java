@@ -24,6 +24,7 @@ public class InfNode implements TreeNode {
 	}
 
 	public void populate() {
+		this.children.clear();
 		if (this.resource.getChildren() != null) {
 			for (InfResource childRes : this.resource.getChildren()) {
 				InfNode child = new InfNode(childRes);

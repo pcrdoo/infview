@@ -26,10 +26,12 @@ public class InfTreeController {
 		public void mouseClicked(MouseEvent e) {
 			if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
 				InfNode node = (InfNode) view.getLastSelectedPathComponent();
-				InfResource resource = node.getResource();
-
-				if (resource instanceof Entity) {
-					MainView.getInstance().doTableOpen((Entity) resource);
+				if (node != null) {
+					InfResource resource = node.getResource();
+	
+					if (resource instanceof Entity) {
+						MainView.getInstance().doTableOpen((Entity) resource);
+					}
 				}
 			}
 		}

@@ -8,6 +8,8 @@ public final class Constants {
 
 	}
 	public static final Dimension WINDOW_SIZE = new Dimension(1600, 900);
+
+	public static final Dimension EDITOR_WINDOW_SIZE = new Dimension(800, 600);
 	
 	public static final Dimension TREE_SIZE = new Dimension(250, 900);
 	

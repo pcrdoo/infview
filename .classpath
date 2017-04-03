@@ -7,5 +7,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/gson-2.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/miglayout-4.0-swing.jar"/>
+	<classpathentry kind="lib" path="lib/json-schema-validator-2.2.6.jar"/>
+	<classpathentry kind="lib" path="lib/org.everit.json.schema-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/org.json-20161124.jar"/>
+	<classpathentry kind="lib" path="lib/commons-validator-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/guava-21.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+</head>
+<body style="width: 100%; height: 100%">
+
+<div id="container" style="width: 750px; height: 525px"></div>
+
+<script src="monaco-editor/min/vs/loader.js"></script>
+<script>
+
+	
+	require.config({ paths: { 'vs': 'monaco-editor/min/vs' }});
+	require(['vs/editor/editor.main'], function() {	
+		monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+			validate: true,
+			schemas: [
+				{
+					uri: "http://infview/schema.json",
+					fileMatch: "*",
+					schema: window.metametaschema
+				}
+			]
+		});
+
+		var model = monaco.editor.createModel(JSON.stringify(window.metaschema, undefined, 4), 'json', 'internal://server/foo.json');
+		
+		var editor = monaco.editor.create(document.getElementById('container'), {
+			model: model
+		});
+
+		window.myMonaco = editor;
+	});
+</script>
+</body>
+</html>

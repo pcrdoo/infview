@@ -11,4 +11,8 @@ public class TreeController {
 	public TreeController(TreeView view) {
 		this.view = view;
 	}
+	
+	public void refresh() {
+		view.refresh();
+	}
 }

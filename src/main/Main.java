@@ -9,20 +9,21 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import metaschema.MetaschemaDeserializer;
+import metaschema.MetaschemaValidator;
 import model.Attribute;
 import model.Entity;
 import model.Entry;
 import model.Package;
 import model.Warehouse;
 import view.MainView;
+import view.MetaschemaEditorView;
 
 public class Main {
 
 	public static void main(String[] args) {
 		try {
 			String fileString = new String(Files.readAllBytes(Paths.get("src/res/mock_metaschema.json")), StandardCharsets.UTF_8);
-			MetaschemaDeserializer d = new MetaschemaDeserializer();
-			d.deserialize(fileString, Warehouse.getInstance());
+			Warehouse.getInstance().loadWarehouse(fileString);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

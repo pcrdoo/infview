@@ -22,6 +22,7 @@ import constants.Constants;
 public class TreeView extends JPanel {
 
 	private TreeController controller;
+	private InfNode root;
 	private InfTree tree;
 
 	public TreeView() {
@@ -38,6 +39,7 @@ public class TreeView extends JPanel {
 		
 		InfNode root = new InfNode(Warehouse.getInstance());
 		root.populate();
+		this.root = root;
 		DefaultTreeModel model = new DefaultTreeModel(root);
 		this.tree = new InfTree();
 		this.tree.setModel(model);
@@ -63,6 +65,11 @@ public class TreeView extends JPanel {
 
 		this.add(treeScrollPane, "cell 0 0, grow");
 	}
+	
+	public void refresh() {
+		root.populate();
+	}
+	
 	public InfTree getTree() {
 		return this.tree;
 	}

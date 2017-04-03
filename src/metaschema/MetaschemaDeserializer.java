@@ -10,6 +10,7 @@ import model.Attribute;
 import model.Relation;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.function.Consumer;
@@ -106,6 +107,15 @@ public class MetaschemaDeserializer {
 			p.addEntity(deserializeEntity(entityJson.getAsJsonObject(), entities, relationsJsons));
 		}
 		
+		if (packageJson.has("packages")) {
+			ArrayList<Package> subPackages = new ArrayList<>();
+			
+			for (JsonElement subPackageJson : packageJson.getAsJsonArray("packages")) {
+				subPackages.add(deserializePackage(subPackageJson.getAsJsonObject(), packages));
+			}
+			p.setSubPackages(subPackages);
+		}
+		
 		for (HashMap.Entry<String, JsonArray> relationsJsonEntry : relationsJsons.entrySet()) {
 			deserializeRelationsToEntity(relationsJsonEntry.getValue(), entities.get(relationsJsonEntry.getKey()), entities);
 		}
@@ -121,10 +131,15 @@ public class MetaschemaDeserializer {
 		deserializeToInfResource(o, destination);
 		destination.setDescription(o.get("description").getAsString());
 		JsonArray packagesJson = o.getAsJsonArray("packages");
-		
+	
 		HashMap<String, Package> packages = new HashMap<>();
-		for (final JsonElement packageJson : packagesJson) {
-			destination.addPackage(deserializePackage(packageJson.getAsJsonObject(), packages));
+		Package root = deserializePackage(o, packages);
+		for (Package p : root.getSubPackages()) {
+			destination.addPackage(p);
+		}
+		
+		for (Entity e : root.getEntities()) {
+			destination.addPackage(e);
 		}
 	}
 }
