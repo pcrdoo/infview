@@ -1,6 +1,8 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +24,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			String fileString = new String(Files.readAllBytes(Paths.get("src/res/mock_metaschema.json")), StandardCharsets.UTF_8);
+			InputStream in = Main.class.getResourceAsStream("/res/mock_metaschema.json");
+			BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+			String fileString = "";
+			String line;
+			while ((line = br.readLine()) != null) {
+				fileString += line;
+			}
 			Warehouse.getInstance().loadWarehouse(fileString);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -30,7 +38,7 @@ public class Main {
 		}
 		MainView mainView = MainView.getInstance();
 		mainView.setVisible(true);
-		//mock();
+		// mock();
 	}
 
 	public static void mock() {

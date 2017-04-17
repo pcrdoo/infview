@@ -13,8 +13,7 @@ import org.json.JSONTokener;
 
 public class MetaschemaValidator {
 	public void validate(String metaschema) throws IOException, MetaschemaValidationException {
-		try (InputStream inputStream = new FileInputStream(new File("src/res/metametaschema.json"))) {
-			JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
+		try (InputStream inputStream = this.getClass().getResourceAsStream("/res/metametaschema.json")) {			JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
 			Schema schema = SchemaLoader.load(rawSchema);
 			try {
 				schema.validate(new JSONObject(metaschema));

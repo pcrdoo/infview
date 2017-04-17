@@ -3,6 +3,7 @@ package view;
 import com.sun.javafx.application.PlatformImpl;
 
 import constants.Constants;
+import java.net.MalformedURLException;
 import controller.MetaschemaEditorController;
 
 import java.awt.BorderLayout;
@@ -34,6 +35,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import java.net.URL;
+
 public class MetaschemaEditorView extends JDialog {
 	private Stage stage;
 	private WebView browser;
@@ -48,10 +51,22 @@ public class MetaschemaEditorView extends JDialog {
 	}
 	
 	private String getIndexUri() {
-		String workingDirectory = System.getProperty("user.dir");
-		System.out.println(workingDirectory);
+		ClassLoader loader = this.getClass().getClassLoader();
+		URL url = loader.getResource("res/monaco/index.html");
+		String protocol = url.getProtocol();
 		
-		return "file:///" + workingDirectory + "/src/res/monaco/index.html";
+		if(protocol.equals("jar")){
+		    try {
+				url = new URL(url.getPath());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    protocol = url.getProtocol();
+		}
+		System.out.println("Lokacija:"+url.toString());
+		System.out.println("PRoto:"+protocol);
+		return url.toString();
 	}
 	
 	private void initComponents(String metaschemaString) {
@@ -107,7 +122,7 @@ public class MetaschemaEditorView extends JDialog {
 				// Set up the embedded browser:
 				browser = new WebView();
 				webEngine = browser.getEngine();
-				webEngine.load(getIndexUri());
+				webEngine.load(MetaschemaEditorView.class.getResource("/res/monaco/index.html").toExternalForm());
 				
 		        com.sun.javafx.webkit.WebConsoleListener.setDefaultListener(new com.sun.javafx.webkit.WebConsoleListener(){
 
