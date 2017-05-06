@@ -13,6 +13,8 @@ import model.InfResource;
 import model.Record;
 
 public abstract class File extends Entity {
+	private ArrayList<UpdateBlockListener> updateBlockListeners;
+	
 	public File(String name, String path, InfResource parent) {
 		super(name, parent);
 		// TODO Auto-generated constructor stub
@@ -98,26 +100,22 @@ public abstract class File extends Entity {
 	 * EventListenerList listenerBlockList = new EventListenerList();
 	 * UpdateBlockEvent updateBlockEvent = null;
 	 * 
-	 * 
-	 * public void addUpdateBlockListener(UpdateBlockListener l) {
-	 * listenerBlockList.add(UpdateBlockListener.class, l); }
-	 * 
-	 * public void removeUpdateBlockListener(UpdateBlockListener l) {
-	 * listenerBlockList.remove(UpdateBlockListener.class, l); }
-	 * 
-	 * // kada se izvrsi odgovarajuca akcija, sve observere (slusace)
-	 * obavestavamo // da se dogadjaj desio protected void
-	 * fireUpdateBlockPerformed() { Object[] listeners =
-	 * listenerBlockList.getListenerList(); for (int i = listeners.length - 2; i
-	 * >= 0; i -= 2) { if (listeners[i] == UpdateBlockListener.class) { if
-	 * (updateBlockEvent == null) updateBlockEvent = new UpdateBlockEvent(this);
-	 * ((UpdateBlockListener) listeners[i +
-	 * 1]).updateBlockPerformed(updateBlockEvent); } }
-	 * 
-	 * }
 	 */
+	public void addUpdateBlockListener(UpdateBlockListener l) {
+		updateBlockListeners.add(l);
+	}
+	
+	public void removeUpdateBlockListener(UpdateBlockListener l) {
+		updateBlockListeners.remove(l);
+	}
 
-	// ((DefaultTableModel)yourTable.getModel()).fireTableDataChanged();
+	protected void fireUpdateBlockPerformed() {
+		for (UpdateBlockListener listener : updateBlockListeners) {
+			listener.blockUpdated();
+		}
+	}
+
+	// ;
 
 	// TODO: listeners IZNAD
 	// TODO: ucitavanje iz serial ispod

@@ -1,5 +1,6 @@
 package view;
 
+import model.files.UpdateBlockListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -8,9 +9,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import model.Entity;
 import model.InfTableModel;
+import model.files.File;
 import net.miginfocom.swing.MigLayout;
 
-public class TablePanel extends JPanel {
+public class TablePanel extends JPanel implements UpdateBlockListener {
 
 	// private BottomPanelController bottomPanelController;
 	private JTable table;
@@ -21,6 +23,11 @@ public class TablePanel extends JPanel {
 		this.entity = entity;
 		this.setLayout(new MigLayout("fill", "0[]0", "0[]0"));
 		initTable();
+		
+		if (entity instanceof File) {
+			File f = (File)entity;
+			f.addUpdateBlockListener(this);
+		}
 		add(new JScrollPane(table), "grow");
 	}
 
@@ -31,6 +38,10 @@ public class TablePanel extends JPanel {
 		table.setFillsViewportHeight(true);
 		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer())
 	    .setHorizontalAlignment(JLabel.CENTER);
+	}
+	
+	public void blockUpdated() {
+		tableModel.fireTableDataChanged();
 	}
 	
 	public JTable getTable() {
