@@ -6,9 +6,8 @@ import java.util.stream.Stream;
 
 public class Entity extends InfResource {
 	
-   private ArrayList<Attribute> attributes;
-   private ArrayList<Relation> relations;
-   private ArrayList<Entry> entries;
+   protected ArrayList<Attribute> attributes;
+   protected ArrayList<Relation> relations;
    
    public Entity(String name, InfResource parent) {
 	   super(name, parent);
@@ -16,7 +15,6 @@ public class Entity extends InfResource {
 	   this.name = name;
        attributes = new ArrayList<Attribute>();
        relations = new ArrayList<Relation>();
-       entries = new ArrayList<Entry>();
    }
    
    @Override
@@ -26,7 +24,7 @@ public class Entity extends InfResource {
 	   }
 	   Entity e = (Entity)o;
 	   if(name.equals(e.name) && attributes.equals(e.attributes) &&
-			   relations.equals(e.relations) && entries.equals(e.entries)) {
+			   relations.equals(e.relations)) {
 		   return true;
 	   }
 	   return false;
@@ -93,35 +91,6 @@ public class Entity extends InfResource {
          relations.clear();
    }
    
-   public ArrayList<Entry> getEntries() {
-      if (entries == null)
-    	  entries = new ArrayList<Entry>();
-      return entries;
-   }
-   
-   
-   public void addEntry(Entry newEntry) {
-      if (newEntry == null)
-         return;
-      if (this.entries == null)
-         this.entries = new ArrayList<Entry>();
-      if (!this.entries.contains(newEntry))
-         this.entries.add(newEntry);
-   }
-   
-   public void removeEntry(Entry oldEntry) {
-      if (oldEntry == null)
-         return;
-      if (this.entries != null)
-         if (this.entries.contains(oldEntry))
-            this.entries.remove(oldEntry);
-   }
-   
-   public void removeAllEntries() {
-      if (entries != null)
-    	  entries.clear();
-   }
-   
    public Attribute findAttributeByName(String name)
    {
 	   for (Attribute a : attributes)
@@ -157,4 +126,5 @@ public class Entity extends InfResource {
 	           "    ]\n" +
 			   "}", name, attributesStr, relationsStr), indentSpaces);
    }
+
 }

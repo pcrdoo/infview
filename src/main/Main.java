@@ -14,7 +14,7 @@ import metaschema.MetaschemaDeserializer;
 import metaschema.MetaschemaValidator;
 import model.Attribute;
 import model.Entity;
-import model.Entry;
+import model.Record;
 import model.Package;
 import model.Warehouse;
 import view.MainView;
@@ -66,7 +66,7 @@ public class Main {
 			String[] names = line.split(cvsSplitBy);
 			while ((line = br.readLine()) != null) {
 				String[] fields = line.split(cvsSplitBy);
-				Entry en = new Entry(entity);
+				Record en = new Record(entity);
 				for (int i = 0; i < names.length; i++) {
 					for (Attribute a : entity.getAttributes()) {
 						if (a.getName().equals(names[i])) {
@@ -81,7 +81,8 @@ public class Main {
 					}
 				}
 				
-				entity.addEntry(en);
+				// TODO
+				//entity.addEntry(en);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -67,6 +67,7 @@ public class MetaschemaDeserializer {
 	public Attribute deserializeAttribute(JsonObject attributeJson, HashMap<String, Attribute> attributes, Entity parent) throws MetaschemaDeserializationException {
 		String type = attributeJson.get("type").getAsString();
 		int length = attributeJson.get("length").getAsInt();
+		boolean primaryKey = attributeJson.get("primaryKey").getAsBoolean();
 		Class<?> clazz = null;
 		switch (type) {
 		case "char": clazz = CharType.class; break;
@@ -76,8 +77,7 @@ public class MetaschemaDeserializer {
 		case "numeric": clazz = Integer.class; break;
 		default: throw new MetaschemaDeserializationException("Unknown type '" + type + "'");
 		}
-		
-		Attribute a = new Attribute("", parent, clazz, length);
+		Attribute a = new Attribute("", parent, clazz, length, primaryKey);
 		deserializeToInfResource(attributeJson, a);
 		
 		if (attributes.containsKey(a.getName())) {
