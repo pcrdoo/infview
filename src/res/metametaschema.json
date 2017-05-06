@@ -32,17 +32,28 @@
 							{
 								"enum": 
 								[
-									"String",
-									"Int",
-									"DateTime",
-									"Boolean"
+									"varchar",
+									"char",
+									"datetime",
+									"numeric"
 								]
-							}
+							},
+
+                            "length":
+                            {
+                                "type": "number"
+                            },
+
+                            "primaryKey":
+                            {
+                                "type": "boolean"
+                            }
 						},
 
 						"required": 
 						[
 							"name",
+                            "length",
 							"type"
 						]
 					}
@@ -57,31 +68,46 @@
 						"additionalProperties": false,
 						"properties": 
 						{
-							"name": 
+							"referencedAttribute": 
 							{
 								"type": "string"
 							},
 
-							"objectEntity": 
-							{
-								"type": "string"
-							}
+                            "referringAttribute":
+                            {
+                                "type": "string"
+                            }
 						},
 
 						"required": 
 						[
-							"name",
-							"objectEntity"
+							"referringAttribute",
+                            "referencedAttribute"
 						]
 					}
-				}
+				},
+                
+                "type":
+                {
+                    "enum":
+                    [
+                        "serial",
+                        "sequential",
+                        "indexedSequential"
+                    ]
+                },
+
+                "url":
+                {
+                    "type": "string"
+                }
 			},
 
 			"required": 
 			[
 				"name",
 				"attributes",
-				"relations"
+                "type"
 			]
 		},
 
@@ -118,8 +144,7 @@
 			"required": 
 			[
 				"name",
-				"entities",
-				"packages"
+				"entities"
 			]
 		}
 	},
@@ -146,6 +171,12 @@
 				"$ref": "#/definitions/package"
 			}
 		},
+
+        "type": {
+            "enum": [
+                "files"
+            ]
+        },
 		
 		"entities":
 		{
@@ -162,7 +193,6 @@
 	[
 		"name",
 		"location",
-		"entities",
 		"packages",
 		"description"
 	]

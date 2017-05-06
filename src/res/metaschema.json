@@ -17,54 +17,54 @@
                     [
                         {   "name": "Struka",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "true"
+                            "length": 1,
+                            "primaryKey": true
                         },
                         {   "name": "BrojIndeksa",
                             "type": "varchar",
-                            "length": "6",
-                            "primaryKey": "true"
+                            "length": 6,
+                            "primaryKey": true
                         },
                         {   "name": "Prezime",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "ImeRoditelja",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "Ime",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "Pol",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "Jmbg",
                             "type": "char",
-                            "length": "13",
-                            "primaryKey": "false"
+                            "length": 13,
+                            "primaryKey": false
                         },
                         {   "name": "DatumRodjenja",
                             "type": "datetime",
-                            "length": "25",
-                            "primaryKey": "false"
+                            "length": 25,
+                            "primaryKey": false
                         },
                         {   "name": "Adresa",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "Telefon",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
-                        },
+                            "length": 20,
+                            "primaryKey": false
+                        }
                     ],
                     "relations": 
                     [
@@ -78,28 +78,28 @@
                     [
                         {   "name": "OznakaPlana",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "true"
+                            "length": 2,
+                            "primaryKey": true
                         },
                         {   "name": "SifraPredmeta",
                             "type": "varchar",
-                            "length": "5",
-                            "primaryKey": "true"
+                            "length": 5,
+                            "primaryKey": true
                         },
                         {   "name": "NazivPredmeta",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "TrajeSemestara",
                             "type": "numeric",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         },
                         {   "name": "BrojKredita",
                             "type": "numeric",
-                            "length": "3",
-                            "primaryKey": "false"
+                            "length": 3,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -114,18 +114,18 @@
                     [
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "NazivKojiSeStice",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "NazivPrograma",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -140,28 +140,28 @@
                     [
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "OznakaPlana",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "true"
+                            "length": 2,
+                            "primaryKey": true
                         },
                         {   "name": "SifraPremeta",
                             "type": "varchar",
-                            "length": "5",
-                            "primaryKey": "true"
+                            "length": 5,
+                            "primaryKey": true
                         },
                         {   "name": "GodinaPredmeta",
                             "type": "numeric",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "SemestarPredmeta",
                             "type": "numeric",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -184,33 +184,33 @@
                     [
                         {   "name": "Struka",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "true"
+                            "length": 1,
+                            "primaryKey": true
                         },
                         {   "name": "BrojIndeksa",
                             "type": "varchar",
-                            "length": "6",
-                            "primaryKey": "true"
+                            "length": 6,
+                            "primaryKey": true
                         },
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "SkolskaGodina",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "GodinaStudija",
                             "type": "numeric",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "UpisujePoPlanu",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -239,54 +239,54 @@
                     [
                         {   "name": "Struka",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "true"
+                            "length": 1,
+                            "primaryKey": true
                         },
                         {   "name": "BrojIndeksa",
                             "type": "varchar",
-                            "length": "6",
-                            "primaryKey": "true"
+                            "length": 6,
+                            "primaryKey": true
                         },
                         {   "name": "Prezime",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "ImeRoditelja",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "Ime",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "Pol",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "Jmbg",
                             "type": "char",
-                            "length": "13",
-                            "primaryKey": "false"
+                            "length": 13,
+                            "primaryKey": false
                         },
                         {   "name": "DatumRodjenja",
                             "type": "datetime",
-                            "length": "25",
-                            "primaryKey": "false"
+                            "length": 25,
+                            "primaryKey": false
                         },
                         {   "name": "Adresa",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "Telefon",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
-                        },
+                            "length": 20,
+                            "primaryKey": false
+                        }
                     ],
                     "relations": 
                     [
@@ -300,28 +300,28 @@
                     [
                         {   "name": "OznakaPlana",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "true"
+                            "length": 2,
+                            "primaryKey": true
                         },
                         {   "name": "SifraPredmeta",
                             "type": "varchar",
-                            "length": "5",
-                            "primaryKey": "true"
+                            "length": 5,
+                            "primaryKey": true
                         },
                         {   "name": "NazivPredmeta",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "TrajeSemestara",
                             "type": "numeric",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         },
                         {   "name": "BrojKredita",
                             "type": "numeric",
-                            "length": "3",
-                            "primaryKey": "false"
+                            "length": 3,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -336,18 +336,18 @@
                     [
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "NazivKojiSeStice",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "NazivPrograma",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -362,28 +362,28 @@
                     [
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "OznakaPlana",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "true"
+                            "length": 2,
+                            "primaryKey": true
                         },
                         {   "name": "SifraPremeta",
                             "type": "varchar",
-                            "length": "5",
-                            "primaryKey": "true"
+                            "length": 5,
+                            "primaryKey": true
                         },
                         {   "name": "GodinaPredmeta",
                             "type": "numeric",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "SemestarPredmeta",
                             "type": "numeric",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -406,33 +406,33 @@
                     [
                         {   "name": "Struka",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "true"
+                            "length": 1,
+                            "primaryKey": true
                         },
                         {   "name": "BrojIndeksa",
                             "type": "varchar",
-                            "length": "6",
-                            "primaryKey": "true"
+                            "length": 6,
+                            "primaryKey": true
                         },
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "SkolskaGodina",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "GodinaStudija",
                             "type": "numeric",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "UpisujePoPlanu",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -461,54 +461,54 @@
                     [
                         {   "name": "Struka",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "true"
+                            "length": 1,
+                            "primaryKey": true
                         },
                         {   "name": "BrojIndeksa",
                             "type": "varchar",
-                            "length": "6",
-                            "primaryKey": "true"
+                            "length": 6,
+                            "primaryKey": true
                         },
                         {   "name": "Prezime",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "ImeRoditelja",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "Ime",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
+                            "length": 20,
+                            "primaryKey": false
                         },
                         {   "name": "Pol",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "Jmbg",
                             "type": "char",
-                            "length": "13",
-                            "primaryKey": "false"
+                            "length": 13,
+                            "primaryKey": false
                         },
                         {   "name": "DatumRodjenja",
                             "type": "datetime",
-                            "length": "25",
-                            "primaryKey": "false"
+                            "length": 25,
+                            "primaryKey": false
                         },
                         {   "name": "Adresa",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "Telefon",
                             "type": "varchar",
-                            "length": "20",
-                            "primaryKey": "false"
-                        },
+                            "length": 20,
+                            "primaryKey": false
+                        }
                     ],
                     "relations": 
                     [
@@ -522,28 +522,28 @@
                     [
                         {   "name": "OznakaPlana",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "true"
+                            "length": 2,
+                            "primaryKey": true
                         },
                         {   "name": "SifraPredmeta",
                             "type": "varchar",
-                            "length": "5",
-                            "primaryKey": "true"
+                            "length": 5,
+                            "primaryKey": true
                         },
                         {   "name": "NazivPredmeta",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "TrajeSemestara",
                             "type": "numeric",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         },
                         {   "name": "BrojKredita",
                             "type": "numeric",
-                            "length": "3",
-                            "primaryKey": "false"
+                            "length": 3,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -558,18 +558,18 @@
                     [
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "NazivKojiSeStice",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         },
                         {   "name": "NazivPrograma",
                             "type": "varchar",
-                            "length": "80",
-                            "primaryKey": "false"
+                            "length": 80,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -584,28 +584,28 @@
                     [
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "OznakaPlana",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "true"
+                            "length": 2,
+                            "primaryKey": true
                         },
                         {   "name": "SifraPremeta",
                             "type": "varchar",
-                            "length": "5",
-                            "primaryKey": "true"
+                            "length": 5,
+                            "primaryKey": true
                         },
                         {   "name": "GodinaPredmeta",
                             "type": "numeric",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "SemestarPredmeta",
                             "type": "numeric",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
@@ -628,33 +628,33 @@
                     [
                         {   "name": "Struka",
                             "type": "char",
-                            "length": "1",
-                            "primaryKey": "true"
+                            "length": 1,
+                            "primaryKey": true
                         },
                         {   "name": "BrojIndeksa",
                             "type": "varchar",
-                            "length": "6",
-                            "primaryKey": "true"
+                            "length": 6,
+                            "primaryKey": true
                         },
                         {   "name": "OznakaPrograma",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "SkolskaGodina",
                             "type": "char",
-                            "length": "4",
-                            "primaryKey": "true"
+                            "length": 4,
+                            "primaryKey": true
                         },
                         {   "name": "GodinaStudija",
                             "type": "numeric",
-                            "length": "1",
-                            "primaryKey": "false"
+                            "length": 1,
+                            "primaryKey": false
                         },
                         {   "name": "UpisujePoPlanu",
                             "type": "char",
-                            "length": "2",
-                            "primaryKey": "false"
+                            "length": 2,
+                            "primaryKey": false
                         }
                     ],
                     "relations": 
