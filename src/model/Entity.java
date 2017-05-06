@@ -10,7 +10,9 @@ public class Entity extends InfResource {
    private ArrayList<Relation> relations;
    private ArrayList<Entry> entries;
    
-   public Entity(String name) {
+   public Entity(String name, InfResource parent) {
+	   super(name, parent);
+	   
 	   this.name = name;
        attributes = new ArrayList<Attribute>();
        relations = new ArrayList<Relation>();
@@ -97,6 +99,7 @@ public class Entity extends InfResource {
       return entries;
    }
    
+   
    public void addEntry(Entry newEntry) {
       if (newEntry == null)
          return;
@@ -117,6 +120,18 @@ public class Entity extends InfResource {
    public void removeAllEntries() {
       if (entries != null)
     	  entries.clear();
+   }
+   
+   public Attribute findAttributeByName(String name)
+   {
+	   for (Attribute a : attributes)
+	   {
+		   if (a.getName().equals(name)) {
+			   return a;
+		   }
+	   }
+	   
+	   return null;
    }
 
    public String toIndentedString(int indentSpaces) {

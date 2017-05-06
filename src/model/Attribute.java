@@ -6,12 +6,18 @@ import java.util.Scanner;
 
 public class Attribute extends InfResource {
 	Class<?> valueClass;
+	int length;
 	
-	public Attribute(String name, Class<?> valueClass){
+	public Attribute(String name, InfResource parent, Class<?> valueClass, int length) {
+		super(name, parent);
 		this.name = name;
 		this.valueClass = valueClass;
+		this.length = length;
 	}
 	
+	public String getFullyQualifiedName() { 
+		return parent.getName() + "/" + name;
+	}
 
 	public Class<?> getValueClass() {
 		return valueClass;

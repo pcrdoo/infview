@@ -9,7 +9,8 @@ public class Package extends InfResource {
 	private ArrayList<Entity> entities;
 	private ArrayList<Package> subPackages;
 
-	public Package(String name) {
+	public Package(String name, InfResource parent) {
+		super(name, parent);
 		this.name = name;
 		entities = new ArrayList<>();
 		subPackages = new ArrayList<>();

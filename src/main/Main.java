@@ -24,7 +24,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			InputStream in = Main.class.getResourceAsStream("/res/mock_metaschema.json");
+			InputStream in = Main.class.getResourceAsStream("/res/metaschema.json");
 			BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 			String fileString = "";
 			String line;

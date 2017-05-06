@@ -7,7 +7,9 @@ import model.InfResource;
 import model.Warehouse;
 import model.Package;
 import model.Attribute;
+import model.CharType;
 import model.Relation;
+import model.VarCharType;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -28,15 +30,30 @@ public class MetaschemaDeserializer {
 		HashSet<String> relationNames = new HashSet<>();
 		for (JsonElement relationElement : relationsJson) {
 			JsonObject relation = relationElement.getAsJsonObject();
-			String relatedEntityName = relation.get("objectEntity").getAsString();
-			String sourceEntityName = source.getName();
-			if (!entities.containsKey(relatedEntityName)) {
-				throw new MetaschemaDeserializationException("Entity '" + sourceEntityName + "' has a relation to unknown entity '" + relatedEntityName + "'");
+			String[] referencedAttributeNamePieces = relation.get("referencedAttribute").getAsString().split("/");
+			if (referencedAttributeNamePieces.length != 2) {
+				throw new MetaschemaDeserializationException("Referenced attribute '" + String.join("/", referencedAttributeNamePieces) + "' is not valid (expected format is 'EntityName/AttributeName')");
 			}
 			
-			Entity related = entities.get(relatedEntityName);
-			Relation r = new Relation("", related);
-			deserializeToInfResource(relation, r);
+			String referringAttributeName = relation.get("referringAttribute").getAsString();
+			Attribute referringAttribute = source.findAttributeByName(referringAttributeName);
+			
+			String fqn = source.getName() + "/" + referringAttributeName;
+			if (referringAttribute == null) {
+				throw new MetaschemaDeserializationException("Referring attribute '" + fqn + "' does not exist");
+			}
+			
+			if (!entities.containsKey(referencedAttributeNamePieces[0])) {
+				throw new MetaschemaDeserializationException("Attribute '" + fqn + "' has a relation to unknown entity '" + referencedAttributeNamePieces[0] + "'");
+			}
+			
+			Entity referenced = entities.get(referencedAttributeNamePieces[0]);
+			Attribute referencedAttribute = referenced.findAttributeByName(referencedAttributeNamePieces[1]);
+			if (referencedAttribute == null) {
+				throw new MetaschemaDeserializationException("Referenced attribute '" + String.join("/", referencedAttributeNamePieces) + "' does not exist");
+			}
+			
+			Relation r = new Relation(referringAttribute, referencedAttribute, source);
 			
 			if (relationNames.contains(r.getName())) {
 				throw new MetaschemaDeserializationException("Duplicate relation with name '" + r.getName() + "'");
@@ -47,18 +64,20 @@ public class MetaschemaDeserializer {
 		}
 	}
 	
-	public Attribute deserializeAttribute(JsonObject attributeJson, HashMap<String, Attribute> attributes) throws MetaschemaDeserializationException {
+	public Attribute deserializeAttribute(JsonObject attributeJson, HashMap<String, Attribute> attributes, Entity parent) throws MetaschemaDeserializationException {
 		String type = attributeJson.get("type").getAsString();
+		int length = attributeJson.get("length").getAsInt();
 		Class<?> clazz = null;
 		switch (type) {
-		case "String": clazz = String.class; break;
-		case "Int": clazz = Integer.class; break;
-		case "DateTime": clazz = Date.class; break;
-		case "Boolean": clazz = Boolean.class; break;
+		case "char": clazz = CharType.class; break;
+		case "varchar": clazz = VarCharType.class; break;
+		case "datetime": clazz = Date.class; break;
+		case "boolean": clazz = Boolean.class; break;
+		case "numeric": clazz = Integer.class; break;
 		default: throw new MetaschemaDeserializationException("Unknown type '" + type + "'");
 		}
 		
-		Attribute a = new Attribute("", clazz);
+		Attribute a = new Attribute("", parent, clazz, length);
 		deserializeToInfResource(attributeJson, a);
 		
 		if (attributes.containsKey(a.getName())) {
@@ -69,8 +88,8 @@ public class MetaschemaDeserializer {
 		return a;
 	}
 	
-	public Entity deserializeEntity(JsonObject entityJson, HashMap<String, Entity> entities, HashMap<String, JsonArray> relationsJsons) throws MetaschemaDeserializationException {
-		Entity e = new Entity("");
+	public Entity deserializeEntity(JsonObject entityJson, HashMap<String, Entity> entities, HashMap<String, JsonArray> relationsJsons, Package parent) throws MetaschemaDeserializationException {
+		Entity e = new Entity("", parent);
 		deserializeToInfResource(entityJson, e);
 		String name = e.getName();
 		
@@ -81,7 +100,7 @@ public class MetaschemaDeserializer {
 		JsonArray attributesJson = entityJson.getAsJsonArray("attributes");
 		HashMap<String, Attribute> attributes = new HashMap<>();
 		for (JsonElement attributeJson : attributesJson) {
-			e.addAttribute(deserializeAttribute(attributeJson.getAsJsonObject(), attributes));
+			e.addAttribute(deserializeAttribute(attributeJson.getAsJsonObject(), attributes, e));
 		}
 		
 		entities.put(name, e);
@@ -90,8 +109,8 @@ public class MetaschemaDeserializer {
 		return e;
 	}
 
-	public Package deserializePackage(JsonObject packageJson, HashMap<String, Package> packages) throws MetaschemaDeserializationException {
-		Package p = new Package("");
+	public Package deserializePackage(JsonObject packageJson, HashMap<String, Package> packages, InfResource parent) throws MetaschemaDeserializationException {
+		Package p = new Package("", parent);
 		deserializeToInfResource(packageJson, p);
 		String name = p.getName();
 		
@@ -102,16 +121,19 @@ public class MetaschemaDeserializer {
 		HashMap<String, Entity> entities = new HashMap<>();
 		HashMap<String, JsonArray> relationsJsons = new HashMap<>();
 		
-		JsonArray entitiesJson = packageJson.getAsJsonArray("entities");
-		for (JsonElement entityJson : entitiesJson) {
-			p.addEntity(deserializeEntity(entityJson.getAsJsonObject(), entities, relationsJsons));
+		if (packageJson.has("entities")) {
+			JsonArray entitiesJson = packageJson.getAsJsonArray("entities");
+		
+			for (JsonElement entityJson : entitiesJson) {
+				p.addEntity(deserializeEntity(entityJson.getAsJsonObject(), entities, relationsJsons, p));
+			}
 		}
 		
 		if (packageJson.has("packages")) {
 			ArrayList<Package> subPackages = new ArrayList<>();
 			
 			for (JsonElement subPackageJson : packageJson.getAsJsonArray("packages")) {
-				subPackages.add(deserializePackage(subPackageJson.getAsJsonObject(), packages));
+				subPackages.add(deserializePackage(subPackageJson.getAsJsonObject(), packages, p));
 			}
 			p.setSubPackages(subPackages);
 		}
@@ -133,7 +155,7 @@ public class MetaschemaDeserializer {
 		JsonArray packagesJson = o.getAsJsonArray("packages");
 	
 		HashMap<String, Package> packages = new HashMap<>();
-		Package root = deserializePackage(o, packages);
+		Package root = deserializePackage(o, packages, destination);
 		for (Package p : root.getSubPackages()) {
 			destination.addPackage(p);
 		}

@@ -148,7 +148,7 @@
                             "length": 2,
                             "primaryKey": true
                         },
-                        {   "name": "SifraPremeta",
+                        {   "name": "SifraPredmeta",
                             "type": "varchar",
                             "length": 5,
                             "primaryKey": true
@@ -167,11 +167,11 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Serijske datoteke/StudijskiProgram/OznakaPrograma",
+                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
                             "referringAttribute" : "OznakaPrograma"
                         },
                         {
-                            "referencedAttribute": "Serijske datoteke/NastavniPredmet/SifraPredmeta",
+                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
                             "referringAttribute" : "SifraPredmeta"
                         }
                     ]
@@ -216,11 +216,11 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Serijske datoteke/Student/Struka",
+                            "referencedAttribute": "Student/Struka",
                             "referringAttribute" : "Struka"
                         },
                         {
-                            "referencedAttribute": "Serijske datoteke/NastavniPredmet/OznakaPrograma",
+                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
                             "referringAttribute" : "OznakaPrograma"
                         }
                     ]
@@ -370,7 +370,7 @@
                             "length": 2,
                             "primaryKey": true
                         },
-                        {   "name": "SifraPremeta",
+                        {   "name": "SifraPredmeta",
                             "type": "varchar",
                             "length": 5,
                             "primaryKey": true
@@ -389,11 +389,11 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Sekvencijalne datoteke/StudijskiProgram/OznakaPrograma",
+                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
                             "referringAttribute" : "OznakaPrograma"
                         },
                         {
-                            "referencedAttribute": "Sekvencijalne datoteke/NastavniPredmet/SifraPredmeta",
+                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
                             "referringAttribute" : "SifraPredmeta"
                         }
                     ]
@@ -438,11 +438,11 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Sekvencijalne datoteke/Student/Struka",
+                            "referencedAttribute": "Student/Struka",
                             "referringAttribute" : "Struka"
                         },
                         {
-                            "referencedAttribute": "Sekvencijalne datoteke/NastavniPredmet/OznakaPrograma",
+                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
                             "referringAttribute" : "OznakaPrograma"
                         }
                     ]
@@ -592,7 +592,7 @@
                             "length": 2,
                             "primaryKey": true
                         },
-                        {   "name": "SifraPremeta",
+                        {   "name": "SifraPredmeta",
                             "type": "varchar",
                             "length": 5,
                             "primaryKey": true
@@ -611,11 +611,11 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Indeks - sekvencijalne datoteke/StudijskiProgram/OznakaPrograma",
+                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
                             "referringAttribute" : "OznakaPrograma"
                         },
                         {
-                            "referencedAttribute": "Indeks - sekvencijalne datoteke/NastavniPredmet/SifraPredmeta",
+                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
                             "referringAttribute" : "SifraPredmeta"
                         }
                     ]
@@ -660,11 +660,11 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Indeks - sekvencijalne datoteke/Student/Struka",
+                            "referencedAttribute": "Student/Struka",
                             "referringAttribute" : "Struka"
                         },
                         {
-                            "referencedAttribute": "Indeks - sekvencijalne datoteke/NastavniPredmet/OznakaPrograma",
+                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
                             "referringAttribute" : "OznakaPrograma"
                         }
                     ]

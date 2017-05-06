@@ -6,6 +6,7 @@ public class Entry {
 	Entity entity;
 	HashMap<Attribute, Object> attributes;
 	HashMap<Relation, Entry> relations;
+	
 	public Entry(Entity entity) {
 		this.entity = entity;
 		attributes = new HashMap<>();
@@ -25,8 +26,11 @@ public class Entry {
 	public void addRelation(Relation relation, Entry entry) {
 		if(!entity.getRelations().contains(relation))
 			return;
-		if(relation.getObjectEntity() != entry.getEntity()) {
-			return;
+		
+		// A relation to a given entry cannot be added unless the referenced attribute
+		// belongs to the same entity as the entry
+		if(relation.getReferencedAttribute().getParent() != entry.getEntity()) {
+			return; // TODO: Exception
 		}
 		relations.put(relation, entry);
 	}
