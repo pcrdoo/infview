@@ -28,6 +28,12 @@ public class TabbedTablesController {
 		tt.getNextBlock().addActionListener(new NextBlockClickListener());
 		tt.getDoSearch().addActionListener(new SearchClickListener());
 		tt.getBlockFactor().addChangeListener(new BlockFactorChangeListener());
+		
+
+		tt.getDoInsert().addActionListener(new InsertClickListener());
+		tt.getDoModify().addActionListener(new ModifyClickListener());
+		tt.getDoDelete().addActionListener(new DeleteClickListener());
+		tt.getDoMerge().addActionListener(new MergeClickListener());
 	}
 
 	private class BlockFactorChangeListener implements ChangeListener {
@@ -92,5 +98,41 @@ public class TabbedTablesController {
 		}
 
 	}
+	
+	private class InsertClickListener implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity());
+			searchDialog.setModal(true);
+			searchDialog.setVisible(true); // block!
+		}
+	}
+	private class ModifyClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity());
+			searchDialog.setModal(true);
+			searchDialog.setVisible(true); // block!
+		}
+	}
+	private class DeleteClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity());
+			searchDialog.setModal(true);
+			searchDialog.setVisible(true); // block!
+		}
+	}
+	private class MergeClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity());
+			searchDialog.setModal(true);
+			searchDialog.setVisible(true); // block!
+		}
+	}
 }

@@ -1,10 +1,10 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -17,14 +17,11 @@ import javax.swing.JToolBar;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
 
 import controller.TabbedTablesController;
 import model.Entity;
 import model.files.File;
-import model.files.InvalidRecordException;
 import model.files.SequentialFile;
 import net.miginfocom.swing.MigLayout;
 
@@ -32,29 +29,39 @@ public class TabbedTables extends JPanel {
 
 	private JToolBar toolbar;
 	private JTabbedPane tabs; // dodajemo tablePanele
-	private boolean autoRefresh;
+	private boolean mainTable;
 
 	private JButton nextBlock;
 	private JSpinner blockFactor;
 	private JButton doSearch;
 	private JTextField blocksFetched;
 
-	public TabbedTables(boolean autoRefresh) {
+
+	private JButton doInsert;
+	private JButton doModify;
+	private JButton doDelete;
+	private JButton doMerge;
+
+	public TabbedTables(boolean mainTable) {
 		this.setLayout(new MigLayout("fill", "", "0[]0[grow]0"));
 		toolbar = new JToolBar();
 		toolbar.setRollover(true);
 		toolbar.setFloatable(false);
 		populateToolbar();
 		this.add(toolbar, "grow, wrap, height 50px");
+		if (!mainTable) {
+			toolbar.setVisible(false);
+			this.setBackground(Color.RED);
+		}
 		tabs = new JTabbedPane();
 		this.add(tabs, "grow, height 250px");
-		this.autoRefresh = autoRefresh;
+		this.mainTable = mainTable;
 		new TabbedTablesController(this);
 	}
-	
-	public void enableToolbar(Entity entity){ 
-		if(entity instanceof File) {
-			File file = (File)entity;
+
+	public void enableToolbar(Entity entity) {
+		if (entity instanceof File) {
+			File file = (File) entity;
 			blockFactor.setValue(file.getBlockFactor());
 			blocksFetched.setText(String.valueOf(file.getBlocksFetched()));
 			blockFactor.setEnabled(true);
@@ -63,9 +70,15 @@ public class TabbedTables extends JPanel {
 				doSearch.setEnabled(true);
 			}
 			blocksFetched.setEnabled(true);
+			if(entity instanceof SequentialFile) {
+				doInsert.setEnabled(true);
+				doModify.setEnabled(true);
+				doDelete.setEnabled(true);
+				doMerge.setEnabled(true);
+			}
 		}
 	}
-	
+
 	public void disableToolbar() {
 		blockFactor.setEnabled(false);
 		blockFactor.setValue(20);
@@ -73,6 +86,10 @@ public class TabbedTables extends JPanel {
 		doSearch.setEnabled(false);
 		blocksFetched.setEnabled(false);
 		blocksFetched.setText("0");
+		doInsert.setEnabled(false);
+		doModify.setEnabled(false);
+		doDelete.setEnabled(false);
+		doMerge.setEnabled(false);
 	}
 
 	private void populateToolbar() {
@@ -112,6 +129,21 @@ public class TabbedTables extends JPanel {
 		blocksFetched.setHorizontalAlignment(SwingConstants.CENTER);
 		toolbar.add(blocksFetched);
 		toolbar.addSeparator();
+		
+		// Insert Modify Delete
+		doInsert = new JButton("Insert");
+		toolbar.add(doInsert);
+		doInsert.setEnabled(false);
+		doModify = new JButton("Modify");
+		toolbar.add(doModify);
+		doModify.setEnabled(false);
+		doDelete = new JButton("Delete");
+		toolbar.add(doDelete);
+		doDelete.setEnabled(false);
+		doMerge = new JButton("Merge");
+		toolbar.add(doMerge);
+		doMerge.setEnabled(false);
+		toolbar.addSeparator();
 
 	}
 
@@ -132,15 +164,13 @@ public class TabbedTables extends JPanel {
 				}
 			}
 		}
-		TablePanel panel = new TablePanel(entity, autoRefresh); //
+		TablePanel panel = new TablePanel(entity, mainTable); //
 		TabComponent tabComponent = new TabComponent(tabs, entity);
 		tabs.addTab(entity.getName(), panel);
 		tabs.setTabComponentAt(tabs.indexOfComponent(panel), tabComponent);
 		tabs.setSelectedComponent(panel);
 		return true;
 	}
-	
-
 
 	public JTabbedPane getTabs() {
 		return tabs;
@@ -157,9 +187,26 @@ public class TabbedTables extends JPanel {
 	public JButton getDoSearch() {
 		return doSearch;
 	}
-	
+
 	public JTextField getBlocksFetched() {
 		return blocksFetched;
+	}
+	
+
+	public JButton getDoInsert() {
+		return doInsert;
+	}
+
+	public JButton getDoModify() {
+		return doModify;
+	}
+
+	public JButton getDoDelete() {
+		return doDelete;
+	}
+
+	public JButton getDoMerge() {
+		return doMerge;
 	}
 
 }
