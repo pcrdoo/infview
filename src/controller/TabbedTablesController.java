@@ -50,7 +50,7 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SearchDialog d = new SearchDialog(tt.getSelectedEntity(), null);
+			SearchDialog d = new SearchDialog(tt.getSelectedEntity(), null, true, true);
 			d.setModal(true);
 			d.setVisible(true); // block!
 			
@@ -115,7 +115,7 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), null);
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), null, false, true);
 			searchDialog.setModal(true);
 			searchDialog.setVisible(true);
 			
@@ -136,10 +136,24 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (tt.getSelectedRow() == null)
+				return;
+			
 			Record r = tt.getSelectedRow();
-			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), null);
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), tt.getSelectedRow(), false, false);
 			searchDialog.setModal(true);
-			searchDialog.setVisible(true); // block!
+			searchDialog.setVisible(true);
+			
+			Entity entity = tt.getSelectedEntity();
+			
+			if (entity instanceof SequentialFile) {
+				try {
+					((SequentialFile)entity).updateRecord(searchDialog.getRecord());
+				} catch (IOException e1) {
+					System.out.println(e1);
+					e1.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -147,9 +161,19 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity());
-//			searchDialog.setModal(true);
-//			searchDialog.setVisible(true); // block!
+			if (tt.getSelectedRow() == null)
+				return;
+			
+			Entity entity = tt.getSelectedEntity();
+			
+			if (entity instanceof SequentialFile) {
+				try {
+					((SequentialFile)entity).deleteRecord(tt.getSelectedRow());
+				} catch (Exception e1) {
+					System.out.println(e1);
+					e1.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -157,9 +181,7 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity());
-//			searchDialog.setModal(true);
-//			searchDialog.setVisible(true); // block!
+			
 		}
 	}
 }
