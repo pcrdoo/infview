@@ -38,10 +38,12 @@ public class GenericDialog extends JDialog {
 	Entity entity;
 	Record record;
 	boolean doShit = false;
+	boolean isSearchNotSave;
 	
 	public GenericDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey, boolean isSearchNotSave) {
 		this.entity = entity;
 		this.record = record;
+		this.isSearchNotSave = isSearchNotSave;
 		this.ok = new JButton(isSearchNotSave ? "Search" : "Save");
 		this.controller = new GenericDialogController(this);
 		findAll = new JCheckBox("Find all occurrences");
@@ -144,6 +146,10 @@ public class GenericDialog extends JDialog {
 
 	public void setDoShit(boolean doShit) {
 		this.doShit = doShit;
+	}
+
+	public boolean isSearch() {
+		return this.isSearchNotSave;
 	}
 
 }

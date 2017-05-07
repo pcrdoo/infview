@@ -26,7 +26,7 @@ public class GenericDialogController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (view.validateRecord()) {
+			if (view.isSearch() || view.validateRecord()) {
                 view.setDoShit(true);
 				view.setVisible(false);
 			}
