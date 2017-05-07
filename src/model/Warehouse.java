@@ -16,7 +16,7 @@ public class Warehouse extends InfResource {
 
 	private String description;
 	private String metaschemaString;
-	private Path metaschemaPath;
+	private String location;
 
 	private static Warehouse instance;
 	private ArrayList<Package> packages;
@@ -98,5 +98,13 @@ public class Warehouse extends InfResource {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

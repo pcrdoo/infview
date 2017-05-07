@@ -19,4 +19,9 @@ public class CharType {
 		
 		this.string = s;
 	}
+	
+	@Override
+	public String toString() {
+		return string;
+	}
 }

@@ -1,6 +1,7 @@
 package metaschema;
 
-import java.sql.Date;
+import java.io.File;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -106,18 +107,19 @@ public class MetaschemaDeserializer {
 		return a;
 	}
 
-	public Entity deserializeEntity(JsonObject entityJson, HashMap<String, Entity> entities, HashMap<String, JsonArray> relationsJsons, Package parent) throws MetaschemaDeserializationException {
+	public Entity deserializeEntity(JsonObject entityJson, HashMap<String, Entity> entities, HashMap<String, JsonArray> relationsJsons, Package parent, String warehouseLocation) throws MetaschemaDeserializationException {
 		String type = entityJson.get("type").getAsString();
+		String fullPath = warehouseLocation + File.separatorChar + entityJson.get("url").getAsString();
 		Entity e;
 		switch(type) {
 		case "serial":
-			e = new SerialFile("", entityJson.get("url").getAsString(), parent);
+			e = new SerialFile("", fullPath, parent);
 			break;
 		case "sequential":
-			e = new SequentialFile("", entityJson.get("url").getAsString(), parent);
+			e = new SequentialFile("", fullPath, parent);
 			break;
 		case "indexedSequential":
-			e = new IndexedSequentialFile("", entityJson.get("url").getAsString(), parent);
+			e = new IndexedSequentialFile("", fullPath, parent);
 			break;
 		default:
 			throw new MetaschemaDeserializationException("Unkown entity type: " + type);
@@ -142,7 +144,7 @@ public class MetaschemaDeserializer {
 		return e;
 	}
 
-	public Package deserializePackage(JsonObject packageJson, HashMap<String, Package> packages, InfResource parent)
+	public Package deserializePackage(JsonObject packageJson, HashMap<String, Package> packages, InfResource parent, String warehouseLocation)
 			throws MetaschemaDeserializationException {
 		Package p = new Package("", parent);
 		deserializeToInfResource(packageJson, p);
@@ -159,7 +161,7 @@ public class MetaschemaDeserializer {
 			JsonArray entitiesJson = packageJson.getAsJsonArray("entities");
 
 			for (JsonElement entityJson : entitiesJson) {
-				p.addEntity(deserializeEntity(entityJson.getAsJsonObject(), entities, relationsJsons, p));
+				p.addEntity(deserializeEntity(entityJson.getAsJsonObject(), entities, relationsJsons, p, warehouseLocation));
 			}
 		}
 
@@ -167,7 +169,7 @@ public class MetaschemaDeserializer {
 			ArrayList<Package> subPackages = new ArrayList<>();
 
 			for (JsonElement subPackageJson : packageJson.getAsJsonArray("packages")) {
-				subPackages.add(deserializePackage(subPackageJson.getAsJsonObject(), packages, p));
+				subPackages.add(deserializePackage(subPackageJson.getAsJsonObject(), packages, p, warehouseLocation));
 			}
 			p.setSubPackages(subPackages);
 		}
@@ -187,10 +189,11 @@ public class MetaschemaDeserializer {
 
 		deserializeToInfResource(o, destination);
 		destination.setDescription(o.get("description").getAsString());
+		destination.setLocation(o.get("location").getAsString());
 		JsonArray packagesJson = o.getAsJsonArray("packages");
 
 		HashMap<String, Package> packages = new HashMap<>();
-		Package root = deserializePackage(o, packages, destination);
+		Package root = deserializePackage(o, packages, destination, destination.getLocation());
 		for (Package p : root.getSubPackages()) {
 			destination.addPackage(p);
 		}

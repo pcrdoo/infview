@@ -37,13 +37,17 @@ public class SerialFile extends File {
 		String contents = new String(buffer);
 		// poravnanje?!
 
+		currentBlock.clear();
 		for (int i = 0; i < recordsToRead; i++) {
 			// svaki slog predstavlja jednu liniju teksta
 			String line = contents.substring(i * recordSize, (i+1) * recordSize);
 			int linePosition = 0;
 			Record record = new Record(this);
 			for(Attribute attr: this.attributes) {
+				System.out.println(attr.getLength() + " " + attr.getName());
 				String field = line.substring(linePosition, linePosition + attr.getLength());
+				System.out.println("*" + field + "*");
+				field = field.trim();
 				linePosition += attr.getLength();
 				Class<?> cls = attr.getValueClass();
 				
@@ -67,6 +71,7 @@ public class SerialFile extends File {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 					try {
 						Date date = sdf.parse(field);
+						System.out.println(date);
 						record.addAttribute(attr, date);
 					} catch(ParseException e) {
 						throw new InvalidRecordException("Date", field);
@@ -81,12 +86,20 @@ public class SerialFile extends File {
 					}
 				} else if(cls == Integer.class) {
 					try {
+						if(attr.getName().equals("GodinaStudija") && field.equals("A")) {
+							field = "1";
+							// ISPRAVKA GRESKE U VELIKOM SETU PODATAKA
+						}
 						Integer num = Integer.parseInt(field);
+						record.addAttribute(attr, num);
 					} catch(NumberFormatException e) {
 						throw new InvalidRecordException("Integer", field);
 					}
+				} else {
+					System.out.println(cls + "!!");
 				}
 			}
+			currentBlock.add(record);
 		}
 
 		// pozicioniramo file pointer tamo gde smo stali sa citanjem

@@ -35,8 +35,8 @@ public abstract class File extends Entity {
 
 	protected int blockFactor = 20; // velicina bloka u slogovima, menja
 									// korisnik!
-	protected int recordSize = 0; // velicina sloga u bajtovima, setuje se kad
-									// se dodaje atribut
+	protected int recordSize = 2; // velicina sloga u bajtovima, setuje se kad
+									// se dodaje atribut, \r\n ruzan hak
 	// BUFFER SIZE = BLOCK_FACTOR * RECORD_SIZE
 	// protected int FILE_SIZE = 0; // velicina datoteke u bajtovima
 	protected int numRecords = 0; // broj slogova u datoteci
@@ -88,7 +88,7 @@ public abstract class File extends Entity {
 	@Override
 	public void removeAllAttributes() {
 		if (attributes != null) {
-			recordSize = 0;
+			recordSize = 2;
 
 			attributes.clear();
 		}

@@ -16,20 +16,20 @@ import net.miginfocom.swing.MigLayout;
 
 public class DesktopView extends JPanel {
 	private DesktopController desktopController;
-	private TopPanel topPanel;
-	private BottomPanel bottomPanel;
+	private TabbedTables mainTable;
+	private TabbedTables detailsTable;
 	public DesktopView() {
 		this.setLayout(new MigLayout("fill", "5[]5", "5[100, grow 10]5[100, grow 10]5"));
-		topPanel = new TopPanel();
-		bottomPanel = new BottomPanel();
-		this.add(topPanel, "grow, wrap");
-		this.add(bottomPanel, "grow");
+		mainTable = new TabbedTables(true);
+		detailsTable = new TabbedTables(false);
+		this.add(mainTable, "grow, wrap");
+		this.add(detailsTable, "grow");
 	}
-	public TopPanel getTopPanel() {
-		return topPanel;
+	public TabbedTables getMainTable() {
+		return mainTable;
 	}
-	public TabbedTables getBottomPanel() {
-		return bottomPanel;
+	public TabbedTables getDetailsTable() {
+		return detailsTable;
 	}
 
 }

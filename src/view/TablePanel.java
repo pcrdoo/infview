@@ -20,14 +20,21 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 	private InfTableModel tableModel;
 	private Entity entity;
 
-	public TablePanel(Entity entity) {
+	public TablePanel(Entity entity, boolean autoRefresh) {
 		this.entity = entity;
 		this.setLayout(new MigLayout("fill", "0[]0", "0[]0"));
-		initTable();
+		tableModel = new InfTableModel(entity);
+		table = new JTable(tableModel);
+		//table.setPreferredScrollableViewportSize(new Dimension(900, 300));
+		table.setFillsViewportHeight(true);
+		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer())
+	    .setHorizontalAlignment(JLabel.CENTER);
 		
 		if (entity instanceof File) {
 			File f = (File)entity;
-			f.addUpdateBlockListener(this);
+			if(autoRefresh) {
+				f.addUpdateBlockListener(this);
+			}
 			try {
 				((File) entity).fetchNextBlock();	
 			} catch(Exception e) {
@@ -39,18 +46,10 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 		}
 		add(new JScrollPane(table), "grow");
 	}
-
-	private void initTable() {
-		tableModel = new InfTableModel(entity);
-		table = new JTable(tableModel);
-		//table.setPreferredScrollableViewportSize(new Dimension(900, 300));
-		table.setFillsViewportHeight(true);
-		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer())
-	    .setHorizontalAlignment(JLabel.CENTER);
-	}
 	
 	public void blockUpdated() {
 		tableModel.fireTableDataChanged();
+		System.out.println(tableModel.getValueAt(1, 1));
 	}
 	
 	public JTable getTable() {

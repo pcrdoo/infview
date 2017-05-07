@@ -19,4 +19,11 @@ public class VarCharType {
 		
 		this.string = s;
 	}
+
+	@Override
+	public String toString() {
+		return string;
+	}
+	
+	
 }
