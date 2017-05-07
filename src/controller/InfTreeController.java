@@ -10,7 +10,6 @@ import model.InfResource;
 import view.MainView;
 import view.tree.InfNode;
 import view.tree.InfTree;
-import view.tree.TreeView;
 
 public class InfTreeController {
 

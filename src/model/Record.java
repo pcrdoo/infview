@@ -2,7 +2,6 @@ package model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import model.datatypes.CharType;
 import model.datatypes.DateType;

@@ -1,9 +1,9 @@
 package model.datatypes;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.io.Serializable;
 
 public class DateType implements Comparable<DateType>, Serializable {
 	private Date date;

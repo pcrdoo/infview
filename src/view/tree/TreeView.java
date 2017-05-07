@@ -1,23 +1,14 @@
 package view.tree;
 
-import controller.TreeController;
-import model.Warehouse;
-import net.miginfocom.swing.MigLayout;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.*;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeSelectionModel;
 
-import constants.Constants;
+import controller.TreeController;
+import model.Warehouse;
+import net.miginfocom.swing.MigLayout;
 
 public class TreeView extends JPanel {
 

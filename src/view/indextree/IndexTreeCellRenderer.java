@@ -2,14 +2,8 @@ package view.indextree;
 
 import java.awt.Component;
 
-import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
-
-import model.Entity;
-import model.Package;
-import model.Warehouse;
-import view.tree.InfNode;
 
 public class IndexTreeCellRenderer extends DefaultTreeCellRenderer {
 	@Override

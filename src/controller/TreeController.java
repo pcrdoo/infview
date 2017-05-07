@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.*;
-
 import view.tree.TreeView;
 
 public class TreeController {

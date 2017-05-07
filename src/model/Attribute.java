@@ -1,9 +1,5 @@
 package model;
 
-import java.util.Formatter;
-import java.util.Locale;
-import java.util.Scanner;
-
 public class Attribute extends InfResource {
 	Class<?> valueClass;
 	int length;

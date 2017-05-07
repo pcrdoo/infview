@@ -1,17 +1,14 @@
 package view.indextree;
 
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeSelectionModel;
-import javax.swing.JPanel;
-
-import controller.TreeController;
-import model.Warehouse;
-import net.miginfocom.swing.MigLayout;
 
 import controller.indextree.IndexTreeController;
 import model.indextree.Node;
+import net.miginfocom.swing.MigLayout;
 
 public class IndexTreeView extends JPanel {
 

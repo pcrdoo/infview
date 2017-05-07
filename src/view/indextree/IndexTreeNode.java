@@ -5,10 +5,9 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
+import model.indextree.KeyElement;
 import model.indextree.Node;
 import model.indextree.NodeElement;
-import model.indextree.KeyElement;
-import view.tree.InfNode;
 
 public class IndexTreeNode implements TreeNode {
 

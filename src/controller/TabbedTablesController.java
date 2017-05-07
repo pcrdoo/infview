@@ -15,8 +15,8 @@ import model.files.File;
 import model.files.IndexedSequentialFile;
 import model.files.InvalidRecordException;
 import model.files.SequentialFile;
-import view.MainView;
 import view.GenericDialog;
+import view.MainView;
 import view.TabbedTables;
 
 public class TabbedTablesController {

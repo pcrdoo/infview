@@ -1,8 +1,7 @@
 package model;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Entity extends InfResource {
 

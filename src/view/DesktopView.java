@@ -11,8 +11,8 @@ import java.awt.Component;
 import javax.swing.JPanel;
 
 import controller.DesktopController;
-import net.miginfocom.swing.MigLayout;
 import model.indextree.Node;
+import net.miginfocom.swing.MigLayout;
 import view.indextree.IndexTreeView;
 
 public class DesktopView extends JPanel {

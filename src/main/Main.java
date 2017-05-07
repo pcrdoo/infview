@@ -1,24 +1,17 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.InputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import metaschema.MetaschemaDeserializer;
-import metaschema.MetaschemaValidator;
 import model.Attribute;
 import model.Entity;
-import model.Record;
 import model.Package;
+import model.Record;
 import model.Warehouse;
 import view.MainView;
-import view.MetaschemaEditorView;
 
 public class Main {
 

@@ -5,11 +5,9 @@ import java.util.Enumeration;
 
 import javax.swing.tree.TreeNode;
 
-import model.Attribute;
 import model.Entity;
 import model.InfResource;
 import model.Package;
-import model.Relation;
 import model.Warehouse;
 
 public class InfNode implements TreeNode {

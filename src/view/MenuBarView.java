@@ -8,8 +8,8 @@ package view;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
 import controller.MenuBarController;
-import java.util.*;
 
 /** @pdOid 760c8f7d-95c9-4dfe-81c0-a68e0cd100e3 */
 public class MenuBarView extends JMenuBar {

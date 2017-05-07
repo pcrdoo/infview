@@ -1,19 +1,10 @@
 package model.files;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Date;
 import java.util.List;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
-import model.Attribute;
 import model.InfResource;
-import model.InvalidLengthException;
 import model.Record;
-import model.datatypes.CharType;
-import model.datatypes.VarCharType;
 
 public class SerialFile extends File {
 

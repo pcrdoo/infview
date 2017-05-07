@@ -1,6 +1,6 @@
 package model.indextree;
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Node implements Serializable {
 	private ArrayList<Node> children = new ArrayList<>();

@@ -1,16 +1,10 @@
 package view;
 
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -22,9 +16,8 @@ import javax.swing.JTextField;
 import controller.GenericDialogController;
 import model.Attribute;
 import model.Entity;
-import model.files.InvalidRecordException;
 import model.Record;
-import model.files.SequentialFile;
+import model.files.InvalidRecordException;
 
 public class GenericDialog extends JDialog {
 	// Ogi todo

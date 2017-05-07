@@ -1,7 +1,12 @@
 
 package view;
 
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import constants.Constants;
@@ -11,11 +16,6 @@ import controller.ToolBarController;
 import model.Entity;
 import net.miginfocom.swing.MigLayout;
 import view.tree.TreeView;
-
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.*;
 
 public class MainView extends JFrame {
 

@@ -1,41 +1,31 @@
 package view;
 
-import com.sun.javafx.application.PlatformImpl;
-
-import constants.Constants;
-import java.net.MalformedURLException;
-import controller.MetaschemaEditorController;
-
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javafx.application.Platform;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
+import com.sun.javafx.application.PlatformImpl;
+
+import constants.Constants;
+import controller.MetaschemaEditorController;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebErrorEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import model.Warehouse;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import java.net.URL;
 
 public class MetaschemaEditorView extends JDialog {
 	private Stage stage;

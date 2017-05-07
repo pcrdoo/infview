@@ -6,13 +6,12 @@
 
 package controller;
 
-import view.MetaschemaEditorView;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
 
 import model.Warehouse;
+import view.MetaschemaEditorView;
 
 /** @pdOid e62662e0-7709-4c4a-9ba9-6c764ecf7398 */
 public class MetaschemaEditorController {

@@ -1,6 +1,10 @@
 package view;
-import java.awt.*;
-import java.util.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.LayoutManager2;
+import java.util.HashMap;
 
 /**
  *  The <code>RelativeLayout</code> class is a layout manager that

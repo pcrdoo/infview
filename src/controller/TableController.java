@@ -6,7 +6,6 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Record;
 import view.MainView;
-import view.TabbedTables;
 
 public class TableController {
 

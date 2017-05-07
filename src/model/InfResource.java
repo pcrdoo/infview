@@ -1,8 +1,6 @@
 package model;
 
-import java.util.*;
-
-import javax.swing.tree.TreeNode;
+import java.util.List;
 
 public abstract class InfResource {
 	
