@@ -36,6 +36,12 @@ public abstract class File extends Entity {
 		numRecords = (int) Math.ceil(((double) file.length()) / recordSize);
 		numBlocks = (int) Math.ceil(((double) numRecords) / blockFactor);
 
+		System.out.println(numRecords + " " + filePointer + " " + recordSize);
+		if(filePointer + 2 == recordSize * numRecords) {
+			// opet glup hak za \r\n
+			file.close();
+			return false;
+		}
 		int recordsLeft = numRecords - filePointer / recordSize;
 		int recordsToRead = Math.min(blockFactor, recordsLeft);
 		int bufferSize = recordsToRead * recordSize;
@@ -52,9 +58,7 @@ public abstract class File extends Entity {
 			int linePosition = 0;
 			Record record = new Record(this);
 			for(Attribute attr: this.attributes) {
-				System.out.println(attr.getLength() + " " + attr.getName());
 				String field = line.substring(linePosition, linePosition + attr.getLength());
-				System.out.println("*" + field + "*");
 				field = field.trim();
 				linePosition += attr.getLength();
 				Class<?> cls = attr.getValueClass();
@@ -131,7 +135,7 @@ public abstract class File extends Entity {
 	public abstract boolean deleteRecord(ArrayList<String> record);
 
 	protected int blockFactor = 20; // velicina bloka u slogovima, menja
-									// korisnik!
+									// korisnik, default 20
 	protected int recordSize = 2; // velicina sloga u bajtovima, setuje se kad
 									// se dodaje atribut, \r\n ruzan hak
 	// BUFFER SIZE = BLOCK_FACTOR * RECORD_SIZE

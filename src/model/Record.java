@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -12,8 +11,8 @@ public class Record {
 
 	public Record(Entity entity) {
 		this.entity = entity;
-		attributes = new TreeMap<>();
-		relations = new TreeMap<>();
+		attributes = new LinkedHashMap<>();
+		relations = new LinkedHashMap<>();
 	}
 
 	public void addAttribute(Attribute attribute, Object value) {

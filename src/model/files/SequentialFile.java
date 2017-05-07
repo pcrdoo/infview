@@ -48,6 +48,8 @@ public class SequentialFile extends File {
 				}
 			}
 		}
+		currentBlock = result;
+		fireUpdateBlockPerformed(); // ozvezavanje tabele
 		return result;
 	}
 

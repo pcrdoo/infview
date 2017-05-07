@@ -36,12 +36,6 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 			if(autoRefresh) {
 				f.addUpdateBlockListener(this);
 			}
-			try {
-				((File) entity).fetchNextBlock();	
-			} catch(Exception e) {
-				System.out.println(e);
-				e.printStackTrace();
-			}
 		} else {
 			System.out.println("Not a file");
 		}
@@ -50,7 +44,6 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 	
 	public void blockUpdated() {
 		tableModel.fireTableDataChanged();
-		System.out.println(tableModel.getValueAt(1, 1));
 	}
 	
 	public JTable getTable() {
