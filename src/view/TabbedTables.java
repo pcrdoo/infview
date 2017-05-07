@@ -129,7 +129,7 @@ public class TabbedTables extends JPanel {
 		blocksFetched = new JTextField("0");
 		blocksFetched.setEditable(false);
 		blocksFetched.setEnabled(false);
-		blocksFetched.setPreferredSize(new Dimension(40, 30));
+		blocksFetched.setPreferredSize(new Dimension(100, 30));
 		blocksFetched.setHorizontalAlignment(SwingConstants.CENTER);
 		toolbar.add(blocksFetched);
 		toolbar.addSeparator();

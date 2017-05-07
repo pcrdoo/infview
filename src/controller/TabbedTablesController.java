@@ -28,7 +28,6 @@ public class TabbedTablesController {
 		tt.getNextBlock().addActionListener(new NextBlockClickListener());
 		tt.getDoSearch().addActionListener(new SearchClickListener());
 		tt.getBlockFactor().addChangeListener(new BlockFactorChangeListener());
-		
 
 		tt.getDoInsert().addActionListener(new InsertClickListener());
 		tt.getDoModify().addActionListener(new ModifyClickListener());
@@ -54,6 +53,10 @@ public class TabbedTablesController {
 			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity());
 			searchDialog.setModal(true);
 			searchDialog.setVisible(true); // block!
+			if (tt.getSelectedEntity() instanceof File) {
+				File file = (File) tt.getSelectedEntity();
+				tt.getBlocksFetched().setText(String.valueOf(file.getBlocksFetched()));
+			}
 		}
 	}
 
@@ -66,7 +69,7 @@ public class TabbedTablesController {
 				try {
 					ArrayList<Record> currentBlock = ((File) entity).fetchNextBlock();
 					((File) entity).fireUpdateBlockPerformed(currentBlock); // ozvezavanje
-																// tabele
+					// tabele
 					tt.getBlocksFetched().setText(String.valueOf(((File) entity).getBlocksFetched()));
 				} catch (IOException | InvalidRecordException ex) {
 					System.out.println("Invalid blockfetch");
@@ -87,7 +90,8 @@ public class TabbedTablesController {
 				if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
 					MainView.getInstance().getDesktopView().attachDetailsTable();
 				} else {
-					// TODO David: ovde show tree ako je IndexedSequentialFile attach/detach
+					// TODO David: ovde show tree ako je IndexedSequentialFile
+					// attach/detach
 					MainView.getInstance().getDesktopView().detachDetailsTable();
 				}
 			} else {
@@ -98,7 +102,7 @@ public class TabbedTablesController {
 		}
 
 	}
-	
+
 	private class InsertClickListener implements ActionListener {
 
 		@Override
@@ -108,6 +112,7 @@ public class TabbedTablesController {
 			searchDialog.setVisible(true); // block!
 		}
 	}
+
 	private class ModifyClickListener implements ActionListener {
 
 		@Override
@@ -117,6 +122,7 @@ public class TabbedTablesController {
 			searchDialog.setVisible(true); // block!
 		}
 	}
+
 	private class DeleteClickListener implements ActionListener {
 
 		@Override
@@ -126,6 +132,7 @@ public class TabbedTablesController {
 			searchDialog.setVisible(true); // block!
 		}
 	}
+
 	private class MergeClickListener implements ActionListener {
 
 		@Override

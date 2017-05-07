@@ -151,7 +151,7 @@ public abstract class File extends Entity {
 			}
 		} else if (cls == Integer.class) {
 			try {
-				if (attr.getName().equals("GodinaStudija") && (field.equals("a") || field.equals("A"))) {
+				if (attr.getName().equals("GodinaStudija") && (field.equals("") || field.equals("a") || field.equals("A"))) {
 					field = "1";
 					// ISPRAVKA GRESKE U VELIKOM SETU PODATAKA
 				}
