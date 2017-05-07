@@ -4,6 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import model.datatypes.CharType;
+import model.datatypes.DateType;
+import model.datatypes.VarCharType;
+import model.files.File;
+import model.files.InvalidRecordException;
+
 public class Record {
 	Entity entity;
 	Map<Attribute, Object> attributes;
@@ -52,35 +58,73 @@ public class Record {
 	public boolean matches(String[] terms) {
 		boolean result = true;
 		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
-			result &= !terms[i].equals("") && terms[i].equals((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim());
+			result &= terms[i].equals("") || terms[i].equals((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim());
 		}
 		return result;
 	}
 
 	public boolean greaterThan(String[] terms) {
 		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
-			if(this.entity.getAttributes().get(i).isPrimaryKey() && !terms[i].equals(""))
+			if(!this.entity.getAttributes().get(i).isPrimaryKey() && !terms[i].equals(""))
 				return false;
 		}
 		
 		for(int i = 0; i < this.attributes.size(); i++) {
+			//System.out.println((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim());
 			if(terms[i].equals("")) {
 				return false;
-			} else if(terms[i].compareToIgnoreCase(((this.attributes.get(this.entity.getAttributes().get(i)).toString().trim()))) == 1) {
-				return false;
-			} else if(terms[i].compareToIgnoreCase((this.attributes.get(this.entity.getAttributes().get(i)).toString().trim())) == -1) {
-				return true;
 			}
+			try {
+				System.out.println("SALJEM " + terms[i]);
+				Object o = File.parseStringField(terms[i], this.entity.getAttributes().get(i));
+				int result;
+				if(o instanceof Boolean) {
+					result = ((Boolean)o).compareTo((Boolean)this.attributes.get(this.entity.getAttributes().get(i)));
+				} else if(o instanceof CharType) {
+					result = ((CharType)o).compareTo((CharType)this.attributes.get(this.entity.getAttributes().get(i)));
+				} else if(o instanceof VarCharType) {
+					result = ((VarCharType)o).compareTo((VarCharType)this.attributes.get(this.entity.getAttributes().get(i)));
+				} else if(o instanceof Integer) {
+					result = ((Integer)o).compareTo((Integer)this.attributes.get(this.entity.getAttributes().get(i)));
+				} else if(o instanceof DateType) {
+					result = ((DateType)o).compareTo((DateType)this.attributes.get(this.entity.getAttributes().get(i)));
+				} else {
+					throw new Exception("Alo druskane pa taj tip nije podrzan.");
+				}
+//				System.out.println(i);
+//				System.out.println(this.attributes.get(this.entity.getAttributes().get(i)).getClass());
+//				System.out.println(this.attributes.get(this.entity.getAttributes().get(i)));
+//				System.out.println(terms[i]);
+				if (result == 1) {
+					return false;
+				} else if (result == -1) {
+					return true;
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+				e.printStackTrace();
+			}
+//			else if(terms[i].compareToIgnoreCase((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim()) == 1) {
+//				return false;
+//			} else if(terms[i].compareToIgnoreCase((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim()) == -1) {
+//				System.out.println("STAO");
+//				return true;
+//			}
 		}
 		return false;
 	}
 	
 	@Override
 	public String toString() {
-		String result = "";
+		StringBuilder result = new StringBuilder();
+		int resultLength = 0;
 		for (Attribute a : this.entity.getAttributes()) {
-			result += this.attributes.get(a);
+			resultLength += a.getLength();
+			result.append(this.attributes.get(a));
+			while (result.length() < resultLength) {
+				result.append(" ");
+			}
 		}
-		return result;
+		return result.toString();
 	}
 }

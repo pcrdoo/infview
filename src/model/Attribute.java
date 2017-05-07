@@ -34,7 +34,7 @@ public class Attribute extends InfResource {
 				String.format("Attribute \"%s\" {\n" + "    valueClass = \"%s\"\n" + "}", name, valueClass.toString()),
 				indentSpaces);
 	}
-
+ 
 	public int getLength() {
 		return length;
 	}

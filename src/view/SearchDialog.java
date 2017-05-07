@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import model.Attribute;
 import model.Entity;
+import model.Record;
 import model.files.SequentialFile;
 
 public class SearchDialog extends JDialog {
@@ -29,7 +30,7 @@ public class SearchDialog extends JDialog {
 	JCheckBox fromStart;
 	ArrayList<JTextField> attributes;
 	
-	public SearchDialog(Entity entity) {
+	public SearchDialog(Entity entity, Record record) {
 		findAll = new JCheckBox("Find all occurrences");
 		toFile = new JCheckBox("Write to file");
 		fromStart = new JCheckBox("Search from start");

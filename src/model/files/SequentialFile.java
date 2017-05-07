@@ -51,6 +51,7 @@ public class SequentialFile extends File {
 					}
 				}
 				currentBlock = fetchNextBlock();
+				System.out.println(this.filePointer);
 			}
 		} catch (Exception e) {
 			e.printStackTrace(); // lol
@@ -58,7 +59,7 @@ public class SequentialFile extends File {
 		return result;
 	}
 
-	public void findRecord(String[] terms, boolean all, boolean toFile, boolean fromStart) {
+	public List<Record> findRecord(String[] terms, boolean all, boolean toFile, boolean fromStart) {
 		System.out.println("Pocinjem da trazim gari...");
 		if (fromStart)
 			this.filePointer = 0;
@@ -84,6 +85,7 @@ public class SequentialFile extends File {
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
 
 	@Override
