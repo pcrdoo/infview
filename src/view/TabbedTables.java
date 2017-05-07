@@ -21,6 +21,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
 
+import controller.TabbedTablesController;
 import model.Entity;
 import model.files.File;
 import model.files.InvalidRecordException;
@@ -46,30 +47,32 @@ public class TabbedTables extends JPanel {
 		populateToolbar();
 		this.add(toolbar, "grow, wrap, height 50px");
 		tabs = new JTabbedPane();
-		tabs.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				Entity entity = getSelectedEntity();
-				if (entity != null && entity instanceof File) {
-					blockFactor.setValue(((File) entity).getBlockFactor());
-					blocksFetched.setText(String.valueOf(((File) entity).getBlocksFetched()));
-					blockFactor.setEnabled(true);
-					nextBlock.setEnabled(true);
-					if (entity instanceof SequentialFile) {
-						doSearch.setEnabled(true);
-					}
-					blocksFetched.setEnabled(true);
-				} else {
-					blockFactor.setEnabled(false);
-					blockFactor.setValue(20);
-					nextBlock.setEnabled(false);
-					doSearch.setEnabled(false);
-					blocksFetched.setEnabled(false);
-					blocksFetched.setText("0");
-				}
-			}
-		});
 		this.add(tabs, "grow, height 250px");
 		this.autoRefresh = autoRefresh;
+		new TabbedTablesController(this);
+	}
+	
+	public void enableToolbar(Entity entity){ 
+		if(entity instanceof File) {
+			File file = (File)entity;
+			blockFactor.setValue(file.getBlockFactor());
+			blocksFetched.setText(String.valueOf(file.getBlocksFetched()));
+			blockFactor.setEnabled(true);
+			nextBlock.setEnabled(true);
+			if (entity instanceof SequentialFile) {
+				doSearch.setEnabled(true);
+			}
+			blocksFetched.setEnabled(true);
+		}
+	}
+	
+	public void disableToolbar() {
+		blockFactor.setEnabled(false);
+		blockFactor.setValue(20);
+		nextBlock.setEnabled(false);
+		doSearch.setEnabled(false);
+		blocksFetched.setEnabled(false);
+		blocksFetched.setText("0");
 	}
 
 	private void populateToolbar() {
@@ -78,19 +81,6 @@ public class TabbedTables extends JPanel {
 		nextBlock.setEnabled(false);
 		nextBlock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Entity entity = getSelectedEntity();
-				if (entity != null && entity instanceof File) {
-					try {
-						((File) entity).fetchNextBlock();
-						((File) entity).fireUpdateBlockPerformed(); // ozvezavanje
-																	// tabele
-						blocksFetched.setText(String.valueOf(((File) entity).getBlocksFetched()));
-					} catch (IOException | InvalidRecordException ex) {
-						System.out.println("Invalid blockfetch");
-						ex.printStackTrace();
-					}
-				}
-
 			}
 		});
 		toolbar.add(nextBlock);
@@ -104,29 +94,12 @@ public class TabbedTables extends JPanel {
 		JFormattedTextField field = (JFormattedTextField) blockFactor.getEditor().getComponent(0);
 		DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
 		formatter.setCommitsOnValidEdit(true);
-		blockFactor.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				Entity entity = getSelectedEntity();
-				if (entity != null && entity instanceof File) {
-					((File) entity).setBlockFactor((Integer) blockFactor.getValue());
-				}
-			}
-
-		});
 		toolbar.add(blockFactor);
 		toolbar.addSeparator();
 
 		// Search
 		doSearch = new JButton("Search");
 		doSearch.setEnabled(false);
-		doSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				SearchDialog searchDialog = new SearchDialog();
-				searchDialog.setModal(true);
-				searchDialog.setVisible(true); // block!
-			}
-		});
 		toolbar.add(doSearch);
 		toolbar.addSeparator();
 
@@ -142,7 +115,7 @@ public class TabbedTables extends JPanel {
 
 	}
 
-	private Entity getSelectedEntity() {
+	public Entity getSelectedEntity() {
 		if (tabs.getSelectedComponent() == null) {
 			return null;
 		}
@@ -165,6 +138,28 @@ public class TabbedTables extends JPanel {
 		tabs.setTabComponentAt(tabs.indexOfComponent(panel), tabComponent);
 		tabs.setSelectedComponent(panel);
 		return true;
+	}
+	
+
+
+	public JTabbedPane getTabs() {
+		return tabs;
+	}
+
+	public JButton getNextBlock() {
+		return nextBlock;
+	}
+
+	public JSpinner getBlockFactor() {
+		return blockFactor;
+	}
+
+	public JButton getDoSearch() {
+		return doSearch;
+	}
+	
+	public JTextField getBlocksFetched() {
+		return blocksFetched;
 	}
 
 }
