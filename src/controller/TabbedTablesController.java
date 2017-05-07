@@ -3,11 +3,13 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import model.Entity;
+import model.Record;
 import model.files.File;
 import model.files.IndexedSequentialFile;
 import model.files.InvalidRecordException;
@@ -56,8 +58,8 @@ public class TabbedTablesController {
 			Entity entity = tt.getSelectedEntity();
 			if (entity != null && entity instanceof File) {
 				try {
-					((File) entity).fetchNextBlock();
-					((File) entity).fireUpdateBlockPerformed(); // ozvezavanje
+					ArrayList<Record> currentBlock = ((File) entity).fetchNextBlock();
+					((File) entity).fireUpdateBlockPerformed(currentBlock); // ozvezavanje
 																// tabele
 					tt.getBlocksFetched().setText(String.valueOf(((File) entity).getBlocksFetched()));
 				} catch (IOException | InvalidRecordException ex) {

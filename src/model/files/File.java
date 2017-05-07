@@ -39,16 +39,12 @@ public abstract class File extends Entity {
 
 	// Full path do entiteta, constructor TODO
 	protected String path; 
-	
-	 // Trenutno ucitan blok
-	protected ArrayList<Record> currentBlock;
 
 	protected RandomAccessFile file;
 	
 	public File(String name, String path, InfResource parent) {
 		super(name, parent);
 		// TODO Auto-generated constructor stub
-		currentBlock = new ArrayList<Record>();
 		updateBlockListeners = new ArrayList<UpdateBlockListener>();
 		this.path = path;
 	}
@@ -71,7 +67,7 @@ public abstract class File extends Entity {
 		file = null;
 	}
 	
-	public boolean fetchNextBlock() throws IOException, InvalidRecordException {
+	public ArrayList<Record> fetchNextBlock() throws IOException, InvalidRecordException {
 		System.out.println("Fetching next block!");
 		lazyOpenFile();
 		
@@ -81,7 +77,7 @@ public abstract class File extends Entity {
 		if(filePointer + 2 == recordSize * numRecords) {
 			// opet glup hak za \r\n
 			closeFile();
-			return false;
+			return null;
 		}
 		int recordsLeft = numRecords - filePointer / recordSize;
 		int recordsToRead = Math.min(blockFactor, recordsLeft);
@@ -92,7 +88,7 @@ public abstract class File extends Entity {
 		String contents = new String(buffer);
 		// poravnanje?!
 
-		currentBlock.clear();
+		ArrayList<Record> currentBlock = new ArrayList<Record>();
 		for (int i = 0; i < recordsToRead; i++) {
 			// svaki slog predstavlja jednu liniju teksta
 			String line = contents.substring(i * recordSize, (i+1) * recordSize);
@@ -141,7 +137,7 @@ public abstract class File extends Entity {
 					}
 				} else if(cls == Integer.class) {
 					try {
-						if(attr.getName().equals("GodinaStudija") && field.equals("A")) {
+						if(attr.getName().equals("GodinaStudija") && (field.equals("a") || field.equals("A"))) {
 							field = "1";
 							// ISPRAVKA GRESKE U VELIKOM SETU PODATAKA
 						}
@@ -161,7 +157,7 @@ public abstract class File extends Entity {
 		// pozicioniramo file pointer tamo gde smo stali sa citanjem
 		filePointer = (int)file.getFilePointer();
 		blocksFetched++;
-		return true;
+		return currentBlock;
 	}
 
 
@@ -172,14 +168,6 @@ public abstract class File extends Entity {
 	public abstract List<Record> findRecord(String[] terms, boolean all);
 
 	public abstract boolean deleteRecord(ArrayList<String> record);
-	
-	public int getFileSize() {
-		return this.numRecords * this.recordSize;
-	}
-
-	public ArrayList<Record> getCurrentBlock() {
-		return currentBlock;
-	}
 
 	public int getBlockFactor() {
 		return blockFactor;
@@ -237,9 +225,9 @@ public abstract class File extends Entity {
 		updateBlockListeners.remove(l);
 	}
 
-	public void fireUpdateBlockPerformed() {
+	public void fireUpdateBlockPerformed(ArrayList<Record> currentBlock) {
 		for (UpdateBlockListener listener : updateBlockListeners) {
-			listener.blockUpdated();
+			listener.blockUpdated(currentBlock);
 		}
 	}
 

@@ -1,6 +1,7 @@
 package view;
 
-import model.files.UpdateBlockListener;
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -9,8 +10,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import model.Entity;
 import model.InfTableModel;
+import model.Record;
 import model.files.File;
-import model.files.InvalidRecordException;
+import model.files.UpdateBlockListener;
 import net.miginfocom.swing.MigLayout;
 
 public class TablePanel extends JPanel implements UpdateBlockListener {
@@ -42,7 +44,8 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 		add(new JScrollPane(table), "grow");
 	}
 	
-	public void blockUpdated() {
+	public void blockUpdated(ArrayList<Record> currentBlock) {
+		tableModel.setCurrentBlock(currentBlock);
 		tableModel.fireTableDataChanged();
 	}
 	

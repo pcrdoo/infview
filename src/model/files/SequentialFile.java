@@ -32,52 +32,54 @@ public class SequentialFile extends File {
 	public List<Record> findRecord(String[] terms, boolean all) {
 
 		ArrayList<Record> result = new ArrayList<>();
-		
-		while(this.filePointer < this.getFileSize()) {
-			try {
-				fetchNextBlock();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			for (Record record : this.currentBlock) {
-				if(record.matches(terms)) {
-					result.add(record);
-					
-					if(!all)
+
+		ArrayList<Record> currentBlock;
+		try {
+			currentBlock = fetchNextBlock();
+
+			while (currentBlock != null) {
+				for (Record record : currentBlock) {
+					if (record.matches(terms)) {
+						result.add(record);
+
+						if (!all)
+							return result;
+					}
+
+					if (record.greaterThan(terms)) {
 						return result;
+					}
 				}
-				
-				if(record.greaterThan(terms)) {
-					return result;
-				}
+				currentBlock = fetchNextBlock();
 			}
+		} catch (Exception e) {
+			e.printStackTrace(); // lol
 		}
 		return result;
 	}
-	
+
 	public void findRecord(String[] terms, boolean all, boolean toFile, boolean fromStart) {
 		System.out.println("Pocinjem da trazim gari...");
-		if(fromStart)
+		if (fromStart)
 			this.filePointer = 0;
-		
+
 		List<Record> result = this.findRecord(terms, all);
-		
-		if(!toFile) {
-			currentBlock = (ArrayList<Record>) result;
+
+		if (!toFile) {
+			ArrayList<Record> currentBlock = (ArrayList<Record>) result;
 			System.out.println("Naso sam " + currentBlock.size() + " gari...");
-			fireUpdateBlockPerformed(); // ozvezavanje tabele
+			fireUpdateBlockPerformed(currentBlock); // ozvezavanje tabele
 		} else {
-			try{
+			try {
 				java.io.File f = new java.io.File("search-results.txt");
-				
-			    PrintWriter writer = new PrintWriter(f, "UTF-8");
-			    for (Record record : result) {
+
+				PrintWriter writer = new PrintWriter(f, "UTF-8");
+				for (Record record : result) {
 					writer.println(record);
 				}
-			    writer.close();
-			    
-			    Desktop.getDesktop().open(f);
+				writer.close();
+
+				Desktop.getDesktop().open(f);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

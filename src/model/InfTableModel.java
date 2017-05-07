@@ -10,10 +10,13 @@ import model.files.File;
 public class InfTableModel extends AbstractTableModel {
 
 	private Entity entity; // OVO JE FILE
+	private ArrayList<Record> currentBlock;
+
 
 	public InfTableModel(Entity entity) {
 		addTableModelListener(new InfTableModelController());
 		this.entity = entity;
+		currentBlock = new ArrayList<Record>();
 	}
 
 	public void setEntity(Entity entity) {
@@ -23,7 +26,7 @@ public class InfTableModel extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		if (entity instanceof File) {
-			return ((File) entity).getCurrentBlock().size();
+			return currentBlock.size();
 		}
 		return 0; // TODO Baza
 	}
@@ -36,7 +39,7 @@ public class InfTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (entity instanceof File) {
-			Record record = ((File) entity).getCurrentBlock().get(rowIndex);
+			Record record = currentBlock.get(rowIndex);
 			Attribute attribute = entity.getAttributes().get(columnIndex);
 			return record.getAttributes().get(attribute);
 		}
@@ -67,10 +70,15 @@ public class InfTableModel extends AbstractTableModel {
 	public void setValueAt(Object value, int row, int col) {
 		if (entity instanceof File) {
 			Attribute attr = entity.getAttributes().get(col);
-			Object obj = ((File) entity).getCurrentBlock().get(row).getAttributes().put(attr, value);
+			Object obj = currentBlock.get(row).getAttributes().put(attr, value);
 			fireTableCellUpdated(row, col);
 		}
 		return; // TODO Baza
+	}
+	
+
+	public void setCurrentBlock(ArrayList<Record> currentBlock) {
+		this.currentBlock = currentBlock;
 	}
 
 }
