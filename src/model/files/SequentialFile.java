@@ -20,6 +20,7 @@ import model.indextree.NodeElement;
 import model.indextree.InvariantViolationException;
 
 public class SequentialFile extends File {
+	private File changesFile;
 
 	public SequentialFile(String name, String path, InfResource parent) {
 		super(name, path, parent);
@@ -27,13 +28,13 @@ public class SequentialFile extends File {
 	}
 
 	@Override
-	public boolean addRecord(ArrayList<String> record) throws IOException {
-		// TODO Auto-generated method stub
+	public boolean addRecord(Record record) throws IOException {
+		
 		return false;
 	}
 
 	@Override
-	public boolean updateRecord(ArrayList<String> record) throws IOException {
+	public boolean updateRecord(Record record) throws IOException {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -98,7 +99,7 @@ public class SequentialFile extends File {
 	}
 
 	@Override
-	public boolean deleteRecord(ArrayList<String> record) {
+	public boolean deleteRecord(Record record) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -167,13 +167,13 @@ public abstract class File extends Entity {
 		}
 	}
 
-	public abstract boolean addRecord(ArrayList<String> record) throws IOException;
+	public abstract boolean addRecord(Record record) throws IOException;
 
-	public abstract boolean updateRecord(ArrayList<String> record) throws IOException;
+	public abstract boolean updateRecord(Record record) throws IOException;
 
 	public abstract List<Record> findRecord(String[] terms, boolean all);
 
-	public abstract boolean deleteRecord(ArrayList<String> record);
+	public abstract boolean deleteRecord(Record record);
 
 	public int getBlockFactor() {
 		return blockFactor;
