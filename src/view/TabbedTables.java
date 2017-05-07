@@ -68,6 +68,7 @@ public class TabbedTables extends JPanel {
 				if (entity != null && entity instanceof File) {
 					try {
 						((File) entity).fetchNextBlock();
+						((File) entity).fireUpdateBlockPerformed(); // ozvezavanje tabele
 					} catch (IOException | InvalidRecordException ex) {
 						System.out.println("Invalid blockfetch");
 						ex.printStackTrace();
@@ -87,7 +88,6 @@ public class TabbedTables extends JPanel {
 		JFormattedTextField field = (JFormattedTextField) blockFactor.getEditor().getComponent(0);
 		DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
 		formatter.setCommitsOnValidEdit(true);
-		blockFactor.setValue(0);
 		blockFactor.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {

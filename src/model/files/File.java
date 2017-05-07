@@ -165,7 +165,6 @@ public abstract class File extends Entity {
 
 		// pozicioniramo file pointer tamo gde smo stali sa citanjem
 		filePointer = (int)file.getFilePointer();
-		fireUpdateBlockPerformed(); // ozvezavanje tabele
 		return true;
 	}
 
@@ -241,7 +240,7 @@ public abstract class File extends Entity {
 		updateBlockListeners.remove(l);
 	}
 
-	protected void fireUpdateBlockPerformed() {
+	public void fireUpdateBlockPerformed() {
 		for (UpdateBlockListener listener : updateBlockListeners) {
 			listener.blockUpdated();
 		}
