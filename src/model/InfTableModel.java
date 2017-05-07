@@ -14,7 +14,7 @@ public class InfTableModel extends AbstractTableModel {
 
 
 	public InfTableModel(Entity entity) {
-		addTableModelListener(new InfTableModelController());
+		new InfTableModelController(this);
 		this.entity = entity;
 		currentBlock = new ArrayList<Record>();
 	}

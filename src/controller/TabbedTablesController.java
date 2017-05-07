@@ -93,13 +93,16 @@ public class TabbedTablesController {
 			Entity entity = tt.getSelectedEntity();
 			if (entity != null) {
 				tt.enableToolbar(entity);
-				if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
-					MainView.getInstance().getDesktopView().attachDetailsTable();
-					MainView.getInstance().getDesktopView().detachIndexTree();
-					
-				} else if (entity instanceof IndexedSequentialFile) {
+				if (entity instanceof IndexedSequentialFile) {
 					MainView.getInstance().getDesktopView().detachDetailsTable();
 					MainView.getInstance().getDesktopView().attachIndexTree(((IndexedSequentialFile)entity).getTree().getRoot());
+				}
+				else if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
+					MainView.getInstance().getDesktopView().attachDetailsTable();
+					MainView.getInstance().getDesktopView().detachIndexTree();
+				} else {
+					MainView.getInstance().getDesktopView().detachDetailsTable();
+					MainView.getInstance().getDesktopView().detachIndexTree();
 				}
 			} else {
 				tt.disableToolbar();

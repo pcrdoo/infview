@@ -61,6 +61,7 @@ public class MetaschemaDeserializer {
 			}
 
 			Relation r = new Relation(referringAttribute, referencedAttribute, source);
+			
 
 			if (relationNames.contains(r.getName())) {
 				throw new MetaschemaDeserializationException("Duplicate relation with name '" + r.getName() + "'");
@@ -68,6 +69,7 @@ public class MetaschemaDeserializer {
 
 			relationNames.add(r.getName());
 			source.addRelation(r);
+			((Entity)(referencedAttribute.getParent())).addInverseRelation(r);
 		}
 	}
 

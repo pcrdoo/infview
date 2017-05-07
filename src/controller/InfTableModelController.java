@@ -4,12 +4,21 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-public class InfTableModelController implements TableModelListener {
+import model.InfTableModel;
 
-	@Override
-	public void tableChanged(TableModelEvent e) {
-		TableModel model = (TableModel)e.getSource();
-		System.out.println("TableChanged");
+public class InfTableModelController {
+
+	public InfTableModelController(InfTableModel model) {
+		model.addTableModelListener(new TableModelChangedListener());
+	}
+	
+	private class TableModelChangedListener implements TableModelListener {
+
+		@Override
+		public void tableChanged(TableModelEvent e) {
+			TableModel model = (TableModel)e.getSource();
+			System.out.println("TableChanged");
+		}
 	}
 
 }

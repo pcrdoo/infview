@@ -13,14 +13,16 @@ import model.files.InvalidRecordException;
 public class Record implements Comparable<Record> {
 	Entity entity;
 	Map<Attribute, Object> attributes;
-	Map<Relation, Record> relations;
 
 	public Record(Entity entity) {
 		this.entity = entity;
 		attributes = new LinkedHashMap<>();
-		relations = new LinkedHashMap<>();
 	}
 
+	public Entity getEntity() {
+		return entity;
+	}
+	
 	public void addAttribute(Attribute attribute, Object value) {
 		if (!entity.getAttributes().contains(attribute))
 			return;
@@ -30,29 +32,8 @@ public class Record implements Comparable<Record> {
 		attributes.put(attribute, value);
 	}
 
-	public void addRelation(Relation relation, Record record) {
-		if (!entity.getRelations().contains(relation))
-			return;
-
-		// A relation to a given entry cannot be added unless the referenced
-		// attribute
-		// belongs to the same entity as the entry
-		if (relation.getReferencedAttribute().getParent() != record.getEntity()) {
-			return; // TODO: Exception
-		}
-		relations.put(relation, record);
-	}
-
 	public Map<Attribute, Object> getAttributes() {
 		return attributes;
-	}
-
-	public Map<Relation, Record> getRelations() {
-		return relations;
-	}
-
-	private Entity getEntity() {
-		return entity;
 	}
 
 	public boolean matches(String[] terms) {
