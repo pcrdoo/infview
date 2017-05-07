@@ -102,6 +102,5 @@ public class MainView extends JFrame {
 
 	public void doTableOpen(Entity entity) {
 		desktopView.getMainTable().addTab(entity);
-		System.out.println("otvaram " + entity.getName() + "...");
 	}
 }

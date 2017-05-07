@@ -51,12 +51,10 @@ public class Record implements Comparable<Record> {
 		}
 		
 		for(int i = 0; i < this.attributes.size(); i++) {
-			//System.out.println((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim());
 			if(terms[i].equals("")) {
 				return false;
 			}
 			try {
-				//System.out.println("SALJEM " + terms[i]);
 				Object o = File.parseStringField(terms[i], this.entity.getAttributes().get(i), String.join("", terms));
 				int result;
 				if(o instanceof Boolean) {
@@ -72,10 +70,6 @@ public class Record implements Comparable<Record> {
 				} else {
 					throw new Exception("Alo druskane pa taj tip nije podrzan.");
 				}
-//				System.out.println(i);
-//				System.out.println(this.attributes.get(this.entity.getAttributes().get(i)).getClass());
-//				System.out.println(this.attributes.get(this.entity.getAttributes().get(i)));
-//				System.out.println(terms[i]);
 				if (result == 1) {
 					return false;
 				} else if (result == -1) {
@@ -85,12 +79,6 @@ public class Record implements Comparable<Record> {
 				System.out.println(e);
 				e.printStackTrace();
 			}
-//			else if(terms[i].compareToIgnoreCase((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim()) == 1) {
-//				return false;
-//			} else if(terms[i].compareToIgnoreCase((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim()) == -1) {
-//				System.out.println("STAO");
-//				return true;
-//			}
 		}
 		return false;
 	}

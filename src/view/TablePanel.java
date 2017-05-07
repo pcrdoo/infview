@@ -39,7 +39,6 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		System.out.println("Kreiran tablepanel");
 		if (entity instanceof File) {
 			File f = (File) entity;
 			if (autoRefresh) {

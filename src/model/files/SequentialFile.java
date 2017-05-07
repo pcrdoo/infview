@@ -84,7 +84,6 @@ public class SequentialFile extends File {
 					}
 				}
 				currentBlock = fetchNextBlock();
-				//System.out.println(this.filePointer);
 			}
 		} catch (Exception e) {
 			e.printStackTrace(); // lol
@@ -93,15 +92,25 @@ public class SequentialFile extends File {
 	}
 	
 	public ArrayList<Record> findRecord(String[] terms, boolean all, boolean toFile, boolean fromStart) {
-		System.out.println("Pocinjem da trazim gari...");
 		if (fromStart)
 			this.filePointer = 0;
 
-		ArrayList<Record> result = this.findRecord(terms, all);
+		ArrayList<Record> result;
+		
+		// any non empty?
+		boolean allEmpty = true;
+		for(String term: terms) {
+			allEmpty &= term.isEmpty();
+		}
+		
+		if(allEmpty) {
+			result = new ArrayList<Record>();
+		} else {
+			result = this.findRecord(terms, all); 
+		}
 
 		if (!toFile) {
 			ArrayList<Record> currentBlock = (ArrayList<Record>) result;
-			System.out.println("Naso sam " + currentBlock.size() + " gari...");
 		} else {
 			try {
 				java.io.File f = new java.io.File("search-results.txt");

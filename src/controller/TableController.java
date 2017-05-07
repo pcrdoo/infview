@@ -28,7 +28,6 @@ public class TableController {
 			if(table.getSelectedRow() != -1) {
 				record = MainView.getInstance().getDesktopView().getMainTable().getSelectedRow();
 			}
-			System.out.println("VALUECHANGEGEG" + e);
 			MainView.getInstance().getDesktopView().getDetailsTable().populateWithChildren(record);
 		}
 		

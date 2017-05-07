@@ -76,7 +76,6 @@ public abstract class File extends Entity {
 			String field = line.substring(linePosition, linePosition + attr.getLength());
 			linePosition += attr.getLength();
 			try {
-				//System.out.println("PARSE: " + field + " " + attr);
 				Object obj = parseStringField(field, attr, line);
 				record.addAttribute(attr, obj);
 			} catch (InvalidRecordException e) {
@@ -112,7 +111,6 @@ public abstract class File extends Entity {
 		for (int i = 0; i < recordsToRead; i++) {
 			// svaki slog predstavlja jednu liniju teksta
 			String line = contents.substring(i * recordSize, (i + 1) * recordSize);
-			//System.out.println("LINE: " + line);
 			currentBlock.add(parseRecordLine(line));
 		}
 
@@ -169,7 +167,6 @@ public abstract class File extends Entity {
 				throw new InvalidRecordException("Integer", field, lineForReference);
 			}
 		} else {
-			System.out.println(cls + "!!");
 			return null;
 		}
 	}

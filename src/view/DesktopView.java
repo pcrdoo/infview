@@ -36,16 +36,13 @@ public class DesktopView extends JPanel {
 	}
 	
 	public void attachDetailsTable() {
-		System.out.println(this.getComponentCount());
 		this.add(detailsTable, "grow");
 		this.repaint();
 	}
 	
 	public void detachDetailsTable() {
 		for(Component c : this.getComponents()) {
-			System.out.println("Finding");
 			if(c == detailsTable) {
-				System.out.println("Found");
 				this.remove(c);
 				this.repaint();
 			}
@@ -59,11 +56,9 @@ public class DesktopView extends JPanel {
 	}
 	
 	public void detachIndexTree() {
-		System.out.println("Seeking");
 		for(Component c : this.getComponents()) {
 			if(c instanceof IndexTreeView) {
 				this.remove(c);
-				System.out.println("Destroying");
 				this.repaint();
 			}
 		}		

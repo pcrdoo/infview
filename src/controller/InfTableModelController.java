@@ -17,7 +17,6 @@ public class InfTableModelController {
 		@Override
 		public void tableChanged(TableModelEvent e) {
 			TableModel model = (TableModel)e.getSource();
-			System.out.println("TableChanged");
 		}
 	}
 

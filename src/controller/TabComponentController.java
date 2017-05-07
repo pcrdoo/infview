@@ -28,7 +28,6 @@ public class TabComponentController {
 				if(c instanceof TablePanel) {
 					TablePanel panel = (TablePanel)c;
 					if(panel.getEntity().equals(entity)) {
-						System.out.println(entity);
 						tabs.remove(c);
 						return;
 					}

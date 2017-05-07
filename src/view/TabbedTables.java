@@ -249,25 +249,14 @@ public class TabbedTables extends JPanel {
 				}
 			}
 
-			/*
-			 * System.out.println(referringEntity + " " +
-			 * r.getReferringAttribute()); System.out.println(referencedEntity +
-			 * " " + r.getReferencedAttribute()); for(String term : terms) {
-			 * System.out.println("\"" + term + "\""); }
-			 * System.out.println(referencedValueStr);
-			 */
-
 			// VRATI POINTER
 			int filePointer = referringEntity.getFilePointer();
 			ArrayList<Record> results = referringEntity.findRecord(terms, true, false, true);
 			referringEntity.setFilePointer(filePointer);
-			System.out.println(results.size());
 
 			// dodaj tabelu
 			TablePanel panel = addTab(referringEntity);
-			if (panel == null) {
-				System.out.println("Panel je null!");
-			} else {
+			if (panel != null) {
 				panel.getTableModel().setCurrentBlock(results);
 			}
 

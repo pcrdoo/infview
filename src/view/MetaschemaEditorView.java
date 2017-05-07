@@ -64,8 +64,6 @@ public class MetaschemaEditorView extends JDialog {
 			}
 		    protocol = url.getProtocol();
 		}
-		System.out.println("Lokacija:"+url.toString());
-		System.out.println("PRoto:"+protocol);
 		return url.toString();
 	}
 	

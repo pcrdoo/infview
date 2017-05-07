@@ -22,7 +22,6 @@ public class InfTreeCellRenderer extends DefaultTreeCellRenderer {
 
 		InfResource resource = ((InfNode) value).getResource();
 
-		System.out.println("RENDER " + resource.getName());
 
 		if (resource instanceof Warehouse) {
 			iconPath = "/res/warehouse.png";
