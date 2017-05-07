@@ -22,6 +22,27 @@ import model.VarCharType;
 public abstract class File extends Entity {
 	private ArrayList<UpdateBlockListener> updateBlockListeners;
 	
+	// Velicina bloka u slogovima, menja korisnik.
+	protected int blockFactor = 20;
+	
+	// Velicina sloga u bajtovima, setuje se kad se dodaje atribut, \r\n ruzan hak
+	protected int recordSize = 2; 
+
+	// Broj slogova u datoteci
+	protected int numRecords = 0;
+	
+	// Broj blokova u datoteci, prikazati u view!
+	protected int numBlocks = 0; 
+	
+	// Pokazivac dokle smo stigli
+	protected int filePointer = 0; 
+
+	// Full path do entiteta, constructor TODO
+	protected String path; 
+	
+	 // Trenutno ucitan blok
+	protected ArrayList<Record> currentBlock;
+	
 	public File(String name, String path, InfResource parent) {
 		super(name, parent);
 		// TODO Auto-generated constructor stub
@@ -45,7 +66,7 @@ public abstract class File extends Entity {
 		int recordsLeft = numRecords - filePointer / recordSize;
 		int recordsToRead = Math.min(blockFactor, recordsLeft);
 		int bufferSize = recordsToRead * recordSize;
-		buffer = new byte[bufferSize];
+		byte[] buffer = new byte[bufferSize];
 		file.seek(filePointer);
 		file.read(buffer);
 		String contents = new String(buffer);
@@ -133,23 +154,6 @@ public abstract class File extends Entity {
 	public abstract List<Record> findRecord(String[] terms, boolean all);
 
 	public abstract boolean deleteRecord(ArrayList<String> record);
-
-	protected int blockFactor = 20; // velicina bloka u slogovima, menja
-									// korisnik, default 20
-	protected int recordSize = 2; // velicina sloga u bajtovima, setuje se kad
-									// se dodaje atribut, \r\n ruzan hak
-	// BUFFER SIZE = BLOCK_FACTOR * RECORD_SIZE
-	// protected int FILE_SIZE = 0; // velicina datoteke u bajtovima
-	protected int numRecords = 0; // broj slogova u datoteci
-	protected int numBlocks = 0; // broj blokova u datoteci, prikazati u view!
-	protected int filePointer = 0; // pokazivac dokle smo stigli
-
-	protected String path; // full path do entiteta, constructor TODO
-	// protected boolean directory;
-
-	protected byte[] buffer;
-
-	protected ArrayList<Record> currentBlock; // trenutno ucitan blok
 	
 	public int getFileSize() {
 		return this.numRecords * this.recordSize;
