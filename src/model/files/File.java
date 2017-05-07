@@ -77,7 +77,7 @@ public abstract class File extends Entity {
 			linePosition += attr.getLength();
 			try {
 				//System.out.println("PARSE: " + field + " " + attr);
-				Object obj = parseStringField(field, attr);
+				Object obj = parseStringField(field, attr, line);
 				record.addAttribute(attr, obj);
 			} catch (InvalidRecordException e) {
 				closeFile();
@@ -122,7 +122,7 @@ public abstract class File extends Entity {
 		return currentBlock;
 	}
 
-	public static Object parseStringField(String field, Attribute attr) throws InvalidRecordException {
+	public static Object parseStringField(String field, Attribute attr, String lineForReference) throws InvalidRecordException {
 		Class<?> cls = attr.getValueClass();
 		field = field.trim();
 		
@@ -132,7 +132,7 @@ public abstract class File extends Entity {
 				str.set(field);
 				return str;
 			} catch (InvalidLengthException e) {
-				throw new InvalidRecordException("CharType", field);
+				throw new InvalidRecordException("CharType", field, lineForReference);
 			}
 		} else if (cls == VarCharType.class) {
 			VarCharType str = new VarCharType(field.length());
@@ -140,14 +140,14 @@ public abstract class File extends Entity {
 				str.set(field);
 				return str;
 			} catch (InvalidLengthException e) {
-				throw new InvalidRecordException("VarCharType", field);
+				throw new InvalidRecordException("VarCharType", field, lineForReference);
 			}
 		} else if (cls == DateType.class) {
 			try {
 				DateType date = new DateType(field);
 				return date;
 			} catch (ParseException e) {
-				throw new InvalidRecordException("Date", field);
+				throw new InvalidRecordException("Date", field, lineForReference);
 			}
 		} else if (cls == Boolean.class) {
 			if (field.equals("true")) {
@@ -155,7 +155,7 @@ public abstract class File extends Entity {
 			} else if (field.equals("false")) {
 				return false;
 			} else {
-				throw new InvalidRecordException("Boolean", field);
+				throw new InvalidRecordException("Boolean", field, lineForReference);
 			}
 		} else if (cls == Integer.class) {
 			try {
@@ -166,7 +166,7 @@ public abstract class File extends Entity {
 				Integer num = Integer.parseInt(field);
 				return num;
 			} catch (NumberFormatException e) {
-				throw new InvalidRecordException("Integer", field);
+				throw new InvalidRecordException("Integer", field, lineForReference);
 			}
 		} else {
 			System.out.println(cls + "!!");

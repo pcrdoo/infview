@@ -136,7 +136,7 @@ public class SequentialFile extends File {
 			case 'A': changeType = ChangeType.ADD; break;
 			case 'U': changeType = ChangeType.UPDATE; break;
 			case 'D': changeType = ChangeType.DELETE; break;
-			default: throw new InvalidRecordException("changeType", String.valueOf(changeTypeChar));
+			default: throw new InvalidRecordException("changeType", String.valueOf(changeTypeChar), line);
 			}
 			
 			changes.put(r, changeType); // Overwrites the previous change
@@ -148,14 +148,24 @@ public class SequentialFile extends File {
 	
 	private ArrayList<Record> readRecordsWithChanges(TreeMap<Record, ChangeType> changes) throws IOException, InvalidRecordException, DuplicateKeyException {
 		// Brace yourselves
+		FileOutputStream errorsFile = null;
+		PrintWriter errorsWriter = null;
+		
 		ArrayList<Record> allRecords = new ArrayList<>();
 		ArrayList<Record> currentBlock;
 		while ((currentBlock = fetchNextBlock()) != null) {
 			for (Record r : currentBlock) {
 				Entry<Record, ChangeType> entry = changes.ceilingEntry(r);
-				if (entry.getKey().compareTo(r) == 0) { // We have it
+
+				if (entry != null && entry.getKey().compareTo(r) == 0) { // We have it
 					switch (entry.getValue()) {
-					case ADD: throw new DuplicateKeyException("Record " + entry.getKey().toString() + " is being added, but has the same primary key as " + r.toString());
+					case ADD: 
+						if (errorsFile == null) {
+							errorsFile = new FileOutputStream(path.replace(".stxt", ".reject"));
+							errorsWriter = new PrintWriter(errorsFile);
+						}
+						errorsWriter.print(entry.getKey().toString() + "\r\n");
+						
 					case UPDATE: allRecords.add(entry.getKey()); break;
 					case DELETE: // Do nothing
 					}
@@ -163,6 +173,11 @@ public class SequentialFile extends File {
 					allRecords.add(r);
 				}
 			}
+		}
+		
+		if (errorsFile != null) {
+			errorsWriter.close();
+			errorsFile.close();
 		}
 
 		// Add the additional records
@@ -179,7 +194,7 @@ public class SequentialFile extends File {
 	private void writeToFile(FileOutputStream stream, ArrayList<Record> records) {
 		PrintWriter pw = new PrintWriter(stream);
 		for (Record r : records) {
-			pw.println(r.toString());
+			pw.print(r.toString() + "\r\n");
 		}
 		
 		pw.close();
@@ -200,6 +215,11 @@ public class SequentialFile extends File {
 		FileOutputStream stream = new FileOutputStream(path);
 		writeToFile(stream, allRecords);
 		stream.close();
+		truncateChangesFile();
+	}
+	
+	public void truncateChangesFile() {
+		new java.io.File(getChangesFilePath()).delete();
 	}
 	
 	@Override

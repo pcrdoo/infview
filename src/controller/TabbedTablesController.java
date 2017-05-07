@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -193,7 +194,18 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Entity entity = tt.getSelectedEntity();
 			
+			if (!(entity instanceof SequentialFile)) {
+				JOptionPane.showMessageDialog(tt, "Ne mogu ermergerdujem zajebane formate");
+				return;
+			}
+			
+			try {
+				((SequentialFile)entity).merge();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 }

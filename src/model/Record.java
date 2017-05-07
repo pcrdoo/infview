@@ -57,7 +57,7 @@ public class Record implements Comparable<Record> {
 			}
 			try {
 				//System.out.println("SALJEM " + terms[i]);
-				Object o = File.parseStringField(terms[i], this.entity.getAttributes().get(i));
+				Object o = File.parseStringField(terms[i], this.entity.getAttributes().get(i), String.join("", terms));
 				int result;
 				if(o instanceof Boolean) {
 					result = ((Boolean)o).compareTo((Boolean)this.attributes.get(this.entity.getAttributes().get(i)));
@@ -112,7 +112,7 @@ public class Record implements Comparable<Record> {
 	public static Record fromTerms(String[] terms, Entity entity) throws InvalidRecordException {
 		Record r = new Record(entity);
 		for (int i = 0; i < entity.getAttributes().size(); i++) {
-			Object o = File.parseStringField(terms[i], entity.getAttributes().get(i));
+			Object o = File.parseStringField(terms[i], entity.getAttributes().get(i), String.join("", terms));
 			r.attributes.put(entity.getAttributes().get(i), o);
 		}
 		return r;
