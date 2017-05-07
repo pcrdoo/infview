@@ -1,18 +1,33 @@
-/***********************************************************************
- * Module:  MenuBarController.java
- * Author:  Ognjen
- * Purpose: Defines the Class MenuBarController
- ***********************************************************************/
 
 package controller;
 
+import view.AboutDialog;
+import view.GenericDialog;
 import view.MenuBarView;
 
-/** @pdOid 92780ef9-7667-46ba-9399-9b4e218bfe4f */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.*;
+
+import model.Entity;
+import model.Record;
+import model.files.SequentialFile;
+
 public class MenuBarController {
-	/**
-	 * @pdRoleInfo migr=no name=MenuBarView assc=association2 mult=1..1 side=A
-	 */
 	public MenuBarView menuBarView;
 
+	public MenuBarController(MenuBarView menuBarView) {
+		this.menuBarView = menuBarView;
+		this.menuBarView.addAboutListener(new AboutListener());
+		// TODO Auto-generated constructor stub
+	}
+
+	private class AboutListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new AboutDialog(null).show();
+		}
+	}
 }

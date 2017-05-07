@@ -68,6 +68,10 @@ public class MainView extends JFrame {
 				});
 			}
 		});
+
+		this.menuBarView = new MenuBarView();
+		this.setJMenuBar(menuBarView);
+
 		this.toolBarView = toolBarController.getView();
 		toolBarView.setFloatable(false);
 

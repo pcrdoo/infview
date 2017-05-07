@@ -1,38 +1,31 @@
-/***********************************************************************
- * Module:  MenuBarView.java
- * Author:  Random
- * Purpose: Defines the Class MenuBarView
- ***********************************************************************/
 
 package view;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-
+import javax.swing.JMenuItem;
 import controller.MenuBarController;
 
-/** @pdOid 760c8f7d-95c9-4dfe-81c0-a68e0cd100e3 */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
+
 public class MenuBarView extends JMenuBar {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 693610068465623592L;
-	/**
-	 * @pdRoleInfo migr=no name=MenuBarController assc=association2 mult=1..1
-	 *             type=Composition
-	 */
+
 	private MenuBarController menuBarController;
+	private JMenu about;
+	private JMenuItem aboutItem;
 
 	public MenuBarView() {
-		this.add(new JMenu("About"));
+		about = new JMenu("About");
+		aboutItem = new JMenuItem("About Us");
+		about.add(aboutItem);
+
+		this.menuBarController = new MenuBarController(this);
+		this.add(about);
 	}
 
-	public MenuBarController getMenuBarController() {
-		return menuBarController;
+	public void addAboutListener(ActionListener l) {
+		this.aboutItem.addActionListener(l);
 	}
-
-	public void setMenuBarController(MenuBarController menuBarController) {
-		this.menuBarController = menuBarController;
-	}
-
 }
