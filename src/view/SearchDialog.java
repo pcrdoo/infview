@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.GenericDialogController;
 import model.Attribute;
 import model.Entity;
 import model.Record;
@@ -29,8 +30,16 @@ public class SearchDialog extends JDialog {
 	JCheckBox toFile;
 	JCheckBox fromStart;
 	ArrayList<JTextField> attributes;
+	GenericDialogController controller;
+	JButton ok;
+	Entity entity;
+	Record record;
 	
 	public SearchDialog(Entity entity, Record record) {
+		this.entity = entity;
+		this.record = record;
+		this.ok = new JButton("Search");
+		this.controller = new GenericDialogController(this);
 		findAll = new JCheckBox("Find all occurrences");
 		toFile = new JCheckBox("Write to file");
 		fromStart = new JCheckBox("Search from start");
@@ -63,15 +72,6 @@ public class SearchDialog extends JDialog {
 			panel.add(newAttribure);
 		}
 		
-		JButton ok = new JButton("Search");
-		ok.addActionListener(new ActionListener() { //TODO prebaciti u kontroler
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				((SequentialFile)entity).findRecord(getTerms(), getFindAll(), getToFile(), getFromStart());
-			}
-		});
 		panel.add(ok);
 		
 		this.add(panel);
@@ -87,6 +87,10 @@ public class SearchDialog extends JDialog {
 		return terms;
 	}
 	
+	public Record getRecord() {
+		return Record.fromTerms(getTerms(), entity);
+	}
+	
 	public boolean getFindAll() {
 		return findAll.isSelected();
 	}
@@ -97,5 +101,9 @@ public class SearchDialog extends JDialog {
 	
 	public boolean getFromStart() {
 		return fromStart.isSelected();
+	}
+
+	public void setOKListener(ActionListener l) {
+		this.ok.addActionListener(l);
 	}
 }

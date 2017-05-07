@@ -69,17 +69,16 @@ public class SequentialFile extends File {
 		return result;
 	}
 	
-	public List<Record> findRecord(String[] terms, boolean all, boolean toFile, boolean fromStart) {
+	public ArrayList<Record> findRecord(String[] terms, boolean all, boolean toFile, boolean fromStart) {
 		System.out.println("Pocinjem da trazim gari...");
 		if (fromStart)
 			this.filePointer = 0;
 
-		List<Record> result = this.findRecord(terms, all);
+		ArrayList<Record> result = (ArrayList<Record>) this.findRecord(terms, all);
 
 		if (!toFile) {
 			ArrayList<Record> currentBlock = (ArrayList<Record>) result;
 			System.out.println("Naso sam " + currentBlock.size() + " gari...");
-			fireUpdateBlockPerformed(currentBlock); // ozvezavanje tabele
 		} else {
 			try {
 				java.io.File f = new java.io.File("search-results.txt");

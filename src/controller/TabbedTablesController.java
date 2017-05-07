@@ -50,9 +50,15 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), null);
-			searchDialog.setModal(true);
-			searchDialog.setVisible(true); // block!
+			SearchDialog d = new SearchDialog(tt.getSelectedEntity(), null);
+			d.setModal(true);
+			d.setVisible(true); // block!
+			
+			if (tt.getSelectedEntity() instanceof SequentialFile) {
+				SequentialFile file = (SequentialFile) tt.getSelectedEntity();
+				file.fireUpdateBlockPerformed(file.findRecord(d.getTerms(), d.getFindAll(), d.getToFile(), d.getFromStart())); // ozvezavanje tabele
+			}
+			
 			if (tt.getSelectedEntity() instanceof File) {
 				File file = (File) tt.getSelectedEntity();
 				tt.getBlocksFetched().setText(String.valueOf(file.getBlocksFetched()));
