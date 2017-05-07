@@ -67,7 +67,7 @@ public abstract class File extends Entity {
 
 		file = null;
 	}
-	
+
 	protected Record parseRecordLine(String line) throws InvalidRecordException {
 		Record record = new Record(this);
 
@@ -83,7 +83,7 @@ public abstract class File extends Entity {
 				throw e;
 			}
 		}
-		
+
 		return record;
 	}
 
@@ -120,10 +120,11 @@ public abstract class File extends Entity {
 		return currentBlock;
 	}
 
-	public static Object parseStringField(String field, Attribute attr, String lineForReference) throws InvalidRecordException {
+	public static Object parseStringField(String field, Attribute attr, String lineForReference)
+			throws InvalidRecordException {
 		Class<?> cls = attr.getValueClass();
 		field = field.trim();
-		
+
 		if (cls == CharType.class) {
 			CharType str = new CharType(field.length());
 			try {
@@ -157,7 +158,8 @@ public abstract class File extends Entity {
 			}
 		} else if (cls == Integer.class) {
 			try {
-				if (attr.getName().equals("GodinaStudija") && (field.equals("") || field.equals("a") || field.equals("A"))) {
+				if (attr.getName().equals("GodinaStudija")
+						&& (field.equals("") || field.equals("a") || field.equals("A"))) {
 					field = "1";
 					// ISPRAVKA GRESKE U VELIKOM SETU PODATAKA
 				}
@@ -217,7 +219,7 @@ public abstract class File extends Entity {
 			attributes.clear();
 		}
 	}
-	
+
 	public int getFilePointer() {
 		return filePointer;
 	}
@@ -225,7 +227,6 @@ public abstract class File extends Entity {
 	public void setFilePointer(int filePointer) {
 		this.filePointer = filePointer;
 	}
-
 
 	/*
 	 * // lista sluÅ¡aÄ�a koja se koristi da se osveÅ¾i prikaz tabele u klasi

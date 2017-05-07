@@ -71,10 +71,10 @@ public class IndexTreeNode implements TreeNode {
 	}
 
 	@Override
-	public Enumeration children() {
+	public Enumeration<?> children() {
 		return null; // TODO
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -95,7 +95,7 @@ public class IndexTreeNode implements TreeNode {
 			}
 		}
 		sb.append("]");
-		
+
 		return sb.toString();
 	}
 }

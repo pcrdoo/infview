@@ -14,6 +14,11 @@ import model.Warehouse;
 
 public class InfTreeCellRenderer extends DefaultTreeCellRenderer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5787950024769204130L;
+
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf,
 			int row, boolean arg6) {
@@ -21,7 +26,6 @@ public class InfTreeCellRenderer extends DefaultTreeCellRenderer {
 		String iconPath;
 
 		InfResource resource = ((InfNode) value).getResource();
-
 
 		if (resource instanceof Warehouse) {
 			iconPath = "/res/warehouse.png";

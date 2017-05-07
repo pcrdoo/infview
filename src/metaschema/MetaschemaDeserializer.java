@@ -207,7 +207,6 @@ public class MetaschemaDeserializer {
 		deserializeToInfResource(o, destination);
 		destination.setDescription(o.get("description").getAsString());
 		destination.setLocation(o.get("location").getAsString());
-		JsonArray packagesJson = o.getAsJsonArray("packages");
 
 		HashMap<String, Package> packages = new HashMap<>();
 		Package root = deserializePackage(o, packages, destination, destination.getLocation());

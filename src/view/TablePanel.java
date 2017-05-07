@@ -21,6 +21,10 @@ import net.miginfocom.swing.MigLayout;
 
 public class TablePanel extends JPanel implements UpdateBlockListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8033998611208949143L;
 	// private BottomPanelController bottomPanelController;
 	private JTable table;
 	private InfTableModel tableModel;
@@ -37,7 +41,7 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
+
 		if (entity instanceof File) {
 			File f = (File) entity;
 			if (autoRefresh) {

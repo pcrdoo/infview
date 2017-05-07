@@ -11,7 +11,7 @@ import model.Entity;
 import view.TablePanel;
 
 public class TabComponentController {
-	
+
 	private JTabbedPane tabs;
 	private Entity entity;
 
@@ -20,20 +20,20 @@ public class TabComponentController {
 		this.entity = entity;
 		button.addActionListener(new TabCloseActionListener());
 	}
-	
+
 	public class TabCloseActionListener implements ActionListener {
 
-	    public void actionPerformed(ActionEvent evt) {
-	    	for(Component c : tabs.getComponents()) {
-				if(c instanceof TablePanel) {
-					TablePanel panel = (TablePanel)c;
-					if(panel.getEntity().equals(entity)) {
+		public void actionPerformed(ActionEvent evt) {
+			for (Component c : tabs.getComponents()) {
+				if (c instanceof TablePanel) {
+					TablePanel panel = (TablePanel) c;
+					if (panel.getEntity().equals(entity)) {
 						tabs.remove(c);
 						return;
 					}
 				}
 			}
-	    }
+		}
 
-	} 
+	}
 }

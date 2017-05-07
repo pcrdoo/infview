@@ -41,20 +41,21 @@ public class Warehouse extends InfResource {
 
 	/**
 	 * @param metaschemaPath
-	 * @throws MetaschemaDeserializationException 
-	 * @throws MetaschemaValidationException 
-	 * @throws IOException 
+	 * @throws MetaschemaDeserializationException
+	 * @throws MetaschemaValidationException
+	 * @throws IOException
 	 * @pdOid fb51985c-d298-469f-8ca9-5c97fb0b9d07
 	 */
-	public void loadWarehouse(String metaschemaString) throws MetaschemaDeserializationException, IOException, MetaschemaValidationException {
+	public void loadWarehouse(String metaschemaString)
+			throws MetaschemaDeserializationException, IOException, MetaschemaValidationException {
 		this.metaschemaString = metaschemaString;
-		
+
 		MetaschemaDeserializer d = new MetaschemaDeserializer();
 		MetaschemaValidator v = new MetaschemaValidator();
 		v.validate(metaschemaString);
 		d.deserialize(metaschemaString, this);
 	}
-	
+
 	public String getMetaschemaString() {
 		return this.metaschemaString;
 	}
@@ -87,12 +88,8 @@ public class Warehouse extends InfResource {
 		String packageStr = String.join("\n", packagesString);
 
 		return indentStringRepresentation(String.format(
-				"Warehouse \"%s\" {\n" +
-				"    description = \"%s\"\n" +
-				"    packages = [\n" +
-				"%s\n" +
-				"    ]\n" +
-				"}", name, description, packageStr), indentSpaces);
+				"Warehouse \"%s\" {\n" + "    description = \"%s\"\n" + "    packages = [\n" + "%s\n" + "    ]\n" + "}",
+				name, description, packageStr), indentSpaces);
 	}
 
 	public void setDescription(String description) {

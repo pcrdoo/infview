@@ -51,7 +51,7 @@ public class Main {
 				break;
 			}
 		}
-		
+
 		String line = "";
 		String cvsSplitBy = ",";
 		try (BufferedReader br = new BufferedReader(new FileReader(bla[0]))) {
@@ -64,18 +64,21 @@ public class Main {
 					for (Attribute a : entity.getAttributes()) {
 						if (a.getName().equals(names[i])) {
 							Object val = null;
-							Class c = a.getValueClass();
-							if (c == Integer.class) val = Integer.parseInt(fields[i]);
-							if (c == String.class) val = fields[i];
-							if (c == Boolean.class) val = fields[i].equals("true");
+							Class<?> c = a.getValueClass();
+							if (c == Integer.class)
+								val = Integer.parseInt(fields[i]);
+							if (c == String.class)
+								val = fields[i];
+							if (c == Boolean.class)
+								val = fields[i].equals("true");
 
 							en.addAttribute(a, val);
 						}
 					}
 				}
-				
+
 				// TODO
-				//entity.addEntry(en);
+				// entity.addEntry(en);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

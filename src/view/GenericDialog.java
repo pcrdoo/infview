@@ -20,6 +20,10 @@ import model.Record;
 import model.files.InvalidRecordException;
 
 public class GenericDialog extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6223361025890446349L;
 	// Ogi todo
 	int atrCount;
 	JCheckBox findAll;
@@ -32,8 +36,9 @@ public class GenericDialog extends JDialog {
 	Record record;
 	boolean doShit = false;
 	boolean isSearchNotSave;
-	
-	public GenericDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey, boolean isSearchNotSave) {
+
+	public GenericDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey,
+			boolean isSearchNotSave) {
 		this.entity = entity;
 		this.record = record;
 		this.isSearchNotSave = isSearchNotSave;
@@ -42,19 +47,19 @@ public class GenericDialog extends JDialog {
 		findAll = new JCheckBox("Find all occurrences");
 		toFile = new JCheckBox("Write to file");
 		fromStart = new JCheckBox("Search from start");
-		
+
 		atrCount = entity.getAttributes().size();
 		int num = (atrCount + 4);
-		
-		if(!allowCheckBoxes)
+
+		if (!allowCheckBoxes)
 			num -= 3;
-		
+
 		this.setSize(num * 30, num * 30);
 		this.setLocationRelativeTo(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(num, 2));
-		
+
 		if (allowCheckBoxes) {
 			panel.add(findAll);
 			panel.add(new JLabel());
@@ -63,18 +68,18 @@ public class GenericDialog extends JDialog {
 			panel.add(fromStart);
 			panel.add(new JLabel());
 		}
-		
+
 		this.attributes = new ArrayList<>();
-		
+
 		for (Attribute a : entity.getAttributes()) {
 			panel.add(new JLabel(a.getName()));
-			
+
 			JTextField newAttribure = new JTextField();
 			if (record != null) {
 				newAttribure.setText(record.getAttributes().get(a).toString());
 			}
-			
-			if(a.isPrimaryKey()) {
+
+			if (a.isPrimaryKey()) {
 				newAttribure.setBackground(Color.GRAY);
 				if (!allowPrimaryKey) {
 					newAttribure.setEditable(false);
@@ -83,19 +88,19 @@ public class GenericDialog extends JDialog {
 			this.attributes.add(newAttribure);
 			panel.add(newAttribure);
 		}
-		
+
 		panel.add(ok);
-		
+
 		this.add(panel);
 	}
-	
+
 	public String[] getTerms() {
 		String[] terms = new String[atrCount];
-		
-		for(int i = 0; i < atrCount; i++) {
+
+		for (int i = 0; i < atrCount; i++) {
 			terms[i] = attributes.get(i).getText();
 		}
-		
+
 		return terms;
 	}
 
@@ -108,7 +113,7 @@ public class GenericDialog extends JDialog {
 			return false;
 		}
 	}
-	
+
 	public Record getRecord() {
 		try {
 			return Record.fromTerms(getTerms(), entity);
@@ -116,7 +121,7 @@ public class GenericDialog extends JDialog {
 			return null;
 		}
 	}
-	
+
 	public boolean getFindAll() {
 		return findAll.isSelected();
 	}
@@ -124,7 +129,7 @@ public class GenericDialog extends JDialog {
 	public boolean getToFile() {
 		return toFile.isSelected();
 	}
-	
+
 	public boolean getFromStart() {
 		return fromStart.isSelected();
 	}
@@ -132,7 +137,7 @@ public class GenericDialog extends JDialog {
 	public void setOKListener(ActionListener l) {
 		this.ok.addActionListener(l);
 	}
-	
+
 	public boolean isDoShit() {
 		return doShit;
 	}

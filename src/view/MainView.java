@@ -19,6 +19,10 @@ import view.tree.TreeView;
 
 public class MainView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8284254239116576700L;
 	private static MainView instance;
 	private TreeView treeView;
 
@@ -43,7 +47,8 @@ public class MainView extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setLayout(new MigLayout("fill", "0[180, grow 30]5[700, grow 70]0", "0[grow 10]0[grow 90]0"));
 		// Adds the menu bar.
-		this.setJMenuBar(new MenuBarView());
+		menuBarView = new MenuBarView();
+		this.setJMenuBar(menuBarView);
 		// this.setJMenuBar(menuBarView);
 
 		// Adds the tool bar.
@@ -78,7 +83,7 @@ public class MainView extends JFrame {
 		this.add(this.desktopView, "grow");
 
 		// Attaches the listeners.
-		this.controller = new MainController(this);
+		this.setController(new MainController());
 	}
 
 	private void setLookAndFeel() {
@@ -96,11 +101,20 @@ public class MainView extends JFrame {
 			// another look and feel.
 		}
 	}
+
 	public DesktopView getDesktopView() {
 		return desktopView;
 	}
 
 	public void doTableOpen(Entity entity) {
 		desktopView.getMainTable().addTab(entity);
+	}
+
+	public MainController getController() {
+		return controller;
+	}
+
+	public void setController(MainController controller) {
+		this.controller = controller;
 	}
 }

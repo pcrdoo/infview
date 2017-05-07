@@ -21,7 +21,7 @@ public class MetaschemaEditorController {
 	 */
 	public MetaschemaEditorView metaschemaEditorView;
 	public ArrayList<ActionListener> newMetaschemaListeners = new ArrayList<>();
-	
+
 	public MetaschemaEditorController() {
 		this.metaschemaEditorView = new MetaschemaEditorView(this, Warehouse.getInstance().getMetaschemaString());
 
@@ -41,15 +41,15 @@ public class MetaschemaEditorController {
 			}
 		});
 	}
-	
+
 	public void addNewMetaschemaListener(ActionListener l) {
 		newMetaschemaListeners.add(l);
 	}
-	
+
 	public void show() {
 		metaschemaEditorView.setVisible(true);
 	}
-	
+
 	public void hide() {
 		metaschemaEditorView.setVisible(false);
 	}

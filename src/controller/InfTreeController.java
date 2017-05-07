@@ -27,7 +27,7 @@ public class InfTreeController {
 				InfNode node = (InfNode) view.getLastSelectedPathComponent();
 				if (node != null) {
 					InfResource resource = node.getResource();
-	
+
 					if (resource instanceof Entity) {
 						MainView.getInstance().doTableOpen((Entity) resource);
 					}

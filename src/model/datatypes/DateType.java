@@ -6,18 +6,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateType implements Comparable<DateType>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3953937202943169616L;
 	private Date date;
 	private SimpleDateFormat sdf;
 
 	public DateType() {
 		sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	}
-	
+
 	public DateType(Date date) {
 		this();
 		this.date = date;
 	}
-	
+
 	public DateType(String dateString) throws ParseException {
 		this();
 		this.date = sdf.parse(dateString);

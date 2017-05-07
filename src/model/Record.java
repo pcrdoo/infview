@@ -21,7 +21,7 @@ public class Record implements Comparable<Record> {
 	public Entity getEntity() {
 		return entity;
 	}
-	
+
 	public void addAttribute(Attribute attribute, Object value) {
 		if (!entity.getAttributes().contains(attribute))
 			return;
@@ -37,35 +37,39 @@ public class Record implements Comparable<Record> {
 
 	public boolean matches(String[] terms) {
 		boolean result = true;
-		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
-			result &= terms[i].equals("") || terms[i].equals((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim());
+		for (int i = 0; i < this.entity.getAttributes().size(); i++) {
+			result &= terms[i].equals("")
+					|| terms[i].equals((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim());
 		}
 		return result;
 	}
 
 	public boolean greaterThan(String[] terms) {
-		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
-			if(!this.entity.getAttributes().get(i).isPrimaryKey() && !terms[i].equals(""))
+		for (int i = 0; i < this.entity.getAttributes().size(); i++) {
+			if (!this.entity.getAttributes().get(i).isPrimaryKey() && !terms[i].equals(""))
 				return false;
 		}
-		
-		for(int i = 0; i < this.attributes.size(); i++) {
-			if(terms[i].equals("")) {
+
+		for (int i = 0; i < this.attributes.size(); i++) {
+			if (terms[i].equals("")) {
 				return false;
 			}
 			try {
 				Object o = File.parseStringField(terms[i], this.entity.getAttributes().get(i), String.join("", terms));
 				int result;
-				if(o instanceof Boolean) {
-					result = ((Boolean)o).compareTo((Boolean)this.attributes.get(this.entity.getAttributes().get(i)));
-				} else if(o instanceof CharType) {
-					result = ((CharType)o).compareTo((CharType)this.attributes.get(this.entity.getAttributes().get(i)));
-				} else if(o instanceof VarCharType) {
-					result = ((VarCharType)o).compareTo((VarCharType)this.attributes.get(this.entity.getAttributes().get(i)));
-				} else if(o instanceof Integer) {
-					result = ((Integer)o).compareTo((Integer)this.attributes.get(this.entity.getAttributes().get(i)));
-				} else if(o instanceof DateType) {
-					result = ((DateType)o).compareTo((DateType)this.attributes.get(this.entity.getAttributes().get(i)));
+				if (o instanceof Boolean) {
+					result = ((Boolean) o).compareTo((Boolean) this.attributes.get(this.entity.getAttributes().get(i)));
+				} else if (o instanceof CharType) {
+					result = ((CharType) o)
+							.compareTo((CharType) this.attributes.get(this.entity.getAttributes().get(i)));
+				} else if (o instanceof VarCharType) {
+					result = ((VarCharType) o)
+							.compareTo((VarCharType) this.attributes.get(this.entity.getAttributes().get(i)));
+				} else if (o instanceof Integer) {
+					result = ((Integer) o).compareTo((Integer) this.attributes.get(this.entity.getAttributes().get(i)));
+				} else if (o instanceof DateType) {
+					result = ((DateType) o)
+							.compareTo((DateType) this.attributes.get(this.entity.getAttributes().get(i)));
 				} else {
 					throw new Exception("Alo druskane pa taj tip nije podrzan.");
 				}
@@ -81,7 +85,7 @@ public class Record implements Comparable<Record> {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -104,32 +108,32 @@ public class Record implements Comparable<Record> {
 		}
 		return r;
 	}
-	
+
 	public int compareTo(Record other) {
 		if (entity != other.entity) {
 			return -1;
 		}
-		
+
 		for (Attribute a : entity.getAttributes()) {
 			if (a.isPrimaryKey()) {
 				int result = 0;
 				if (a.getValueClass() == CharType.class) {
-					result = ((CharType)attributes.get(a)).compareTo((CharType)other.getAttributes().get(a));
+					result = ((CharType) attributes.get(a)).compareTo((CharType) other.getAttributes().get(a));
 				} else if (a.getValueClass() == VarCharType.class) {
-					result = ((VarCharType)attributes.get(a)).compareTo((VarCharType)other.getAttributes().get(a));
+					result = ((VarCharType) attributes.get(a)).compareTo((VarCharType) other.getAttributes().get(a));
 				} else if (a.getValueClass() == DateType.class) {
-					result = ((DateType)attributes.get(a)).compareTo((DateType)other.getAttributes().get(a));
+					result = ((DateType) attributes.get(a)).compareTo((DateType) other.getAttributes().get(a));
 				} else if (a.getValueClass() == Integer.class) {
-					result = ((Integer)attributes.get(a)).compareTo((Integer)other.getAttributes().get(a));
+					result = ((Integer) attributes.get(a)).compareTo((Integer) other.getAttributes().get(a));
 				}
-				
+
 				// Lexicographical comparison
 				if (result != 0) {
 					return result;
 				}
 			}
 		}
-		
+
 		return 0;
 	}
 }

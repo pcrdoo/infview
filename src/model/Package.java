@@ -60,14 +60,7 @@ public class Package extends InfResource {
 		}
 		String entityStr = String.join("\n", entitiesString);
 
-		return indentStringRepresentation(String.format(
-				"Package \"%s\" {\n" +
-				"    packages = [\n" +
-				"%s\n" +
-				"    ]\n" +
-				"    entities = [\n" +
-				"%s\n" +
-				"    ]\n" +
-				"}", name, packageStr, entityStr), indentSpaces);
+		return indentStringRepresentation(String.format("Package \"%s\" {\n" + "    packages = [\n" + "%s\n" + "    ]\n"
+				+ "    entities = [\n" + "%s\n" + "    ]\n" + "}", name, packageStr, entityStr), indentSpaces);
 	}
 }

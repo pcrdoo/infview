@@ -11,16 +11,16 @@ import model.indextree.Node;
 import net.miginfocom.swing.MigLayout;
 
 public class IndexTreeView extends JPanel {
-
+	private static final long serialVersionUID = 5555927999642550382L;
 	private IndexTreeController controller;
 	private IndexTreeNode root;
 	private IndexTree tree;
-	
+
 	public IndexTreeView(Node root) {
-		this.controller = new IndexTreeController(this);
+		this.setController(new IndexTreeController());
 		this.initialize(root);
 	}
-	
+
 	private void initialize(Node modelRoot) {
 		IndexTreeNode root = new IndexTreeNode(modelRoot);
 		root.populate();
@@ -42,12 +42,20 @@ public class IndexTreeView extends JPanel {
 		JScrollPane treeScrollPane = new JScrollPane(tree);
 		this.add(treeScrollPane, "cell 0 0, grow");
 	}
-	
+
 	public void refresh() {
 		root.populate();
 	}
-	
+
 	public IndexTree getTree() {
 		return this.tree;
+	}
+
+	public IndexTreeController getController() {
+		return controller;
+	}
+
+	public void setController(IndexTreeController controller) {
+		this.controller = controller;
 	}
 }

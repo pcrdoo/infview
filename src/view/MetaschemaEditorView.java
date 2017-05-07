@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,6 +26,10 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class MetaschemaEditorView extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7621166619955849413L;
 	private Stage stage;
 	private WebView browser;
 	private JFXPanel jfxPanel;
@@ -36,27 +38,10 @@ public class MetaschemaEditorView extends JDialog {
 	private MetaschemaEditorController controller;
 
 	public MetaschemaEditorView(MetaschemaEditorController controller, String metaschemaString) {
-		this.controller = controller;
+		this.setController(controller);
 		initComponents(metaschemaString);
 	}
-	
-	private String getIndexUri() {
-		ClassLoader loader = this.getClass().getClassLoader();
-		URL url = loader.getResource("res/monaco/index.html");
-		String protocol = url.getProtocol();
-		
-		if(protocol.equals("jar")){
-		    try {
-				url = new URL(url.getPath());
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		    protocol = url.getProtocol();
-		}
-		return url.toString();
-	}
-	
+
 	private void initComponents(String metaschemaString) {
 		jfxPanel = new JFXPanel();
 		createScene(metaschemaString);
@@ -66,13 +51,11 @@ public class MetaschemaEditorView extends JDialog {
 		add(jfxPanel, BorderLayout.CENTER);
 
 		okButton = new JButton();
-		
-		MetaschemaEditorView self = this;
 		okButton.setText("OK");
 
 		add(okButton, BorderLayout.SOUTH);
 	}
-	
+
 	public void addOkListener(ActionListener l) {
 		okButton.addActionListener(new ActionListener() {
 			@Override
@@ -81,13 +64,13 @@ public class MetaschemaEditorView extends JDialog {
 					@Override
 					public void run() {
 						l.actionPerformed(e);
-					}	
+					}
 				});
 			}
-			
+
 		});
 	}
-	
+
 	public void showFailureMessage(String message) {
 		JOptionPane.showMessageDialog(this, message, "Error loading new metaschema", JOptionPane.ERROR_MESSAGE);
 	}
@@ -95,7 +78,7 @@ public class MetaschemaEditorView extends JDialog {
 	public String getText() {
 		return (String) webEngine.executeScript("window.myMonaco.getValue()");
 	}
-	
+
 	private void createScene(String metaschemaString) {
 		PlatformImpl.startup(new Runnable() {
 			@Override
@@ -111,30 +94,42 @@ public class MetaschemaEditorView extends JDialog {
 				browser = new WebView();
 				webEngine = browser.getEngine();
 				webEngine.load(MetaschemaEditorView.class.getResource("/res/monaco/index.html").toExternalForm());
-				
-		        com.sun.javafx.webkit.WebConsoleListener.setDefaultListener(new com.sun.javafx.webkit.WebConsoleListener(){
 
-		            @Override
-		            public void messageAdded(WebView webView, String message, int lineNumber, String sourceId) {
-		                System.out.println("Console: [" + sourceId + ":" + lineNumber + "] " + message);
+				com.sun.javafx.webkit.WebConsoleListener
+						.setDefaultListener(new com.sun.javafx.webkit.WebConsoleListener() {
 
-		            }
+							@Override
+							public void messageAdded(WebView webView, String message, int lineNumber, String sourceId) {
+								System.out.println("Console: [" + sourceId + ":" + lineNumber + "] " + message);
 
-		        });
-				
+							}
+
+						});
+
 				webEngine.executeScript("window.metaschema = " + metaschemaString + ";");
 				try {
-					webEngine.executeScript("window.metametaschema = " +  new String(Files.readAllBytes(Paths.get("src/res/metametaschema.json")), StandardCharsets.UTF_8) + ";");
+					webEngine.executeScript("window.metametaschema = "
+							+ new String(Files.readAllBytes(Paths.get("src/res/metametaschema.json")),
+									StandardCharsets.UTF_8)
+							+ ";");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				ObservableList<Node> children = root.getChildren();
 				children.add(browser);
 
 				jfxPanel.setScene(scene);
 			}
 		});
+	}
+
+	public MetaschemaEditorController getController() {
+		return controller;
+	}
+
+	public void setController(MetaschemaEditorController controller) {
+		this.controller = controller;
 	}
 }

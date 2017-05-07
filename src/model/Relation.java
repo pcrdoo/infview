@@ -16,7 +16,7 @@ public class Relation extends InfResource {
 		this.referringAttribute = referringAttribute;
 		this.referencedAttribute = referencedAttribute;
 	}
-	
+
 	public Attribute getReferencedAttribute() {
 		return referencedAttribute;
 	}
@@ -27,10 +27,11 @@ public class Relation extends InfResource {
 
 	@Override
 	public String toIndentedString(int indentSpaces) {
-		return indentStringRepresentation(String.format(
-			"Relation \"%s\" {\n" +
-		    "    referringAttribute = Attribute(\"%s\")\n" +
-		    "    referencingAttribute = Attribute(\"%s\")\n" +
-			"}", name, referringAttribute.getFullyQualifiedName(), referringAttribute.getFullyQualifiedName()), indentSpaces);
+		return indentStringRepresentation(
+				String.format(
+						"Relation \"%s\" {\n" + "    referringAttribute = Attribute(\"%s\")\n"
+								+ "    referencingAttribute = Attribute(\"%s\")\n" + "}",
+						name, referringAttribute.getFullyQualifiedName(), referringAttribute.getFullyQualifiedName()),
+				indentSpaces);
 	}
 }

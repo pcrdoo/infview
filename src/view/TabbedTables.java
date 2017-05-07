@@ -33,6 +33,10 @@ import net.miginfocom.swing.MigLayout;
 
 public class TabbedTables extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1167886373482792472L;
 	private JToolBar toolbar;
 	private JTabbedPane tabs; // dodajemo tablePanele
 	private boolean mainTable;

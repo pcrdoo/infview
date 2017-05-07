@@ -12,22 +12,22 @@ import net.miginfocom.swing.MigLayout;
 
 public class TreeView extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3813766417763713050L;
 	private TreeController controller;
 	private InfNode root;
 	private InfTree tree;
 
 	public TreeView() {
-		this.controller = new TreeController(this);
+		this.setController(new TreeController(this));
 		this.initialize();
 	}
-	
-	private void addMockNodes(Warehouse root) {
-		
-	}
-	
+
 	private void initialize() {
-		//this.setPreferredSize(Constants.TREE_SIZE);
-		
+		// this.setPreferredSize(Constants.TREE_SIZE);
+
 		InfNode root = new InfNode(Warehouse.getInstance());
 		root.populate();
 		this.root = root;
@@ -45,23 +45,35 @@ public class TreeView extends JPanel {
 		this.tree.setSelectionModel(selectionModel);
 
 		this.setLayout(new MigLayout("fill", "0[]0", "0[]0"));
-		//this.setMinimumSize(new Dimension(1000, 1000));
+		// this.setMinimumSize(new Dimension(1000, 1000));
 
 		JScrollPane treeScrollPane = new JScrollPane(tree);
 
-		//treeScrollPane.setSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
-		//treeScrollPane.setMaximumSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
-		//treeScrollPane.setMinimumSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
-		//treeScrollPane.setPreferredSize(new Dimension(50, (int) Math.round(Constants.TREE_VIEW_HEIGHT)));
+		// treeScrollPane.setSize(new Dimension(50, (int)
+		// Math.round(Constants.TREE_VIEW_HEIGHT)));
+		// treeScrollPane.setMaximumSize(new Dimension(50, (int)
+		// Math.round(Constants.TREE_VIEW_HEIGHT)));
+		// treeScrollPane.setMinimumSize(new Dimension(50, (int)
+		// Math.round(Constants.TREE_VIEW_HEIGHT)));
+		// treeScrollPane.setPreferredSize(new Dimension(50, (int)
+		// Math.round(Constants.TREE_VIEW_HEIGHT)));
 
 		this.add(treeScrollPane, "cell 0 0, grow");
 	}
-	
+
 	public void refresh() {
 		root.populate();
 	}
-	
+
 	public InfTree getTree() {
 		return this.tree;
+	}
+
+	public TreeController getController() {
+		return controller;
+	}
+
+	public void setController(TreeController controller) {
+		this.controller = controller;
 	}
 }

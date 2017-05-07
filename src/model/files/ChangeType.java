@@ -1,7 +1,5 @@
 package model.files;
 
 public enum ChangeType {
-	ADD,
-	UPDATE,
-	DELETE
+	ADD, UPDATE, DELETE
 }

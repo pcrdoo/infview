@@ -74,7 +74,7 @@ public class InfNode implements TreeNode {
 	}
 
 	@Override
-	public Enumeration children() {
+	public Enumeration<?> children() {
 		return null; // TODO
 	}
 

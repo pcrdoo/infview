@@ -54,15 +54,17 @@ public class TabbedTablesController {
 			GenericDialog d = new GenericDialog(tt.getSelectedEntity(), null, true, true, true);
 			d.setModal(true);
 			d.setVisible(true); // block!
-			
-			if(!d.isDoShit())
+
+			if (!d.isDoShit())
 				return;
-			
+
 			if (tt.getSelectedEntity() instanceof SequentialFile) {
 				SequentialFile file = (SequentialFile) tt.getSelectedEntity();
-				file.fireUpdateBlockPerformed(file.findRecord(d.getTerms(), d.getFindAll(), d.getToFile(), d.getFromStart())); // ozvezavanje tabele
+				file.fireUpdateBlockPerformed(
+						file.findRecord(d.getTerms(), d.getFindAll(), d.getToFile(), d.getFromStart())); // ozvezavanje
+																											// tabele
 			}
-			
+
 			if (tt.getSelectedEntity() instanceof File) {
 				File file = (File) tt.getSelectedEntity();
 				tt.getBlocksFetched().setText(String.valueOf(file.getBlocksFetched()));
@@ -78,7 +80,8 @@ public class TabbedTablesController {
 			if (entity != null && entity instanceof File) {
 				try {
 					ArrayList<Record> currentBlock = ((File) entity).fetchNextBlock();
-					((File) entity).fireUpdateBlockPerformed(currentBlock == null ? new ArrayList<Record>() : currentBlock); // ozvezavanje
+					((File) entity)
+							.fireUpdateBlockPerformed(currentBlock == null ? new ArrayList<Record>() : currentBlock); // ozvezavanje
 					// tabele
 					tt.getBlocksFetched().setText(String.valueOf(((File) entity).getBlocksFetched()));
 				} catch (IOException | InvalidRecordException ex) {
@@ -99,9 +102,9 @@ public class TabbedTablesController {
 				tt.enableToolbar(entity);
 				if (entity instanceof IndexedSequentialFile) {
 					MainView.getInstance().getDesktopView().detachDetailsTable();
-					MainView.getInstance().getDesktopView().attachIndexTree(((IndexedSequentialFile)entity).getTree().getRoot());
-				}
-				else if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
+					MainView.getInstance().getDesktopView()
+							.attachIndexTree(((IndexedSequentialFile) entity).getTree().getRoot());
+				} else if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
 					MainView.getInstance().getDesktopView().attachDetailsTable();
 					MainView.getInstance().getDesktopView().detachIndexTree();
 				} else {
@@ -125,15 +128,15 @@ public class TabbedTablesController {
 			GenericDialog genericDialog = new GenericDialog(tt.getSelectedEntity(), null, false, true, false);
 			genericDialog.setModal(true);
 			genericDialog.setVisible(true);
-			
-			if(!genericDialog.isDoShit())
+
+			if (!genericDialog.isDoShit())
 				return;
-			
+
 			Entity entity = tt.getSelectedEntity();
-			
+
 			if (entity instanceof SequentialFile) {
 				try {
-					((SequentialFile)entity).addRecord(genericDialog.getRecord());
+					((SequentialFile) entity).addRecord(genericDialog.getRecord());
 				} catch (IOException e1) {
 					System.out.println(e1);
 					e1.printStackTrace();
@@ -148,20 +151,20 @@ public class TabbedTablesController {
 		public void actionPerformed(ActionEvent e) {
 			if (tt.getSelectedRow() == null)
 				return;
-			
-			Record r = tt.getSelectedRow();
-			GenericDialog genericDialog = new GenericDialog(tt.getSelectedEntity(), tt.getSelectedRow(), false, false, false);
+
+			GenericDialog genericDialog = new GenericDialog(tt.getSelectedEntity(), tt.getSelectedRow(), false, false,
+					false);
 			genericDialog.setModal(true);
 			genericDialog.setVisible(true);
-			
-			if(!genericDialog.isDoShit())
+
+			if (!genericDialog.isDoShit())
 				return;
-			
+
 			Entity entity = tt.getSelectedEntity();
-			
+
 			if (entity instanceof SequentialFile) {
 				try {
-					((SequentialFile)entity).updateRecord(genericDialog.getRecord());
+					((SequentialFile) entity).updateRecord(genericDialog.getRecord());
 				} catch (IOException e1) {
 					System.out.println(e1);
 					e1.printStackTrace();
@@ -176,12 +179,12 @@ public class TabbedTablesController {
 		public void actionPerformed(ActionEvent e) {
 			if (tt.getSelectedRow() == null)
 				return;
-			
+
 			Entity entity = tt.getSelectedEntity();
-			
+
 			if (entity instanceof SequentialFile) {
 				try {
-					((SequentialFile)entity).deleteRecord(tt.getSelectedRow());
+					((SequentialFile) entity).deleteRecord(tt.getSelectedRow());
 				} catch (Exception e1) {
 					System.out.println(e1);
 					e1.printStackTrace();
@@ -195,14 +198,14 @@ public class TabbedTablesController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Entity entity = tt.getSelectedEntity();
-			
+
 			if (!(entity instanceof SequentialFile)) {
 				JOptionPane.showMessageDialog(tt, "Ne mogu ermergerdujem zajebane formate");
 				return;
 			}
-			
+
 			try {
-				((SequentialFile)entity).merge();
+				((SequentialFile) entity).merge();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
