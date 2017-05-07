@@ -82,7 +82,6 @@ public abstract class File extends Entity {
 		if(filePointer + 2 == recordSize * numRecords) {
 			// opet glup hak za \r\n
 			closeFile();
-			file = null;
 			return false;
 		}
 		int recordsLeft = numRecords - filePointer / recordSize;
