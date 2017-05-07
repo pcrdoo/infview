@@ -32,6 +32,7 @@ public class TabbedTables extends JPanel {
 
 	private JButton nextBlock;
 	private JSpinner blockFactor;
+	private JButton doSearch;
 
 	public TabbedTables(boolean autoRefresh) {
 		this.setLayout(new MigLayout("fill", "", "0[]0[grow]0"));
@@ -48,9 +49,11 @@ public class TabbedTables extends JPanel {
 					blockFactor.setValue(((File) entity).getBlockFactor());
 					blockFactor.setEnabled(true);
 					nextBlock.setEnabled(true);
+					doSearch.setEnabled(true);
 				} else {
 					blockFactor.setEnabled(false);
 					nextBlock.setEnabled(false);
+					doSearch.setEnabled(false);
 				}
 			}
 		});
@@ -64,6 +67,7 @@ public class TabbedTables extends JPanel {
 		nextBlock.setEnabled(false);
 		nextBlock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("EBRE");
 				Entity entity = getSelectedEntity();
 				if (entity != null && entity instanceof File) {
 					try {
@@ -99,6 +103,21 @@ public class TabbedTables extends JPanel {
 
 		});
 		toolbar.add(blockFactor);
+		toolbar.addSeparator();
+		
+		// Search
+		doSearch = new JButton("Search");
+		doSearch.setEnabled(false);
+		doSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SearchDialog searchDialog = new SearchDialog();
+				searchDialog.setModal(true);
+				searchDialog.setVisible(true); //block!
+			}
+		});
+		toolbar.add(doSearch);
+		toolbar.addSeparator();
+		
 	}
 
 	private Entity getSelectedEntity() {

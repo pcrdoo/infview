@@ -79,7 +79,6 @@ public abstract class File extends Entity {
 		numRecords = (int) Math.ceil(((double) file.length()) / recordSize);
 		numBlocks = (int) Math.ceil(((double) numRecords) / blockFactor);
 
-		System.out.println(numRecords + " " + filePointer + " " + recordSize);
 		if(filePointer + 2 == recordSize * numRecords) {
 			// opet glup hak za \r\n
 			closeFile();
@@ -129,7 +128,6 @@ public abstract class File extends Entity {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 					try {
 						Date date = sdf.parse(field);
-						System.out.println(date);
 						record.addAttribute(attr, date);
 					} catch(ParseException e) {
 						closeFile();
