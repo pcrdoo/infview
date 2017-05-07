@@ -14,12 +14,14 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.GenericDialogController;
 import model.Attribute;
 import model.Entity;
+import model.files.InvalidRecordException;
 import model.Record;
 import model.files.SequentialFile;
 
@@ -101,9 +103,23 @@ public class SearchDialog extends JDialog {
 		
 		return terms;
 	}
+
+	public boolean validateRecord() {
+		try {
+			Record.fromTerms(getTerms(), entity);
+			return true;
+		} catch (InvalidRecordException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage() + "\n\n" + "Fix the errors and try again.");
+			return false;
+		}
+	}
 	
 	public Record getRecord() {
-		return Record.fromTerms(getTerms(), entity);
+		try {
+			return Record.fromTerms(getTerms(), entity);
+		} catch (InvalidRecordException e) {
+			return null;
+		}
 	}
 	
 	public boolean getFindAll() {

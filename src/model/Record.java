@@ -109,16 +109,11 @@ public class Record implements Comparable<Record> {
 		return result.toString();
 	}
 
-	public static Record fromTerms(String[] terms, Entity entity) {
+	public static Record fromTerms(String[] terms, Entity entity) throws InvalidRecordException {
 		Record r = new Record(entity);
 		for (int i = 0; i < entity.getAttributes().size(); i++) {
-			try {
-				Object o = File.parseStringField(terms[i], entity.getAttributes().get(i));
-				r.attributes.put(entity.getAttributes().get(i), o);
-			} catch (Exception e) {
-				System.out.println(e);
-				e.printStackTrace();
-			}
+			Object o = File.parseStringField(terms[i], entity.getAttributes().get(i));
+			r.attributes.put(entity.getAttributes().get(i), o);
 		}
 		return r;
 	}

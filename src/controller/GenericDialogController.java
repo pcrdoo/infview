@@ -26,8 +26,10 @@ public class GenericDialogController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			view.setDoShit(true);
-			view.setVisible(false);
+			if (view.validateRecord()) {
+                view.setDoShit(true);
+				view.setVisible(false);
+			}
 		}
 	}
 }
