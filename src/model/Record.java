@@ -52,7 +52,7 @@ public class Record {
 	public boolean matches(String[] terms) {
 		boolean result = true;
 		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
-			result &= !terms[i].equals("") && terms[i].equals((this.attributes.get(this.entity.getAttributes().get(i))).toString());
+			result &= !terms[i].equals("") && terms[i].equals((this.attributes.get(this.entity.getAttributes().get(i))).toString().trim());
 		}
 		return result;
 	}
@@ -66,9 +66,9 @@ public class Record {
 		for(int i = 0; i < this.attributes.size(); i++) {
 			if(terms[i].equals("")) {
 				return false;
-			} else if(terms[i].compareToIgnoreCase(((String)this.attributes.get(this.entity.getAttributes().get(i)))) == 1) {
+			} else if(terms[i].compareToIgnoreCase(((this.attributes.get(this.entity.getAttributes().get(i)).toString().trim()))) == 1) {
 				return false;
-			} else if(terms[i].compareToIgnoreCase(((String)this.attributes.get(this.entity.getAttributes().get(i)))) == -1) {
+			} else if(terms[i].compareToIgnoreCase((this.attributes.get(this.entity.getAttributes().get(i)).toString().trim())) == -1) {
 				return true;
 			}
 		}
