@@ -1,6 +1,8 @@
 package model.files;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,9 @@ public class SequentialFile extends File {
 			for (Record record : this.currentBlock) {
 				if(record.matches(terms)) {
 					result.add(record);
+					
+					if(!all)
+						return result;
 				}
 				
 				if(record.greaterThan(terms)) {
@@ -48,9 +53,35 @@ public class SequentialFile extends File {
 				}
 			}
 		}
-		currentBlock = result;
-		fireUpdateBlockPerformed(); // ozvezavanje tabele
 		return result;
+	}
+	
+	public void findRecord(String[] terms, boolean all, boolean toFile, boolean fromStart) {
+		System.out.println("Pocinjem da trazim gari...");
+		if(fromStart)
+			this.filePointer = 0;
+		
+		List<Record> result = this.findRecord(terms, all);
+		
+		if(!toFile) {
+			currentBlock = (ArrayList<Record>) result;
+			System.out.println("Naso sam " + currentBlock.size() + " gari...");
+			fireUpdateBlockPerformed(); // ozvezavanje tabele
+		} else {
+			try{
+				java.io.File f = new java.io.File("search-results.txt");
+				
+			    PrintWriter writer = new PrintWriter(f, "UTF-8");
+			    for (Record record : result) {
+					writer.println(record);
+				}
+			    writer.close();
+			    
+			    Desktop.getDesktop().open(f);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override

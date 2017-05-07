@@ -52,7 +52,7 @@ public class Record {
 	public boolean matches(String[] terms) {
 		boolean result = true;
 		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
-			result &= !terms[i].equals("") && terms[i].equals(((String)this.attributes.get(this.entity.getAttributes().get(i))));
+			result &= !terms[i].equals("") && terms[i].equals((this.attributes.get(this.entity.getAttributes().get(i))).toString());
 		}
 		return result;
 	}
@@ -73,5 +73,14 @@ public class Record {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		String result = "";
+		for (Attribute a : this.entity.getAttributes()) {
+			result += this.attributes.get(a);
+		}
+		return result;
 	}
 }

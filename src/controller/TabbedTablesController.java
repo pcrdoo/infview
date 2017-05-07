@@ -40,7 +40,7 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SearchDialog searchDialog = new SearchDialog();
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity());
 			searchDialog.setModal(true);
 			searchDialog.setVisible(true); // block!
 		}
