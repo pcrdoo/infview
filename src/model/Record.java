@@ -1,16 +1,19 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Record {
 	Entity entity;
-	HashMap<Attribute, Object> attributes;
-	HashMap<Relation, Record> relations;
+	Map<Attribute, Object> attributes;
+	Map<Relation, Record> relations;
 
 	public Record(Entity entity) {
 		this.entity = entity;
-		attributes = new HashMap<>();
-		relations = new HashMap<>();
+		attributes = new TreeMap<>();
+		relations = new TreeMap<>();
 	}
 
 	public void addAttribute(Attribute attribute, Object value) {
@@ -35,11 +38,11 @@ public class Record {
 		relations.put(relation, record);
 	}
 
-	public HashMap<Attribute, Object> getAttributes() {
+	public Map<Attribute, Object> getAttributes() {
 		return attributes;
 	}
 
-	public HashMap<Relation, Record> getRelations() {
+	public Map<Relation, Record> getRelations() {
 		return relations;
 	}
 
@@ -47,4 +50,29 @@ public class Record {
 		return entity;
 	}
 
+	public boolean matches(String[] terms) {
+		boolean result = true;
+		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
+			result &= !terms[i].equals("") && terms[i].equals(((String)this.attributes.get(this.entity.getAttributes().get(i))));
+		}
+		return result;
+	}
+
+	public boolean greatherThen(String[] terms) {
+		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
+			if(this.entity.getAttributes().get(i).isPrimaryKey() && !terms[i].equals(""))
+				return false;
+		}
+		
+		for(int i = 0; i < this.attributes.size(); i++) {
+			if(terms[i].equals("")) {
+				return false;
+			} else if(terms[i].compareToIgnoreCase(((String)this.attributes.get(this.entity.getAttributes().get(i)))) == 1) {
+				return false;
+			} else if(terms[i].compareToIgnoreCase(((String)this.attributes.get(this.entity.getAttributes().get(i)))) == -1) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

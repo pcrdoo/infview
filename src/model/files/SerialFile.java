@@ -3,6 +3,7 @@ package model.files;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Date;
+import java.util.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,9 +35,9 @@ public class SerialFile extends File {
 	}
 
 	@Override
-	public int findRecord(int TODO) {
+	public List<Record> findRecord(String[] terms, boolean all) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override

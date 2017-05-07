@@ -2,8 +2,10 @@ package model.files;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.InfResource;
+import model.Record;
 
 public class IndexedSequentialFile extends File {
 
@@ -27,9 +29,9 @@ public class IndexedSequentialFile extends File {
 	}
 
 	@Override
-	public int findRecord(int TODO) {
+	public List<Record> findRecord(String[] terms, boolean all) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override

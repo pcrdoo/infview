@@ -2,8 +2,10 @@ package model.files;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.InfResource;
+import model.Record;
 
 public class SequentialFile extends File {
 
@@ -25,9 +27,28 @@ public class SequentialFile extends File {
 	}
 
 	@Override
-	public int findRecord(int TODO) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<Record> findRecord(String[] terms, boolean all) {
+
+		ArrayList<Record> result = new ArrayList<>();
+		
+		while(this.filePointer < this.getFileSize()) {
+			try {
+				fetchNextBlock();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			for (Record record : this.currentBlock) {
+				if(record.matches(terms)) {
+					result.add(record);
+				}
+				
+				if(record.greatherThen(terms)) {
+					return result;
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override

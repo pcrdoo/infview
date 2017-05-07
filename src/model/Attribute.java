@@ -38,4 +38,8 @@ public class Attribute extends InfResource {
 	public int getLength() {
 		return length;
 	}
+	
+	public boolean isPrimaryKey() {
+		return this.primaryKey;
+	}
 }

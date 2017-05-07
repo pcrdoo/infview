@@ -5,6 +5,7 @@ import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 import java.util.StringTokenizer;
 
@@ -125,7 +126,7 @@ public abstract class File extends Entity {
 
 	public abstract boolean updateRecord(ArrayList<String> record) throws IOException;
 
-	public abstract int findRecord(int TODO); // TODO
+	public abstract List<Record> findRecord(String[] terms, boolean all);
 
 	public abstract boolean deleteRecord(ArrayList<String> record);
 
@@ -145,6 +146,10 @@ public abstract class File extends Entity {
 	protected byte[] buffer;
 
 	protected ArrayList<Record> currentBlock; // trenutno ucitan blok
+	
+	public int getFileSize() {
+		return this.numRecords * this.recordSize;
+	}
 
 	public ArrayList<Record> getCurrentBlock() {
 		return currentBlock;
@@ -191,8 +196,8 @@ public abstract class File extends Entity {
 	}
 
 	/*
-	 * // lista slušača koja se koristi da se osveži prikaz tabele u klasi
-	 * FileView // prilikom učitavanja novog bloka iz datoteke
+	 * // lista sluÅ¡aÄ�a koja se koristi da se osveÅ¾i prikaz tabele u klasi
+	 * FileView // prilikom uÄ�itavanja novog bloka iz datoteke
 	 * 
 	 * EventListenerList listenerBlockList = new EventListenerList();
 	 * UpdateBlockEvent updateBlockEvent = null;
