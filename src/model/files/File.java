@@ -125,6 +125,7 @@ public abstract class File extends Entity {
 	public static Object parseStringField(String field, Attribute attr) throws InvalidRecordException {
 		Class<?> cls = attr.getValueClass();
 		field = field.trim();
+		
 		if (cls == CharType.class) {
 			CharType str = new CharType(field.length());
 			try {
@@ -216,10 +217,18 @@ public abstract class File extends Entity {
 	public void removeAllAttributes() {
 		if (attributes != null) {
 			recordSize = 2;
-
 			attributes.clear();
 		}
 	}
+	
+	public int getFilePointer() {
+		return filePointer;
+	}
+
+	public void setFilePointer(int filePointer) {
+		this.filePointer = filePointer;
+	}
+
 
 	/*
 	 * // lista sluÅ¡aÄ�a koja se koristi da se osveÅ¾i prikaz tabele u klasi

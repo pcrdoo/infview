@@ -62,7 +62,7 @@ public class SequentialFile extends File {
 	}
 	
 	@Override
-	public List<Record> findRecord(String[] terms, boolean all) {
+	public ArrayList<Record> findRecord(String[] terms, boolean all) {
 
 		ArrayList<Record> result = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class SequentialFile extends File {
 					}
 				}
 				currentBlock = fetchNextBlock();
-				System.out.println(this.filePointer);
+				//System.out.println(this.filePointer);
 			}
 		} catch (Exception e) {
 			e.printStackTrace(); // lol
@@ -97,7 +97,7 @@ public class SequentialFile extends File {
 		if (fromStart)
 			this.filePointer = 0;
 
-		ArrayList<Record> result = (ArrayList<Record>) this.findRecord(terms, all);
+		ArrayList<Record> result = this.findRecord(terms, all);
 
 		if (!toFile) {
 			ArrayList<Record> currentBlock = (ArrayList<Record>) result;

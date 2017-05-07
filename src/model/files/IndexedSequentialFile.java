@@ -144,7 +144,7 @@ public class IndexedSequentialFile extends SequentialFile {
 	}
 
 	@Override
-	public List<Record> findRecord(String[] terms, boolean all) {
+	public ArrayList<Record> findRecord(String[] terms, boolean all) {
 		// TODO Auto-generated method stub
 		return null;
 	}
