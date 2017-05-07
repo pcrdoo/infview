@@ -133,7 +133,7 @@ public class IndexedSequentialFile extends SequentialFile {
 	
 	@Override
 	public boolean addRecord(Record record) throws IOException {
-		
+		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -150,7 +150,7 @@ public class IndexedSequentialFile extends SequentialFile {
 	}
 
 	@Override
-	public boolean deleteRecord(Record record) {
+	public boolean deleteRecord(Record record) throws IOException {
 		// TODO Auto-generated method stub
 		return false;
 	}

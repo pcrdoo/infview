@@ -67,6 +67,26 @@ public abstract class File extends Entity {
 
 		file = null;
 	}
+	
+	protected Record parseRecordLine(String line) throws InvalidRecordException {
+		Record record = new Record(this);
+
+		int linePosition = 0;
+		for (Attribute attr : this.attributes) {
+			String field = line.substring(linePosition, linePosition + attr.getLength());
+			linePosition += attr.getLength();
+			try {
+				//System.out.println("PARSE: " + field + " " + attr);
+				Object obj = parseStringField(field, attr);
+				record.addAttribute(attr, obj);
+			} catch (InvalidRecordException e) {
+				closeFile();
+				throw e;
+			}
+		}
+		
+		return record;
+	}
 
 	public ArrayList<Record> fetchNextBlock() throws IOException, InvalidRecordException {
 		lazyOpenFile();
@@ -93,21 +113,7 @@ public abstract class File extends Entity {
 			// svaki slog predstavlja jednu liniju teksta
 			String line = contents.substring(i * recordSize, (i + 1) * recordSize);
 			//System.out.println("LINE: " + line);
-			int linePosition = 0;
-			Record record = new Record(this);
-			for (Attribute attr : this.attributes) {
-				String field = line.substring(linePosition, linePosition + attr.getLength());
-				linePosition += attr.getLength();
-				try {
-					//System.out.println("PARSE: " + field + " " + attr);
-					Object obj = parseStringField(field, attr);
-					record.addAttribute(attr, obj);
-				} catch (InvalidRecordException e) {
-					closeFile();
-					throw e;
-				}
-			}
-			currentBlock.add(record);
+			currentBlock.add(parseRecordLine(line));
 		}
 
 		// pozicioniramo file pointer tamo gde smo stali sa citanjem
@@ -173,7 +179,7 @@ public abstract class File extends Entity {
 
 	public abstract List<Record> findRecord(String[] terms, boolean all);
 
-	public abstract boolean deleteRecord(Record record);
+	public abstract boolean deleteRecord(Record record) throws IOException;
 
 	public int getBlockFactor() {
 		return blockFactor;

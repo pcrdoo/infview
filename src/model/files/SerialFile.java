@@ -23,13 +23,13 @@ public class SerialFile extends File {
 	}
 
 	@Override
-	public List<Record> findRecord(String[] terms, boolean all) {
+	public boolean addRecord(Record record) throws IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean addRecord(Record record) throws IOException {
+	public boolean updateRecord(Record record) throws IOException {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -41,7 +41,7 @@ public class SerialFile extends File {
 	}
 
 	@Override
-	public boolean deleteRecord(Record record) {
+	public boolean deleteRecord(Record record) throws IOException {
 		// TODO Auto-generated method stub
 		return false;
 	}

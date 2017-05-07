@@ -10,7 +10,7 @@ import model.datatypes.VarCharType;
 import model.files.File;
 import model.files.InvalidRecordException;
 
-public class Record {
+public class Record implements Comparable<Record> {
 	Entity entity;
 	Map<Attribute, Object> attributes;
 	Map<Relation, Record> relations;
@@ -140,5 +140,33 @@ public class Record {
 			}
 		}
 		return r;
+	}
+	
+	public int compareTo(Record other) {
+		if (entity != other.entity) {
+			return -1;
+		}
+		
+		for (Attribute a : entity.getAttributes()) {
+			if (a.isPrimaryKey()) {
+				int result = 0;
+				if (a.getValueClass() == CharType.class) {
+					result = ((CharType)attributes.get(a)).compareTo((CharType)other.getAttributes().get(a));
+				} else if (a.getValueClass() == VarCharType.class) {
+					result = ((VarCharType)attributes.get(a)).compareTo((VarCharType)other.getAttributes().get(a));
+				} else if (a.getValueClass() == DateType.class) {
+					result = ((DateType)attributes.get(a)).compareTo((DateType)other.getAttributes().get(a));
+				} else if (a.getValueClass() == Integer.class) {
+					result = ((Integer)attributes.get(a)).compareTo((Integer)other.getAttributes().get(a));
+				}
+				
+				// Lexicographical comparison
+				if (result != 0) {
+					return result;
+				}
+			}
+		}
+		
+		return 0;
 	}
 }
