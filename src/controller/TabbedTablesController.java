@@ -9,7 +9,10 @@ import javax.swing.event.ChangeListener;
 
 import model.Entity;
 import model.files.File;
+import model.files.IndexedSequentialFile;
 import model.files.InvalidRecordException;
+import model.files.SequentialFile;
+import view.MainView;
 import view.SearchDialog;
 import view.TabbedTables;
 
@@ -73,8 +76,15 @@ public class TabbedTablesController {
 			Entity entity = tt.getSelectedEntity();
 			if (entity != null) {
 				tt.enableToolbar(entity);
+				if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
+					MainView.getInstance().getDesktopView().attachDetailsTable();
+				} else {
+					// TODO David: ovde show tree ako je IndexedSequentialFile attach/detach
+					MainView.getInstance().getDesktopView().detachDetailsTable();
+				}
 			} else {
 				tt.disableToolbar();
+				MainView.getInstance().getDesktopView().detachDetailsTable();
 			}
 
 		}

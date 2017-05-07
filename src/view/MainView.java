@@ -21,6 +21,7 @@ public class MainView extends JFrame {
 
 	private static MainView instance;
 	private TreeView treeView;
+
 	private ToolBarView toolBarView;
 	private MenuBarView menuBarView;
 	private DesktopView desktopView;
@@ -93,6 +94,9 @@ public class MainView extends JFrame {
 			// If Nimbus is not available, you can set the GUI to
 			// another look and feel.
 		}
+	}
+	public DesktopView getDesktopView() {
+		return desktopView;
 	}
 
 	public void doTableOpen(Entity entity) {
