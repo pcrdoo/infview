@@ -10,14 +10,14 @@ import javax.swing.SwingUtilities;
 import model.Entity;
 import model.InfResource;
 import view.MainView;
-import view.SearchDialog;
+import view.GenericDialog;
 import view.tree.InfNode;
 
 public class GenericDialogController {
 	
-	SearchDialog view;
+	GenericDialog view;
 	
-	public GenericDialogController(SearchDialog view) {
+	public GenericDialogController(GenericDialog view) {
 		this.view = view;
 		view.setOKListener(new OKListener());
 	}

@@ -15,7 +15,7 @@ import model.files.IndexedSequentialFile;
 import model.files.InvalidRecordException;
 import model.files.SequentialFile;
 import view.MainView;
-import view.SearchDialog;
+import view.GenericDialog;
 import view.TabbedTables;
 
 public class TabbedTablesController {
@@ -50,7 +50,7 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SearchDialog d = new SearchDialog(tt.getSelectedEntity(), null, true, true, true);
+			GenericDialog d = new GenericDialog(tt.getSelectedEntity(), null, true, true, true);
 			d.setModal(true);
 			d.setVisible(true); // block!
 			
@@ -121,18 +121,18 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), null, false, true, false);
-			searchDialog.setModal(true);
-			searchDialog.setVisible(true);
+			GenericDialog genericDialog = new GenericDialog(tt.getSelectedEntity(), null, false, true, false);
+			genericDialog.setModal(true);
+			genericDialog.setVisible(true);
 			
-			if(!searchDialog.isDoShit())
+			if(!genericDialog.isDoShit())
 				return;
 			
 			Entity entity = tt.getSelectedEntity();
 			
 			if (entity instanceof SequentialFile) {
 				try {
-					((SequentialFile)entity).addRecord(searchDialog.getRecord());
+					((SequentialFile)entity).addRecord(genericDialog.getRecord());
 				} catch (IOException e1) {
 					System.out.println(e1);
 					e1.printStackTrace();
@@ -149,18 +149,18 @@ public class TabbedTablesController {
 				return;
 			
 			Record r = tt.getSelectedRow();
-			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), tt.getSelectedRow(), false, false, false);
-			searchDialog.setModal(true);
-			searchDialog.setVisible(true);
+			GenericDialog genericDialog = new GenericDialog(tt.getSelectedEntity(), tt.getSelectedRow(), false, false, false);
+			genericDialog.setModal(true);
+			genericDialog.setVisible(true);
 			
-			if(!searchDialog.isDoShit())
+			if(!genericDialog.isDoShit())
 				return;
 			
 			Entity entity = tt.getSelectedEntity();
 			
 			if (entity instanceof SequentialFile) {
 				try {
-					((SequentialFile)entity).updateRecord(searchDialog.getRecord());
+					((SequentialFile)entity).updateRecord(genericDialog.getRecord());
 				} catch (IOException e1) {
 					System.out.println(e1);
 					e1.printStackTrace();

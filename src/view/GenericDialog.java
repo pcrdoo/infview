@@ -4,6 +4,7 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import model.files.InvalidRecordException;
 import model.Record;
 import model.files.SequentialFile;
 
-public class SearchDialog extends JDialog {
+public class GenericDialog extends JDialog {
 	// Ogi todo
 	int atrCount;
 	JCheckBox findAll;
@@ -38,7 +39,7 @@ public class SearchDialog extends JDialog {
 	Record record;
 	boolean doShit = false;
 	
-	public SearchDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey, boolean isSearchNotSave) {
+	public GenericDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey, boolean isSearchNotSave) {
 		this.entity = entity;
 		this.record = record;
 		this.ok = new JButton(isSearchNotSave ? "Search" : "Save");
@@ -54,11 +55,10 @@ public class SearchDialog extends JDialog {
 			num -= 3;
 		
 		this.setSize(num * 30, num * 30);
+		this.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
-		//panel.setSize(1000, 1000);
 		panel.setLayout(new GridLayout(num, 2));
-		//panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
 		if (allowCheckBoxes) {
 			panel.add(findAll);
