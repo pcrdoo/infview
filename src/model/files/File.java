@@ -19,10 +19,11 @@ public abstract class File extends Entity {
 		super(name, parent);
 		// TODO Auto-generated constructor stub
 		currentBlock = new ArrayList<Record>();
+		updateBlockListeners = new ArrayList<UpdateBlockListener>();
 		this.path = path;
 	}
 
-	public abstract boolean fetchNextBlock() throws IOException;
+	public abstract boolean fetchNextBlock() throws IOException, InvalidRecordException;
 
 	public abstract boolean addRecord(ArrayList<String> record) throws IOException;
 
@@ -39,7 +40,7 @@ public abstract class File extends Entity {
 	// BUFFER SIZE = BLOCK_FACTOR * RECORD_SIZE
 	// protected int FILE_SIZE = 0; // velicina datoteke u bajtovima
 	protected int numRecords = 0; // broj slogova u datoteci
-	// protected int NUM_BLOCKS = 0; // broj blokova u datoteci
+	protected int numBlocks = 0; // broj blokova u datoteci, prikazati u view!
 	protected int filePointer = 0; // pokazivac dokle smo stigli
 
 	protected String path; // full path do entiteta, constructor TODO

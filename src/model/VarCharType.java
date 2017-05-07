@@ -1,18 +1,18 @@
 package model;
 
 public class VarCharType {
-	String string;
-	int length;
+	private String string;
+	private int length;
 	
-	VarCharType(int length) {
+	public VarCharType(int length) {
 		this.length = length;
 	}
 	
-	String get() {
+	public String get() {
 		return string;
 	}
 	
-	void set(String s) throws InvalidLengthException {
+	public void set(String s) throws InvalidLengthException {
 		if (s.length() > length) {
 			throw new InvalidLengthException("String of length " + s.length() + " cannot be fit in a varchar(" + length + ")");
 		}

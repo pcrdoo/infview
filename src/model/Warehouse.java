@@ -76,7 +76,7 @@ public class Warehouse extends InfResource {
 		return this.entities;
 	}
 
-	public void addPackage(Entity entity) {
+	public void addEntity(Entity entity) {
 		this.entities.add(entity);
 	}
 

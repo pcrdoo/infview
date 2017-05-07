@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import model.Entity;
 import model.InfTableModel;
 import model.files.File;
+import model.files.InvalidRecordException;
 import net.miginfocom.swing.MigLayout;
 
 public class TablePanel extends JPanel implements UpdateBlockListener {
@@ -27,6 +28,14 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 		if (entity instanceof File) {
 			File f = (File)entity;
 			f.addUpdateBlockListener(this);
+			try {
+				((File) entity).fetchNextBlock();	
+			} catch(Exception e) {
+				System.out.println(e);
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Not a file");
 		}
 		add(new JScrollPane(table), "grow");
 	}
