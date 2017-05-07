@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class DateType {
+public class DateType implements Comparable<DateType>{
 	private Date date;
 	private SimpleDateFormat sdf;
 
@@ -34,5 +34,10 @@ public class DateType {
 	@Override
 	public String toString() {
 		return sdf.format(date);
+	}
+
+	@Override
+	public int compareTo(DateType o) {
+		return date.compareTo(o.date);
 	}
 }

@@ -2,7 +2,7 @@ package model.datatypes;
 
 import model.InvalidLengthException;
 
-public class VarCharType {
+public class VarCharType implements Comparable<VarCharType> {
 	private String string;
 	private int length;
 	
@@ -25,6 +25,11 @@ public class VarCharType {
 	@Override
 	public String toString() {
 		return string;
+	}
+
+	@Override
+	public int compareTo(VarCharType o) {
+		return string.compareTo(o.string);
 	}
 	
 	

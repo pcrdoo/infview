@@ -18,43 +18,44 @@ import model.datatypes.VarCharType;
 
 public abstract class File extends Entity {
 	private ArrayList<UpdateBlockListener> updateBlockListeners;
-	
+
 	// Velicina bloka u slogovima, menja korisnik.
 	protected int blockFactor = 20;
-	
-	// Velicina sloga u bajtovima, setuje se kad se dodaje atribut, \r\n ruzan hak
-	protected int recordSize = 2; 
+
+	// Velicina sloga u bajtovima, setuje se kad se dodaje atribut, \r\n ruzan
+	// hak
+	protected int recordSize = 2;
 
 	// Broj slogova u datoteci
 	protected int numRecords = 0;
-	
+
 	// Broj blokova u datoteci, prikazati u view!
-	protected int numBlocks = 0; 
-	
+	protected int numBlocks = 0;
+
 	// Pokazivac dokle smo stigli
-	protected int filePointer = 0; 
-	
+	protected int filePointer = 0;
+
 	// Ukupno blokova fetchovanih ikada
 	protected int blocksFetched = 0;
 
 	// Full path do entiteta, constructor TODO
-	protected String path; 
+	protected String path;
 
 	protected RandomAccessFile file;
-	
+
 	public File(String name, String path, InfResource parent) {
 		super(name, parent);
 		// TODO Auto-generated constructor stub
 		updateBlockListeners = new ArrayList<UpdateBlockListener>();
 		this.path = path;
 	}
-	
+
 	private void lazyOpenFile() throws FileNotFoundException {
 		if (file == null) {
 			file = new RandomAccessFile(path, "r");
 		}
 	}
-	
+
 	private void closeFile() {
 		if (file != null) {
 			try {
@@ -63,18 +64,18 @@ public abstract class File extends Entity {
 				System.err.println("File: Failed closing file, ignoring as there's nothing we can do");
 			}
 		}
-		
+
 		file = null;
 	}
-	
+
 	public ArrayList<Record> fetchNextBlock() throws IOException, InvalidRecordException {
 		System.out.println("Fetching next block!");
 		lazyOpenFile();
-		
+
 		numRecords = (int) Math.ceil(((double) file.length()) / recordSize);
 		numBlocks = (int) Math.ceil(((double) numRecords) / blockFactor);
 
-		if(filePointer + 2 == recordSize * numRecords) {
+		if (filePointer + 2 == recordSize * numRecords) {
 			// opet glup hak za \r\n
 			closeFile();
 			return null;
@@ -91,75 +92,79 @@ public abstract class File extends Entity {
 		ArrayList<Record> currentBlock = new ArrayList<Record>();
 		for (int i = 0; i < recordsToRead; i++) {
 			// svaki slog predstavlja jednu liniju teksta
-			String line = contents.substring(i * recordSize, (i+1) * recordSize);
+			String line = contents.substring(i * recordSize, (i + 1) * recordSize);
 			int linePosition = 0;
 			Record record = new Record(this);
-			for(Attribute attr: this.attributes) {
+			for (Attribute attr : this.attributes) {
 				String field = line.substring(linePosition, linePosition + attr.getLength());
-				field = field.trim();
 				linePosition += attr.getLength();
-				Class<?> cls = attr.getValueClass();
-				
-				if(cls == CharType.class) {
-					CharType str = new CharType(field.length());
-					try {
-						str.set(field);
-						record.addAttribute(attr, str);
-					} catch(InvalidLengthException e) {
-						closeFile();
-						throw new InvalidRecordException("CharType", field);
-					}
-				} else if(cls == VarCharType.class) {
-					VarCharType str = new VarCharType(field.length());
-					try {
-						str.set(field);
-						record.addAttribute(attr, str);
-					} catch(InvalidLengthException e) {
-						closeFile();
-						throw new InvalidRecordException("VarCharType", field);
-					}
-				} else if(cls == DateType.class) {
-					try {
-						DateType date = new DateType(field);
-						record.addAttribute(attr, date);
-					} catch(ParseException e) {
-						closeFile();
-						throw new InvalidRecordException("Date", field);
-					}
-				} else if(cls == Boolean.class) {
-					if(field.equals("true")) {
-						record.addAttribute(attr, true);
-					} else if(field.equals("false")) {
-						record.addAttribute(attr, false);
-					} else {
-						closeFile();
-						throw new InvalidRecordException("Boolean", field);
-					}
-				} else if(cls == Integer.class) {
-					try {
-						if(attr.getName().equals("GodinaStudija") && (field.equals("a") || field.equals("A"))) {
-							field = "1";
-							// ISPRAVKA GRESKE U VELIKOM SETU PODATAKA
-						}
-						Integer num = Integer.parseInt(field);
-						record.addAttribute(attr, num);
-					} catch(NumberFormatException e) {
-						closeFile();
-						throw new InvalidRecordException("Integer", field);
-					}
-				} else {
-					System.out.println(cls + "!!");
+				try {
+					Object obj = parseStringField(field, attr);
+					record.addAttribute(attr, obj);
+				} catch (InvalidRecordException e) {
+					closeFile();
+					throw e;
 				}
 			}
 			currentBlock.add(record);
 		}
 
 		// pozicioniramo file pointer tamo gde smo stali sa citanjem
-		filePointer = (int)file.getFilePointer();
+		filePointer = (int) file.getFilePointer();
 		blocksFetched++;
 		return currentBlock;
 	}
 
+	public static Object parseStringField(String field, Attribute attr) throws InvalidRecordException {
+		Class<?> cls = attr.getValueClass();
+		field = field.trim();
+		if (cls == CharType.class) {
+			CharType str = new CharType(field.length());
+			try {
+				str.set(field);
+				return str;
+			} catch (InvalidLengthException e) {
+				throw new InvalidRecordException("CharType", field);
+			}
+		} else if (cls == VarCharType.class) {
+			VarCharType str = new VarCharType(field.length());
+			try {
+				str.set(field);
+				return str;
+			} catch (InvalidLengthException e) {
+				throw new InvalidRecordException("VarCharType", field);
+			}
+		} else if (cls == DateType.class) {
+			try {
+				DateType date = new DateType(field);
+				return date;
+			} catch (ParseException e) {
+				throw new InvalidRecordException("Date", field);
+			}
+		} else if (cls == Boolean.class) {
+			if (field.equals("true")) {
+				return true;
+			} else if (field.equals("false")) {
+				return false;
+			} else {
+				throw new InvalidRecordException("Boolean", field);
+			}
+		} else if (cls == Integer.class) {
+			try {
+				if (attr.getName().equals("GodinaStudija") && (field.equals("a") || field.equals("A"))) {
+					field = "1";
+					// ISPRAVKA GRESKE U VELIKOM SETU PODATAKA
+				}
+				Integer num = Integer.parseInt(field);
+				return num;
+			} catch (NumberFormatException e) {
+				throw new InvalidRecordException("Integer", field);
+			}
+		} else {
+			System.out.println(cls + "!!");
+			return null;
+		}
+	}
 
 	public abstract boolean addRecord(ArrayList<String> record) throws IOException;
 
@@ -220,7 +225,7 @@ public abstract class File extends Entity {
 	public void addUpdateBlockListener(UpdateBlockListener l) {
 		updateBlockListeners.add(l);
 	}
-	
+
 	public void removeUpdateBlockListener(UpdateBlockListener l) {
 		updateBlockListeners.remove(l);
 	}
