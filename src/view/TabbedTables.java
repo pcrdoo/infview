@@ -30,21 +30,39 @@ public class TabbedTables extends JPanel {
 	private JTabbedPane tabs; // dodajemo tablePanele
 	private boolean autoRefresh;
 
+	private JButton nextBlock;
+	private JSpinner blockFactor;
+
 	public TabbedTables(boolean autoRefresh) {
 		this.setLayout(new MigLayout("fill", "", "0[]0[grow]0"));
 		toolbar = new JToolBar();
 		toolbar.setRollover(true);
+		toolbar.setFloatable(false);
 		populateToolbar();
 		this.add(toolbar, "grow, wrap, height 50px");
 		tabs = new JTabbedPane();
+		tabs.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				Entity entity = getSelectedEntity();
+				if (entity != null && entity instanceof File) {
+					blockFactor.setValue(((File) entity).getBlockFactor());
+					blockFactor.setEnabled(true);
+					nextBlock.setEnabled(true);
+				} else {
+					blockFactor.setEnabled(false);
+					nextBlock.setEnabled(false);
+				}
+			}
+		});
 		this.add(tabs, "grow, height 250px");
 		this.autoRefresh = autoRefresh;
 	}
 
 	private void populateToolbar() {
 		// FETCH NEXT BLOCK
-		JButton button = new JButton("Fetch Next Block");
-		button.addActionListener(new ActionListener() {
+		nextBlock = new JButton("Fetch Next Block");
+		nextBlock.setEnabled(false);
+		nextBlock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Entity entity = getSelectedEntity();
 				if (entity != null && entity instanceof File) {
@@ -58,27 +76,29 @@ public class TabbedTables extends JPanel {
 
 			}
 		});
-		toolbar.add(button);
+		toolbar.add(nextBlock);
 		toolbar.addSeparator();
 		toolbar.add(new JLabel("Block Factor: "));
-		SpinnerModel numberModel = new SpinnerNumberModel();
-		JSpinner spinner = new JSpinner(numberModel);
-		JFormattedTextField field = (JFormattedTextField) spinner.getEditor().getComponent(0);
+		
+		// Block factor spinner
+		SpinnerModel numberModel = new SpinnerNumberModel(20, 1, 100, 1);
+		blockFactor = new JSpinner(numberModel);
+		blockFactor.setEnabled(false);
+		JFormattedTextField field = (JFormattedTextField) blockFactor.getEditor().getComponent(0);
 		DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
 		formatter.setCommitsOnValidEdit(true);
-		spinner.setValue(0);
-		// na change taba promenis spinner value i disablujes ga kad nema nista TODO
-		spinner.addChangeListener(new ChangeListener() {
+		blockFactor.setValue(0);
+		blockFactor.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				Entity entity = getSelectedEntity();
-				if(entity != null && entity instanceof File) {
-					((File)entity).setBlockFactor((Integer)spinner.getValue());
+				if (entity != null && entity instanceof File) {
+					((File) entity).setBlockFactor((Integer) blockFactor.getValue());
 				}
 			}
 
 		});
-		toolbar.add(spinner);
+		toolbar.add(blockFactor);
 	}
 
 	private Entity getSelectedEntity() {
