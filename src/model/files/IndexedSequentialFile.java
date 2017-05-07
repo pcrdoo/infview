@@ -13,11 +13,6 @@ public class IndexedSequentialFile extends File {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public boolean fetchNextBlock() throws IOException {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean addRecord(ArrayList<String> record) throws IOException {

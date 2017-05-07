@@ -30,6 +30,7 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer())
 	    .setHorizontalAlignment(JLabel.CENTER);
 		
+		System.out.println("Kreiran tablepanel");
 		if (entity instanceof File) {
 			File f = (File)entity;
 			if(autoRefresh) {
