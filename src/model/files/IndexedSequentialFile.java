@@ -130,14 +130,15 @@ public class IndexedSequentialFile extends SequentialFile {
 		closeFile();
 		return makeTreeFromElements(elements);
 	}
+	
 	@Override
-	public boolean addRecord(ArrayList<String> record) throws IOException {
-		// TODO Auto-generated method stub
+	public boolean addRecord(Record record) throws IOException {
+		
 		return false;
 	}
 
 	@Override
-	public boolean updateRecord(ArrayList<String> record) throws IOException {
+	public boolean updateRecord(Record record) throws IOException {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -149,9 +150,8 @@ public class IndexedSequentialFile extends SequentialFile {
 	}
 
 	@Override
-	public boolean deleteRecord(ArrayList<String> record) {
+	public boolean deleteRecord(Record record) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

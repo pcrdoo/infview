@@ -23,25 +23,25 @@ public class SerialFile extends File {
 	}
 
 	@Override
-	public boolean addRecord(ArrayList<String> record) throws IOException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateRecord(ArrayList<String> record) throws IOException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public List<Record> findRecord(String[] terms, boolean all) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean deleteRecord(ArrayList<String> record) {
+	public boolean addRecord(Record record) throws IOException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateRecord(Record record) throws IOException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteRecord(Record record) {
 		// TODO Auto-generated method stub
 		return false;
 	}

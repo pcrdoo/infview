@@ -117,7 +117,18 @@ public class TabbedTablesController {
 		public void actionPerformed(ActionEvent e) {
 			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), null);
 			searchDialog.setModal(true);
-			searchDialog.setVisible(true); // block!
+			searchDialog.setVisible(true);
+			
+			Entity entity = tt.getSelectedEntity();
+			
+			if (entity instanceof SequentialFile) {
+				try {
+					((SequentialFile)entity).addRecord(searchDialog.getRecord());
+				} catch (IOException e1) {
+					System.out.println(e1);
+					e1.printStackTrace();
+				}
+			}
 		}
 	}
 
