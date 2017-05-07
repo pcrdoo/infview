@@ -43,7 +43,7 @@ public class SequentialFile extends File {
 					result.add(record);
 				}
 				
-				if(record.greatherThen(terms)) {
+				if(record.greaterThan(terms)) {
 					return result;
 				}
 			}

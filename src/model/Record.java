@@ -57,7 +57,7 @@ public class Record {
 		return result;
 	}
 
-	public boolean greatherThen(String[] terms) {
+	public boolean greaterThan(String[] terms) {
 		for(int i = 0; i < this.entity.getAttributes().size(); i++) {
 			if(this.entity.getAttributes().get(i).isPrimaryKey() && !terms[i].equals(""))
 				return false;

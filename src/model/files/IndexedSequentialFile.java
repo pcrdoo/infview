@@ -7,7 +7,7 @@ import java.util.List;
 import model.InfResource;
 import model.Record;
 
-public class IndexedSequentialFile extends File {
+public class IndexedSequentialFile extends SequentialFile {
 
 
 	public IndexedSequentialFile(String name, String path, InfResource parent) {
