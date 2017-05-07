@@ -41,9 +41,9 @@ public class MainView extends JFrame {
 		this.setTitle("InfView");
 		this.setSize(Constants.WINDOW_SIZE);
 		this.setLocationRelativeTo(null);
-		this.setLayout(new MigLayout("fill", "0[100, grow 30]5[700, grow 70]0", "0[grow 10]0[grow 90]0"));
+		this.setLayout(new MigLayout("fill", "0[180, grow 30]5[700, grow 70]0", "0[grow 10]0[grow 90]0"));
 		// Adds the menu bar.
-		this.menuBarView = new MenuBarView();
+		this.setJMenuBar(new MenuBarView());
 		// this.setJMenuBar(menuBarView);
 
 		// Adds the tool bar.
@@ -64,6 +64,7 @@ public class MainView extends JFrame {
 			}
 		});
 		this.toolBarView = toolBarController.getView();
+		toolBarView.setFloatable(false);
 
 		this.add(this.toolBarView, "wrap, span 2 1, grow");
 

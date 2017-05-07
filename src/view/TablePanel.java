@@ -6,7 +6,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import controller.TableController;
 import model.Entity;
@@ -35,6 +37,8 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 		table.setFillsViewportHeight(true);
 		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
 		System.out.println("Kreiran tablepanel");
 		if (entity instanceof File) {
 			File f = (File) entity;

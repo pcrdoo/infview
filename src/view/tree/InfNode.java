@@ -27,6 +27,7 @@ public class InfNode implements TreeNode {
 		this.children.clear();
 		if (this.resource.getChildren() != null) {
 			for (InfResource childRes : this.resource.getChildren()) {
+				System.out.println(childRes.getName() + " je dete od " + this.resource.getName());
 				InfNode child = new InfNode(childRes);
 				this.addChild(child);
 				if (childRes instanceof Warehouse || childRes instanceof Package || childRes instanceof Entity) {
@@ -72,7 +73,7 @@ public class InfNode implements TreeNode {
 
 	@Override
 	public boolean isLeaf() {
-		return this.resource instanceof Entity || this.children.isEmpty();
+		return this.children.isEmpty();
 	}
 
 	@Override

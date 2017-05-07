@@ -6,6 +6,7 @@
 
 package view;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import controller.MenuBarController;
 import java.util.*;
@@ -14,5 +15,9 @@ import java.util.*;
 public class MenuBarView extends JMenuBar {
    /** @pdRoleInfo migr=no name=MenuBarController assc=association2 mult=1..1 type=Composition */
    private MenuBarController menuBarController;
+   
+   public MenuBarView() {
+	   this.add(new JMenu("About"));
+   }
 
 }

@@ -51,7 +51,6 @@ public class TabbedTables extends JPanel {
 	public TabbedTables(boolean mainTable) {
 		this.setLayout(new MigLayout("fill", "", "0[]0[grow]0"));
 		toolbar = new JToolBar();
-		toolbar.setRollover(true);
 		toolbar.setFloatable(false);
 		populateToolbar();
 		if (mainTable) {
@@ -59,7 +58,7 @@ public class TabbedTables extends JPanel {
 			toolbar.setVisible(true);
 		} else {
 			JLabel relations = new JLabel("Relations:");
-			relations.setFont(new Font("Garamond", Font.BOLD, 20));
+			relations.setFont(new Font("Garamond", Font.PLAIN, 20));
 			this.add(relations, "grow, wrap, height 50px");
 		}
 		tabs = new JTabbedPane();

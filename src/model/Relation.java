@@ -14,7 +14,7 @@ public class Relation extends InfResource {
 	private Attribute referringAttribute;
 
 	public Relation(Attribute referringAttribute, Attribute referencedAttribute, InfResource parent) {
-		super(referringAttribute.getName(), parent);
+		super(referringAttribute.getParent().getName() + " - " + referringAttribute.getName(), parent);
 		this.referringAttribute = referringAttribute;
 		this.referencedAttribute = referencedAttribute;
 	}
