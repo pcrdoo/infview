@@ -50,9 +50,12 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SearchDialog d = new SearchDialog(tt.getSelectedEntity(), null, true, true);
+			SearchDialog d = new SearchDialog(tt.getSelectedEntity(), null, true, true, true);
 			d.setModal(true);
 			d.setVisible(true); // block!
+			
+			if(!d.isDoShit())
+				return;
 			
 			if (tt.getSelectedEntity() instanceof SequentialFile) {
 				SequentialFile file = (SequentialFile) tt.getSelectedEntity();
@@ -118,9 +121,12 @@ public class TabbedTablesController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), null, false, true);
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), null, false, true, false);
 			searchDialog.setModal(true);
 			searchDialog.setVisible(true);
+			
+			if(!searchDialog.isDoShit())
+				return;
 			
 			Entity entity = tt.getSelectedEntity();
 			
@@ -143,9 +149,12 @@ public class TabbedTablesController {
 				return;
 			
 			Record r = tt.getSelectedRow();
-			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), tt.getSelectedRow(), false, false);
+			SearchDialog searchDialog = new SearchDialog(tt.getSelectedEntity(), tt.getSelectedRow(), false, false, false);
 			searchDialog.setModal(true);
 			searchDialog.setVisible(true);
+			
+			if(!searchDialog.isDoShit())
+				return;
 			
 			Entity entity = tt.getSelectedEntity();
 			

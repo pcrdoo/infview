@@ -34,11 +34,12 @@ public class SearchDialog extends JDialog {
 	JButton ok;
 	Entity entity;
 	Record record;
+	boolean doShit = false;
 	
-	public SearchDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey) {
+	public SearchDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey, boolean isSearchNotSave) {
 		this.entity = entity;
 		this.record = record;
-		this.ok = new JButton("Search");
+		this.ok = new JButton(isSearchNotSave ? "Search" : "Save");
 		this.controller = new GenericDialogController(this);
 		findAll = new JCheckBox("Find all occurrences");
 		toFile = new JCheckBox("Write to file");
@@ -46,9 +47,11 @@ public class SearchDialog extends JDialog {
 		
 		atrCount = entity.getAttributes().size();
 		int num = (atrCount + 4);
+		
 		if(!allowCheckBoxes)
 			num -= 3;
-		this.setSize(num, num);
+		
+		this.setSize(num * 30, num * 30);
 		
 		JPanel panel = new JPanel();
 		//panel.setSize(1000, 1000);
@@ -118,4 +121,13 @@ public class SearchDialog extends JDialog {
 	public void setOKListener(ActionListener l) {
 		this.ok.addActionListener(l);
 	}
+	
+	public boolean isDoShit() {
+		return doShit;
+	}
+
+	public void setDoShit(boolean doShit) {
+		this.doShit = doShit;
+	}
+
 }
