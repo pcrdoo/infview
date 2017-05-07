@@ -37,6 +37,9 @@ public abstract class File extends Entity {
 	
 	// Pokazivac dokle smo stigli
 	protected int filePointer = 0; 
+	
+	// Ukupno blokova fetchovanih ikada
+	protected int blocksFetched = 0;
 
 	// Full path do entiteta, constructor TODO
 	protected String path; 
@@ -162,8 +165,10 @@ public abstract class File extends Entity {
 
 		// pozicioniramo file pointer tamo gde smo stali sa citanjem
 		filePointer = (int)file.getFilePointer();
+		blocksFetched++;
 		return true;
 	}
+
 
 	public abstract boolean addRecord(ArrayList<String> record) throws IOException;
 
@@ -244,7 +249,7 @@ public abstract class File extends Entity {
 	}
 
 	// ;
-
-	// TODO: listeners IZNAD
-	// TODO: ucitavanje iz serial ispod
+	public int getBlocksFetched() {
+		return blocksFetched;
+	}
 }

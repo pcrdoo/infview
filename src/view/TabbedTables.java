@@ -1,20 +1,22 @@
 package view;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
@@ -22,6 +24,7 @@ import javax.swing.text.DefaultFormatter;
 import model.Entity;
 import model.files.File;
 import model.files.InvalidRecordException;
+import model.files.SequentialFile;
 import net.miginfocom.swing.MigLayout;
 
 public class TabbedTables extends JPanel {
@@ -33,6 +36,7 @@ public class TabbedTables extends JPanel {
 	private JButton nextBlock;
 	private JSpinner blockFactor;
 	private JButton doSearch;
+	private JTextField blocksFetched;
 
 	public TabbedTables(boolean autoRefresh) {
 		this.setLayout(new MigLayout("fill", "", "0[]0[grow]0"));
@@ -47,13 +51,20 @@ public class TabbedTables extends JPanel {
 				Entity entity = getSelectedEntity();
 				if (entity != null && entity instanceof File) {
 					blockFactor.setValue(((File) entity).getBlockFactor());
+					blocksFetched.setText(String.valueOf(((File) entity).getBlocksFetched()));
 					blockFactor.setEnabled(true);
 					nextBlock.setEnabled(true);
-					doSearch.setEnabled(true);
+					if (entity instanceof SequentialFile) {
+						doSearch.setEnabled(true);
+					}
+					blocksFetched.setEnabled(true);
 				} else {
 					blockFactor.setEnabled(false);
+					blockFactor.setValue(20);
 					nextBlock.setEnabled(false);
 					doSearch.setEnabled(false);
+					blocksFetched.setEnabled(false);
+					blocksFetched.setText("0");
 				}
 			}
 		});
@@ -67,12 +78,13 @@ public class TabbedTables extends JPanel {
 		nextBlock.setEnabled(false);
 		nextBlock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("EBRE");
 				Entity entity = getSelectedEntity();
 				if (entity != null && entity instanceof File) {
 					try {
 						((File) entity).fetchNextBlock();
-						((File) entity).fireUpdateBlockPerformed(); // ozvezavanje tabele
+						((File) entity).fireUpdateBlockPerformed(); // ozvezavanje
+																	// tabele
+						blocksFetched.setText(String.valueOf(((File) entity).getBlocksFetched()));
 					} catch (IOException | InvalidRecordException ex) {
 						System.out.println("Invalid blockfetch");
 						ex.printStackTrace();
@@ -84,7 +96,7 @@ public class TabbedTables extends JPanel {
 		toolbar.add(nextBlock);
 		toolbar.addSeparator();
 		toolbar.add(new JLabel("Block Factor: "));
-		
+
 		// Block factor spinner
 		SpinnerModel numberModel = new SpinnerNumberModel(20, 1, 100, 1);
 		blockFactor = new JSpinner(numberModel);
@@ -104,7 +116,7 @@ public class TabbedTables extends JPanel {
 		});
 		toolbar.add(blockFactor);
 		toolbar.addSeparator();
-		
+
 		// Search
 		doSearch = new JButton("Search");
 		doSearch.setEnabled(false);
@@ -112,12 +124,22 @@ public class TabbedTables extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				SearchDialog searchDialog = new SearchDialog();
 				searchDialog.setModal(true);
-				searchDialog.setVisible(true); //block!
+				searchDialog.setVisible(true); // block!
 			}
 		});
 		toolbar.add(doSearch);
 		toolbar.addSeparator();
-		
+
+		// Counter:
+		toolbar.add(new JLabel("Number of blocks fetched:"));
+		blocksFetched = new JTextField("0");
+		blocksFetched.setEditable(false);
+		blocksFetched.setEnabled(false);
+		blocksFetched.setPreferredSize(new Dimension(40, 30));
+		blocksFetched.setHorizontalAlignment(SwingConstants.CENTER);
+		toolbar.add(blocksFetched);
+		toolbar.addSeparator();
+
 	}
 
 	private Entity getSelectedEntity() {
