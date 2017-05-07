@@ -20,6 +20,7 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 	// private BottomPanelController bottomPanelController;
 	private JTable table;
 	private InfTableModel tableModel;
+
 	private Entity entity;
 
 	public TablePanel(Entity entity, boolean autoRefresh) {
@@ -55,5 +56,9 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 
 	public Entity getEntity() {
 		return entity;
+	}
+	
+	public InfTableModel getTableModel() {
+		return tableModel;
 	}
 }

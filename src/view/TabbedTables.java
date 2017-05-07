@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SpinnerModel;
@@ -21,6 +23,8 @@ import javax.swing.text.DefaultFormatter;
 
 import controller.TabbedTablesController;
 import model.Entity;
+import model.InfTableModel;
+import model.Record;
 import model.files.File;
 import model.files.SequentialFile;
 import net.miginfocom.swing.MigLayout;
@@ -154,6 +158,19 @@ public class TabbedTables extends JPanel {
 		return ((TablePanel) tabs.getSelectedComponent()).getEntity();
 	}
 
+	public Record getSelectedRow() {
+		Entity entity = getSelectedEntity();
+		if(entity == null) {
+			return null;
+		}
+		TablePanel panel = ((TablePanel) tabs.getSelectedComponent());
+		int selectedRow = panel.getTable().getSelectedRow();
+		if(selectedRow == -1) {
+			return null;
+		}
+		return panel.getTableModel().getRecordAt(selectedRow);
+	}
+	
 	public boolean addTab(Entity entity) {
 		for (Component c : tabs.getComponents()) {
 			if (c instanceof TablePanel) {

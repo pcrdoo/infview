@@ -22,6 +22,14 @@ public class InfTableModel extends AbstractTableModel {
 	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}
+	
+	public Record getRecordAt(int rowIndex) {
+		if(rowIndex < 0 || rowIndex >= currentBlock.size()) {
+			return null;
+		} else {
+			return currentBlock.get(rowIndex);
+		}
+	}
 
 	@Override
 	public int getRowCount() {
