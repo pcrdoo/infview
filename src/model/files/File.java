@@ -1,6 +1,7 @@
 package model.files;
 
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,8 @@ public abstract class File extends Entity {
 	
 	 // Trenutno ucitan blok
 	protected ArrayList<Record> currentBlock;
+
+	protected RandomAccessFile file;
 	
 	public File(String name, String path, InfResource parent) {
 		super(name, parent);
@@ -51,16 +54,36 @@ public abstract class File extends Entity {
 		this.path = path;
 	}
 	
+	private void lazyOpenFile() throws FileNotFoundException {
+		if (file == null) {
+			file = new RandomAccessFile(path, "r");
+		}
+	}
+	
+	private void closeFile() {
+		if (file != null) {
+			try {
+				file.close();
+			} catch (IOException e) {
+				System.err.println("File: Failed closing file, ignoring as there's nothing we can do");
+			}
+		}
+		
+		file = null;
+	}
+	
 	public boolean fetchNextBlock() throws IOException, InvalidRecordException {
 		System.out.println("Fetching next block!");
-		RandomAccessFile file = new RandomAccessFile(path, "r");
+		lazyOpenFile();
+		
 		numRecords = (int) Math.ceil(((double) file.length()) / recordSize);
 		numBlocks = (int) Math.ceil(((double) numRecords) / blockFactor);
 
 		System.out.println(numRecords + " " + filePointer + " " + recordSize);
 		if(filePointer + 2 == recordSize * numRecords) {
 			// opet glup hak za \r\n
-			file.close();
+			closeFile();
+			file = null;
 			return false;
 		}
 		int recordsLeft = numRecords - filePointer / recordSize;
@@ -90,7 +113,7 @@ public abstract class File extends Entity {
 						str.set(field);
 						record.addAttribute(attr, str);
 					} catch(InvalidLengthException e) {
-						file.close();
+						closeFile();
 						throw new InvalidRecordException("CharType", field);
 					}
 				} else if(cls == VarCharType.class) {
@@ -99,7 +122,7 @@ public abstract class File extends Entity {
 						str.set(field);
 						record.addAttribute(attr, str);
 					} catch(InvalidLengthException e) {
-						file.close();
+						closeFile();
 						throw new InvalidRecordException("VarCharType", field);
 					}
 				} else if(cls == Date.class) {
@@ -109,7 +132,7 @@ public abstract class File extends Entity {
 						System.out.println(date);
 						record.addAttribute(attr, date);
 					} catch(ParseException e) {
-						file.close();
+						closeFile();
 						throw new InvalidRecordException("Date", field);
 					}
 				} else if(cls == Boolean.class) {
@@ -118,7 +141,7 @@ public abstract class File extends Entity {
 					} else if(field.equals("false")) {
 						record.addAttribute(attr, false);
 					} else {
-						file.close();
+						closeFile();
 						throw new InvalidRecordException("Boolean", field);
 					}
 				} else if(cls == Integer.class) {
@@ -130,7 +153,7 @@ public abstract class File extends Entity {
 						Integer num = Integer.parseInt(field);
 						record.addAttribute(attr, num);
 					} catch(NumberFormatException e) {
-						file.close();
+						closeFile();
 						throw new InvalidRecordException("Integer", field);
 					}
 				} else {
@@ -142,7 +165,6 @@ public abstract class File extends Entity {
 
 		// pozicioniramo file pointer tamo gde smo stali sa citanjem
 		filePointer = (int)file.getFilePointer();
-		file.close();
 		fireUpdateBlockPerformed(); // ozvezavanje tabele
 		return true;
 	}
