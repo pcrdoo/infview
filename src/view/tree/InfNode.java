@@ -29,7 +29,7 @@ public class InfNode implements TreeNode {
 			for (InfResource childRes : this.resource.getChildren()) {
 				InfNode child = new InfNode(childRes);
 				this.addChild(child);
-				if (childRes instanceof Warehouse || childRes instanceof Package) {
+				if (childRes instanceof Warehouse || childRes instanceof Package || childRes instanceof Entity) {
 					child.populate();
 				}
 			}

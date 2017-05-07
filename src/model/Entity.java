@@ -33,7 +33,8 @@ public class Entity extends InfResource {
 
     @Override
     public List<? extends InfResource> getChildren() {
-        return Stream.concat(this.attributes.stream(), this.relations.stream()).collect(Collectors.toList());
+        //return Stream.concat(this.attributes.stream(), this.relations.stream()).collect(Collectors.toList());
+    	return this.inverseRelations;
     }
 
     public ArrayList<Attribute> getAttributes() {
