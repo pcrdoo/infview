@@ -91,7 +91,7 @@ public class TabbedTablesController {
 					MainView.getInstance().getDesktopView().attachDetailsTable();
 					MainView.getInstance().getDesktopView().detachIndexTree();
 					
-				} else {
+				} else if (entity instanceof IndexedSequentialFile) {
 					MainView.getInstance().getDesktopView().detachDetailsTable();
 					MainView.getInstance().getDesktopView().attachIndexTree(((IndexedSequentialFile)entity).getTree().getRoot());
 				}
