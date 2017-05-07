@@ -1,24 +1,20 @@
 package model.files;
 
-import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
-import java.util.StringTokenizer;
-
-import javax.swing.event.EventListenerList;
 
 import model.Attribute;
-import model.CharType;
 import model.Entity;
 import model.InfResource;
 import model.InvalidLengthException;
 import model.Record;
-import model.VarCharType;
+import model.datatypes.CharType;
+import model.datatypes.DateType;
+import model.datatypes.VarCharType;
 
 public abstract class File extends Entity {
 	private ArrayList<UpdateBlockListener> updateBlockListeners;
@@ -126,10 +122,9 @@ public abstract class File extends Entity {
 						closeFile();
 						throw new InvalidRecordException("VarCharType", field);
 					}
-				} else if(cls == Date.class) {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				} else if(cls == DateType.class) {
 					try {
-						Date date = sdf.parse(field);
+						DateType date = new DateType(field);
 						record.addAttribute(attr, date);
 					} catch(ParseException e) {
 						closeFile();

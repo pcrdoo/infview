@@ -9,11 +9,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import model.Attribute;
-import model.CharType;
 import model.InfResource;
 import model.InvalidLengthException;
 import model.Record;
-import model.VarCharType;
+import model.datatypes.CharType;
+import model.datatypes.VarCharType;
 
 public class SerialFile extends File {
 

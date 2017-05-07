@@ -1,7 +1,6 @@
 package metaschema;
 
 import java.io.File;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,13 +11,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import model.Attribute;
-import model.CharType;
 import model.Entity;
 import model.InfResource;
 import model.Package;
 import model.Relation;
-import model.VarCharType;
 import model.Warehouse;
+import model.datatypes.CharType;
+import model.datatypes.DateType;
+import model.datatypes.VarCharType;
 import model.files.IndexedSequentialFile;
 import model.files.SequentialFile;
 import model.files.SerialFile;
@@ -85,7 +85,7 @@ public class MetaschemaDeserializer {
 			clazz = VarCharType.class;
 			break;
 		case "datetime":
-			clazz = Date.class;
+			clazz = DateType.class;
 			break;
 		case "boolean":
 			clazz = Boolean.class;

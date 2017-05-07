@@ -1,4 +1,6 @@
-package model;
+package model.datatypes;
+
+import model.InvalidLengthException;
 
 public class CharType {
 	private String string;
