@@ -1,6 +1,7 @@
 package model.indextree;
+import java.io.Serializable;
 
-public class KeyElement {
+public class KeyElement implements Serializable {
 	public Class<?> type;
 	public Object value;
 	

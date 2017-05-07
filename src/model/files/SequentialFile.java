@@ -4,10 +4,20 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.InfResource;
 import model.Record;
+import model.indextree.Tree;
+
+import model.Attribute;
+
+import model.indextree.Tree;
+import model.indextree.Node;
+import model.indextree.KeyElement;
+import model.indextree.NodeElement;
+import model.indextree.InvariantViolationException;
 
 public class SequentialFile extends File {
 
@@ -58,7 +68,7 @@ public class SequentialFile extends File {
 		}
 		return result;
 	}
-
+	
 	public List<Record> findRecord(String[] terms, boolean all, boolean toFile, boolean fromStart) {
 		System.out.println("Pocinjem da trazim gari...");
 		if (fromStart)

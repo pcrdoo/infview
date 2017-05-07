@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 
 import controller.DesktopController;
 import net.miginfocom.swing.MigLayout;
+import model.indextree.Node;
+import view.indextree.IndexTreeView;
 
 public class DesktopView extends JPanel {
 	private DesktopController desktopController;
@@ -48,6 +50,23 @@ public class DesktopView extends JPanel {
 				this.repaint();
 			}
 		}
+	}
+	
+	public void attachIndexTree(Node node) {
+		detachIndexTree();
+		this.add(new IndexTreeView(node), "grow");
+		this.repaint();
+	}
+	
+	public void detachIndexTree() {
+		System.out.println("Seeking");
+		for(Component c : this.getComponents()) {
+			if(c instanceof IndexTreeView) {
+				this.remove(c);
+				System.out.println("Destroying");
+				this.repaint();
+			}
+		}		
 	}
 
 }

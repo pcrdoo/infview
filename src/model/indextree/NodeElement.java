@@ -1,7 +1,8 @@
 package model.indextree;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class NodeElement {
+public class NodeElement implements Serializable {
 	private int blockAddress;
 	private ArrayList<KeyElement> keys;
 	

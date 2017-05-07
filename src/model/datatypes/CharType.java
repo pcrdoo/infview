@@ -1,8 +1,9 @@
 package model.datatypes;
 
 import model.InvalidLengthException;
+import java.io.Serializable;
 
-public class CharType implements Comparable<CharType> {
+public class CharType implements Comparable<CharType>, Serializable {
 	private String string;
 	private int length;
 	

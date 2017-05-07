@@ -97,6 +97,7 @@ public class MetaschemaDeserializer {
 			throw new MetaschemaDeserializationException("Unknown type '" + type + "'");
 		}
 		Attribute a = new Attribute("", parent, clazz, length, primaryKey);
+
 		deserializeToInfResource(attributeJson, a);
 
 		if (attributes.containsKey(a.getName())) {
@@ -107,11 +108,13 @@ public class MetaschemaDeserializer {
 		return a;
 	}
 
-	public Entity deserializeEntity(JsonObject entityJson, HashMap<String, Entity> entities, HashMap<String, JsonArray> relationsJsons, Package parent, String warehouseLocation) throws MetaschemaDeserializationException {
+	public Entity deserializeEntity(JsonObject entityJson, HashMap<String, Entity> entities,
+			HashMap<String, JsonArray> relationsJsons, Package parent, String warehouseLocation)
+			throws MetaschemaDeserializationException {
 		String type = entityJson.get("type").getAsString();
 		String fullPath = warehouseLocation + File.separatorChar + entityJson.get("url").getAsString();
 		Entity e;
-		switch(type) {
+		switch (type) {
 		case "serial":
 			e = new SerialFile("", fullPath, parent);
 			break;
@@ -124,28 +127,37 @@ public class MetaschemaDeserializer {
 		default:
 			throw new MetaschemaDeserializationException("Unkown entity type: " + type);
 		}
-		
+
 		deserializeToInfResource(entityJson, e);
-		
+
 		String name = e.getName();
 		if (entities.containsKey(name)) {
 			throw new MetaschemaDeserializationException("Duplicate entity with name '" + name + "'");
 		}
-		
+
 		JsonArray attributesJson = entityJson.getAsJsonArray("attributes");
 		HashMap<String, Attribute> attributes = new HashMap<>();
 		for (JsonElement attributeJson : attributesJson) {
 			e.addAttribute(deserializeAttribute(attributeJson.getAsJsonObject(), attributes, e));
 		}
-		
+
 		entities.put(name, e);
+
+		if (e instanceof IndexedSequentialFile) {
+			try {
+				((IndexedSequentialFile)e).loadOrMakeTree();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
 		relationsJsons.put(name, entityJson.getAsJsonArray("relations"));
-		
+
 		return e;
 	}
 
-	public Package deserializePackage(JsonObject packageJson, HashMap<String, Package> packages, InfResource parent, String warehouseLocation)
-			throws MetaschemaDeserializationException {
+	public Package deserializePackage(JsonObject packageJson, HashMap<String, Package> packages, InfResource parent,
+			String warehouseLocation) throws MetaschemaDeserializationException {
 		Package p = new Package("", parent);
 		deserializeToInfResource(packageJson, p);
 		String name = p.getName();
@@ -161,7 +173,8 @@ public class MetaschemaDeserializer {
 			JsonArray entitiesJson = packageJson.getAsJsonArray("entities");
 
 			for (JsonElement entityJson : entitiesJson) {
-				p.addEntity(deserializeEntity(entityJson.getAsJsonObject(), entities, relationsJsons, p, warehouseLocation));
+				p.addEntity(deserializeEntity(entityJson.getAsJsonObject(), entities, relationsJsons, p,
+						warehouseLocation));
 			}
 		}
 

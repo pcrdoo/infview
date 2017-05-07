@@ -1,6 +1,6 @@
 package model.indextree;
-
-public class Tree {
+import java.io.Serializable;
+public class Tree implements Serializable {
 	private Node root;
 	
 	public Tree(Node root) {

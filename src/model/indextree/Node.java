@@ -1,11 +1,15 @@
 package model.indextree;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Node {
-	private ArrayList<Node> children;
+public class Node implements Serializable {
+	private ArrayList<Node> children = new ArrayList<>();
 	private ArrayList<NodeElement> elements;
 	
-	public Node(ArrayList<NodeElement> elements) {
+	public Node(ArrayList<NodeElement> elements) throws InvariantViolationException {
+		if (elements.size() > 2) {
+			throw new InvariantViolationException("Cannot have more than 2 elements");
+		}
 		this.elements = elements;
 	}
 	

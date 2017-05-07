@@ -89,14 +89,16 @@ public class TabbedTablesController {
 				tt.enableToolbar(entity);
 				if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
 					MainView.getInstance().getDesktopView().attachDetailsTable();
+					MainView.getInstance().getDesktopView().detachIndexTree();
+					
 				} else {
-					// TODO David: ovde show tree ako je IndexedSequentialFile
-					// attach/detach
 					MainView.getInstance().getDesktopView().detachDetailsTable();
+					MainView.getInstance().getDesktopView().attachIndexTree(((IndexedSequentialFile)entity).getTree().getRoot());
 				}
 			} else {
 				tt.disableToolbar();
 				MainView.getInstance().getDesktopView().detachDetailsTable();
+				MainView.getInstance().getDesktopView().detachIndexTree();
 			}
 
 		}

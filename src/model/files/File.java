@@ -50,13 +50,13 @@ public abstract class File extends Entity {
 		this.path = path;
 	}
 
-	private void lazyOpenFile() throws FileNotFoundException {
+	protected void lazyOpenFile() throws FileNotFoundException {
 		if (file == null) {
 			file = new RandomAccessFile(path, "r");
 		}
 	}
 
-	private void closeFile() {
+	protected void closeFile() {
 		if (file != null) {
 			try {
 				file.close();
@@ -69,7 +69,6 @@ public abstract class File extends Entity {
 	}
 
 	public ArrayList<Record> fetchNextBlock() throws IOException, InvalidRecordException {
-		System.out.println("Fetching next block!");
 		lazyOpenFile();
 
 		numRecords = (int) Math.ceil(((double) file.length()) / recordSize);
