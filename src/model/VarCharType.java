@@ -17,7 +17,7 @@ public class VarCharType {
 			throw new InvalidLengthException("String of length " + s.length() + " cannot be fit in a varchar(" + length + ")");
 		}
 		
-		this.string = s;
+		this.string = s.trim();
 	}
 
 	@Override
