@@ -3,6 +3,7 @@ package model.files;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -210,21 +211,25 @@ public class SequentialFile extends File {
 	}
 
 	public void merge() throws IOException, InvalidRecordException, DuplicateKeyException {
-		rewind();
 
-		FileInputStream changesStream = new FileInputStream(getChangesFilePath());
-		TreeMap<Record, ChangeType> changes = readChanges(changesStream);
-		changesStream.close();
+		try {
+			rewind();
+			FileInputStream changesStream = new FileInputStream(getChangesFilePath());
+			TreeMap<Record, ChangeType> changes = readChanges(changesStream);
+			changesStream.close();
 
-		ArrayList<Record> allRecords = readRecordsWithChanges(changes);
+			ArrayList<Record> allRecords = readRecordsWithChanges(changes);
 
-		closeFile();
-		rewind();
+			closeFile();
+			rewind();
 
-		FileOutputStream stream = new FileOutputStream(path);
-		writeToFile(stream, allRecords);
-		stream.close();
-		truncateChangesFile();
+			FileOutputStream stream = new FileOutputStream(path);
+			writeToFile(stream, allRecords);
+			stream.close();
+			truncateChangesFile();
+		} catch (FileNotFoundException e) {
+			System.out.println("No changes were made.");
+		}
 	}
 
 	public void truncateChangesFile() {
