@@ -160,6 +160,10 @@ public class SequentialFile extends File {
 		ArrayList<Record> allRecords = new ArrayList<>();
 		ArrayList<Record> currentBlock;
 		while ((currentBlock = fetchNextBlock()) != null) {
+			if (currentBlock.size() == 0) {
+				break;
+			}
+			
 			for (Record r : currentBlock) {
 				Entry<Record, ChangeType> entry = changes.ceilingEntry(r);
 

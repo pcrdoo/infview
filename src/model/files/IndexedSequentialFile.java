@@ -17,7 +17,7 @@ import model.indextree.Node;
 import model.indextree.NodeElement;
 import model.indextree.IndexTree;
 
-public class IndexedSequentialFile extends SequentialFile {
+public class IndexedSequentialFile extends File {
 	private IndexTree indexTree;
 
 	public IndexedSequentialFile(String name, String path, InfResource parent) {
@@ -128,6 +128,8 @@ public class IndexedSequentialFile extends SequentialFile {
 		}
 
 		closeFile();
+		filePointer = 0;
+		
 		return makeTreeFromElements(elements);
 	}
 

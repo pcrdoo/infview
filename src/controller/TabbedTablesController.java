@@ -200,7 +200,7 @@ public class TabbedTablesController {
 			Entity entity = tt.getSelectedEntity();
 
 			if (!(entity instanceof SequentialFile)) {
-				JOptionPane.showMessageDialog(tt, "Ne mogu ermergerdujem zajebane formate");
+				JOptionPane.showMessageDialog(tt, "Cannot merge non-sequential file formats");
 				return;
 			}
 
