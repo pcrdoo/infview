@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.UpdateBlockListener;
 import model.Attribute;
 import model.Entity;
 import model.InfResource;

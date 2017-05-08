@@ -10,13 +10,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import controller.TableController;
+import controller.UpdateBlockListener;
 import model.Entity;
 import model.InfTableModel;
 import model.Record;
 import model.files.File;
 import model.files.IndexedSequentialFile;
 import model.files.SequentialFile;
-import model.files.UpdateBlockListener;
 import net.miginfocom.swing.MigLayout;
 
 public class TablePanel extends JPanel implements UpdateBlockListener {
