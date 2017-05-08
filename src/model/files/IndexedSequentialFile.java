@@ -15,10 +15,10 @@ import model.indextree.InvariantViolationException;
 import model.indextree.KeyElement;
 import model.indextree.Node;
 import model.indextree.NodeElement;
-import model.indextree.Tree;
+import model.indextree.IndexTree;
 
 public class IndexedSequentialFile extends SequentialFile {
-	private Tree tree;
+	private IndexTree indexTree;
 
 	public IndexedSequentialFile(String name, String path, InfResource parent) {
 		super(name, path, parent);
@@ -32,12 +32,12 @@ public class IndexedSequentialFile extends SequentialFile {
 		String treePath = getTreePath();
 		try {
 			ObjectInputStream stream = new ObjectInputStream(new FileInputStream(treePath));
-			Tree tree = (Tree) stream.readObject();
-			this.tree = tree;
+			IndexTree indexTree = (IndexTree) stream.readObject();
+			this.indexTree = indexTree;
 			stream.close();
 		} catch (Exception e) {
 			System.err.println("Tree for " + name + " not available, building a new one.");
-			this.tree = makeTree();
+			this.indexTree = makeTree();
 			writeTree();
 		}
 	}
@@ -45,15 +45,15 @@ public class IndexedSequentialFile extends SequentialFile {
 	public void writeTree() throws IOException {
 		String treePath = getTreePath();
 		ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(treePath));
-		stream.writeObject(tree);
+		stream.writeObject(indexTree);
 		stream.close();
 	}
 
-	public Tree getTree() {
-		return tree;
+	public IndexTree getTree() {
+		return indexTree;
 	}
 
-	private Tree makeTreeFromElements(ArrayList<NodeElement> elements) {
+	private IndexTree makeTreeFromElements(ArrayList<NodeElement> elements) {
 		ArrayList<Node> level = new ArrayList<>();
 
 		// Group the first level
@@ -97,10 +97,10 @@ public class IndexedSequentialFile extends SequentialFile {
 			level = newLevel;
 		}
 
-		return new Tree(level.get(0));
+		return new IndexTree(level.get(0));
 	}
 
-	private Tree makeTree() throws IOException, InvalidRecordException {
+	private IndexTree makeTree() throws IOException, InvalidRecordException {
 		lazyOpenFile();
 
 		ArrayList<NodeElement> elements = new ArrayList<>();

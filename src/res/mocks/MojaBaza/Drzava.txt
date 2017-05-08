@@ -1,3 +1,0 @@
-Povrsina,Ime,Glavni grad
-254,Srbija,Beograd
-231,Nepal,Katmandu
