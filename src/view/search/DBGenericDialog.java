@@ -35,8 +35,8 @@ public class DBGenericDialog extends JDialog implements CloseableDialog {
 	private Entity entity;
 	private boolean isSearch;
 	private DBSearchDialogController controller;
-	private int heigt;
-	private int fieldHeight = 50;
+	private int heigt = 1;
+	private int fieldHeight = 40;
 	private JButton ok;
 	private JPanel panel;
 	private boolean closed = true;
@@ -54,7 +54,7 @@ public class DBGenericDialog extends JDialog implements CloseableDialog {
 		
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
-		this.setSize(400, 5 * fieldHeight);
+		this.setSize(400, 10 * fieldHeight);
 		this.setLocationRelativeTo(null);
 
 		panel = new JPanel();
