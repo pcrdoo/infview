@@ -220,12 +220,13 @@ public class TabbedTablesController {
 				return;
 			}
 			Table table = (Table) entity;
-
+			
 			DBGenericDialog dialog = new DBGenericDialog(entity, false);
 
 			dialog.setVisible(true);
 
 			if (dialog.isClosed()) {
+				System.out.println("EVO ME");
 				return;
 			}
 			

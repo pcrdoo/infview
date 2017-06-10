@@ -4,6 +4,7 @@ import java.awt.Color;
 import view.CloseableDialog;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class DBGenericDialog extends JDialog implements CloseableDialog {
 	private ArrayList<ExpressionRow> expression;
 	
 	public DBGenericDialog(Entity entity, boolean isSearch) {
+		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setEntity(entity);
 		this.isSearch = isSearch;
 		this.ok = new JButton(isSearch ? "Search" : "Sort");
@@ -108,7 +110,15 @@ public class DBGenericDialog extends JDialog implements CloseableDialog {
 	public FilterParams getFilterParams()  throws InvalidRecordException{
 		FilterParams params = new FilterParams();
 		
-		StringBuilder sb = new StringBuilder("SELECT * WHERE ");
+		StringBuilder sb = new StringBuilder();
+		if(isSearch) {
+			sb.append("SELECT * FROM ");
+			sb.append(entity.getName());
+			sb.append(" WHERE ");
+		} else {
+			sb.append("ORDER BY ");
+		}
+		
 		for (ExpressionRow ep : this.expression) {
 			sb.append(ep.getQuery());
 		}

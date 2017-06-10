@@ -39,6 +39,6 @@ class AttributeComboBox extends JComboBox<AttributeWrapper> implements Expressio
 
 	@Override
 	public String getExpression() {
-		return this.getSelectedItem().toString();
+		return this.getSelectedItem().toString() + " ";
 	}
 }

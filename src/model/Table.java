@@ -49,6 +49,7 @@ public class Table extends Entity {
 		stmtBuilder.append("SELECT * FROM ");
 		stmtBuilder.append(name);
 		System.out.println(stmtBuilder.toString());
+		lastParams = new FilterParams(stmtBuilder.toString(), new ArrayList<Object>());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
 		ResultSet results = stmt.executeQuery();
 		
@@ -117,7 +118,6 @@ public class Table extends Entity {
 			}
 		}
 		stmtBuilder.delete(stmtBuilder.length() - 5, stmtBuilder.length());
-		lastParams = new FilterParams(stmtBuilder.toString(), new ArrayList<Object>());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
 		System.out.println(stmtBuilder.toString());
 		for (int i = 0; i < attributes.size(); i++) {
@@ -139,18 +139,20 @@ public class Table extends Entity {
 		lastParams = filterParams;
 		ArrayList<Record> records = new ArrayList<>();
 		//System.out.println(sql);
-		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(filterParams.getQuery() + orderBy);
+		String fullQuery = filterParams.getQuery() + " " + orderBy;
+		System.out.println(fullQuery);
+		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(fullQuery);
 		//System.out.println(stmt.getParameterMetaData().getParameterCount());
 		for(int i = 0; i < filterParams.getObjects().size(); i++) {
 			setByType(stmt, i+1, filterParams.getObjects().get(i));
 		}
 		ResultSet results = stmt.executeQuery();
-		Record record = new Record(this);
 		if (results.getMetaData().getColumnCount() != attributes.size()) {
 			System.err.println("DB and MS out of sync...");
 			return records;
 		}
 		while (results.next()) {
+			Record record = new Record(this);
 			for (Attribute attr : attributes) {
 				Object value = results.getObject(attr.getName());
 				record.addAttribute(attr, Attribute.fromValue(attr, value));
@@ -187,6 +189,7 @@ public class Table extends Entity {
 	}
 
 	public void sortRecords(String orderBy) throws SQLException {
+		System.out.println(orderBy + " " + lastParams);
 		if(lastParams == null) {
 			return;
 		}
@@ -197,5 +200,11 @@ public class Table extends Entity {
 			System.out.println("Invalid length error: " + e.getMessage());
 		}
 	}
+
+	public FilterParams getLastParams() {
+		return lastParams;
+	}
+	
+	
 
 }

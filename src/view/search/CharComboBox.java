@@ -12,9 +12,9 @@ class CharComboBox extends JComboBox<String> implements ExpressionComponent{
 		super();
 		mapa.put("jednako je", "= ? ");
 		mapa.put("nije jednako", "<> ? ");
-		mapa.put("sadrzi", " LIKE CONCAT('%', ?, '%') ");
-		mapa.put("pocinje sa", " LIKE CONCAT(?, '%') ");
-		mapa.put("zavrsava sa", " LIKE CONCAT('%', ?) ");
+		mapa.put("sadrzi", "LIKE CONCAT('%', ?, '%') ");
+		mapa.put("pocinje sa", "LIKE CONCAT(?, '%') ");
+		mapa.put("zavrsava sa", "LIKE CONCAT('%', ?) ");
 		for(String s : mapa.keySet())
 			this.addItem(s);
 	}
