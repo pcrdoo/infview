@@ -13,9 +13,9 @@ import model.Entity;
 
 class AttributeComboBox extends JComboBox<AttributeWrapper> implements ExpressionComponent{
 	
-	private ExpressionPanel parent;
+	private ExpressionRow parent;
 	
-	public AttributeComboBox(Entity entity, ExpressionPanel parent) {
+	public AttributeComboBox(Entity entity, ExpressionRow parent) {
 		super();
 		
 		this.parent = parent;

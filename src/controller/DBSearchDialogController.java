@@ -4,13 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import view.search.DBSearchDialog;
+import view.search.DBGenericDialog;
 
 public class DBSearchDialogController {
 	
-	private DBSearchDialog view;
+	private DBGenericDialog view;
 	
-	public DBSearchDialogController(DBSearchDialog view) {
+	public DBSearchDialogController(DBGenericDialog view) {
 		this.view = view;
 		this.view.setOKListener(new OKListener());
 	}

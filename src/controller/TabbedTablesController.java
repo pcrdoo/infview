@@ -26,7 +26,7 @@ import model.files.SequentialFile;
 import view.GenericDialog;
 import view.MainView;
 import view.TabbedTables;
-import view.search.DBSearchDialog;
+import view.search.DBGenericDialog;
 
 public class TabbedTablesController {
 
@@ -170,7 +170,7 @@ public class TabbedTablesController {
 				return;
 			}
 			Table table = (Table) entity;
-			DBSearchDialog dialog = new DBSearchDialog(entity);
+			DBGenericDialog dialog = new DBGenericDialog(entity, true);
 			dialog.setVisible(true);
 			try {
 				table.filterRecords(dialog.getFilterParams(), "");

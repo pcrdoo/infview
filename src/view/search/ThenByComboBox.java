@@ -5,25 +5,24 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
-class LogicalComboBox extends JComboBox<String> implements ExpressionComponent {
-	
+class ThenByComboBox extends JComboBox<String> implements ExpressionComponent {
+
 	public DBGenericDialog grandParent;
 	boolean used = false;
-	
-	public LogicalComboBox(DBGenericDialog grandParent) {
+
+	public ThenByComboBox(DBGenericDialog grandParent) {
 		super();
 		this.grandParent = grandParent;
 		this.addItem(" ");
-		this.addItem("AND");
-		this.addItem("OR");
-		
+		this.addItem("ONDA PO");
+
 		this.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (used)
 					return;
-				
+
 				if (getSelectedIndex() != 0) {
 					used = true;
 					grandParent.addRow();
@@ -35,6 +34,6 @@ class LogicalComboBox extends JComboBox<String> implements ExpressionComponent {
 
 	@Override
 	public String getExpression() {
-		return this.getSelectedItem().toString() + " ";
+		return ", ";
 	}
 }

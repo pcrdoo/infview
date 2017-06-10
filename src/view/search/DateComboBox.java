@@ -10,9 +10,9 @@ class DateComboBox extends JComboBox<String> implements ExpressionComponent{
 	
 	public DateComboBox() {
 		super();
-		mapa.put("on", "= ? ");
-		mapa.put("before", "< ? ");
-		mapa.put("after", "> ? ");
+		mapa.put("na", "= ? ");
+		mapa.put("pre", "< ? ");
+		mapa.put("posle", "> ? ");
 		
 		for(String s : mapa.keySet()) {
 			this.addItem(s);

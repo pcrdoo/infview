@@ -16,29 +16,14 @@ import model.files.File;
 import model.files.InvalidRecordException;
 import sun.reflect.annotation.ExceptionProxy;
 
-public class ExpressionPanel extends JPanel {
+public class SearchRow extends ExpressionRow {
 	
-	private Entity entity;
-	private DBSearchDialog parent;
-
-	private ExpressionComponent attribute;
 	private ExpressionComponent operation;
 	private ExpressionComponent value;
 	private ExpressionComponent logic;
 	
-	public ExpressionPanel(Entity entity, DBSearchDialog parent) {
-		super();
-		this.entity = entity;
-		this.parent = parent;
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		
-		this.init();
-	}
-	
-	private void init() {
-		this.attribute = new AttributeComboBox(this.entity, this);
-		this.add((Component) attribute);
-		this.setAttribute(((AttributeComboBox)this.attribute).getSelectedAttribute());
+	public SearchRow(Entity entity, DBGenericDialog parent) {
+		super(entity, parent);
 	}
 	
 	public void setAttribute(Attribute a) {

@@ -74,19 +74,19 @@ public class GenericDialog extends JDialog {
 		for (Attribute a : entity.getAttributes()) {
 			panel.add(new JLabel(a.getName()));
 
-			JTextField newAttribure = new JTextField();
+			JTextField newAttribute = new JTextField();
 			if (record != null) {
-				newAttribure.setText(record.getAttributes().get(a).toString());
+				newAttribute.setText(record.getAttributes().get(a).toString());
 			}
 
 			if (a.isPrimaryKey()) {
-				newAttribure.setBackground(Color.GRAY);
+				newAttribute.setBackground(Color.GRAY);
 				if (!allowPrimaryKey) {
-					newAttribure.setEditable(false);
+					newAttribute.setEditable(false);
 				}
 			}
-			this.attributes.add(newAttribure);
-			panel.add(newAttribure);
+			this.attributes.add(newAttribute);
+			panel.add(newAttribute);
 		}
 
 		panel.add(ok);
