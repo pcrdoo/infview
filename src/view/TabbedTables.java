@@ -95,7 +95,7 @@ public class TabbedTables extends JPanel {
 
 	public void enableToolbar(Entity entity) {
 		if (entity instanceof File) {
-			setToolbar("db"); // CHANGE TO FILE TODO
+			setToolbar("file"); // CHANGE TO FILE TODO
 			File file = (File) entity;
 			blockFactor.setValue(file.getBlockFactor());
 			blocksFetched.setText(String.valueOf(file.getBlocksFetched()));

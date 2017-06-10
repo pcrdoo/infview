@@ -167,12 +167,12 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
+                            "referencedAttributes": ["StudijskiProgram/OznakaPrograma"],
+                            "referringAttributes": ["OznakaPrograma"]
                         },
                         {
-                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
-                            "referringAttribute" : "SifraPredmeta"
+                            "referencedAttributes": ["NastavniPredmet/SifraPredmeta"],
+                            "referringAttributes": ["SifraPredmeta"]
                         }
                     ]
                 },
@@ -216,12 +216,12 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Student/Struka",
-                            "referringAttribute" : "Struka"
+                            "referencedAttributes": ["Student/Struka"],
+                            "referringAttributes": ["Struka"]
                         },
                         {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
+                            "referencedAttributes": ["StudijskiProgram/OznakaPrograma"],
+                            "referringAttributes": ["OznakaPrograma"]
                         }
                     ]
                 }
@@ -389,12 +389,12 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
+                            "referencedAttributes": ["StudijskiProgram/OznakaPrograma"],
+                            "referringAttributes": ["OznakaPrograma"]
                         },
                         {
-                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
-                            "referringAttribute" : "SifraPredmeta"
+                            "referencedAttributes": ["NastavniPredmet/SifraPredmeta"],
+                            "referringAttributes": ["SifraPredmeta"]
                         }
                     ]
                 },
@@ -438,12 +438,12 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Student/Struka",
-                            "referringAttribute" : "Struka"
+                            "referencedAttributes": ["Student/Struka"],
+                            "referringAttributes": ["Struka"]
                         },
                         {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
+                            "referencedAttributes": ["StudijskiProgram/OznakaPrograma"],
+                            "referringAttributes": ["OznakaPrograma"]
                         }
                     ]
                 }
@@ -611,12 +611,12 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
+                            "referencedAttributes": ["StudijskiProgram/OznakaPrograma"],
+                            "referringAttributes": ["OznakaPrograma"]
                         },
                         {
-                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
-                            "referringAttribute" : "SifraPredmeta"
+                            "referencedAttributes": ["NastavniPredmet/SifraPredmeta"],
+                            "referringAttributes": ["SifraPredmeta"]
                         }
                     ]
                 },
@@ -660,12 +660,12 @@
                     "relations": 
                     [
                         {
-                            "referencedAttribute": "Student/Struka",
-                            "referringAttribute" : "Struka"
+                            "referencedAttributes": ["Student/Struka"],
+                            "referringAttributes": ["Struka"]
                         },
                         {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
+                            "referencedAttributes": ["StudijskiProgram/OznakaPrograma"],
+                            "referringAttributes": ["OznakaPrograma"]
                         }
                     ]
                 }
