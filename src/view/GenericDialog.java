@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -20,46 +21,54 @@ import model.Record;
 import model.files.InvalidRecordException;
 
 public class GenericDialog extends JDialog implements CloseableDialog {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6223361025890446349L;
-	// Ogi todo
-	int atrCount;
-	JCheckBox findAll;
-	JCheckBox toFile;
-	JCheckBox fromStart;
-	ArrayList<JTextField> attributes;
-	GenericDialogController controller;
-	JButton ok;
-	Entity entity;
-	Record record;
+
+	private GenericDialogController controller;
+
+	private ArrayList<JTextField> attributes;
+	private Entity entity;
+	private Record record;
+	private int attributeCount;
+
+	private JCheckBox findAll;
+	private JCheckBox toFile;
+	private JCheckBox fromStart;
+	private JButton ok;
+
 	boolean closed = true;
-	boolean isSearchNotSave;
-	
+	boolean isSearch;
+
 	public GenericDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey,
-			boolean isSearchNotSave) {
+			boolean isSearch) {
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
+		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+
 		this.entity = entity;
 		this.record = record;
-		this.isSearchNotSave = isSearchNotSave;
-		this.ok = new JButton(isSearchNotSave ? "Search" : "Save");
+		this.isSearch = isSearch;
+
+		this.ok = new JButton(isSearch ? "Search" : "Save");
 		this.controller = new GenericDialogController(this);
+		
+		this.init(allowCheckBoxes, allowPrimaryKey);
+	}
+
+	private void init(boolean allowCheckBoxes, boolean allowPrimaryKey) {
 		findAll = new JCheckBox("Find all occurrences");
 		toFile = new JCheckBox("Write to file");
 		fromStart = new JCheckBox("Search from start");
 
-		atrCount = entity.getAttributes().size();
-		int num = (atrCount + 6);
+		this.attributeCount = entity.getAttributes().size();
+		int heightCount = (attributeCount + 5);
+		int rowHeight = 40;
 
 		if (!allowCheckBoxes)
-			num -= 3;
+			heightCount -= 3;
 
-		this.setSize(num * 30, num * 30);
+		this.setSize(400, heightCount * rowHeight);
 		this.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(num, 2));
+		panel.setLayout(new GridLayout(heightCount, 2, 2, 2));
 
 		if (allowCheckBoxes) {
 			panel.add(findAll);
@@ -90,15 +99,14 @@ public class GenericDialog extends JDialog implements CloseableDialog {
 			panel.add(newAttribute);
 		}
 
-		panel.add(ok);
-
 		this.add(panel);
+		this.add(ok);
 	}
 
 	public String[] getTerms() {
-		String[] terms = new String[atrCount];
+		String[] terms = new String[attributeCount];
 
-		for (int i = 0; i < atrCount; i++) {
+		for (int i = 0; i < attributeCount; i++) {
 			terms[i] = attributes.get(i).getText();
 		}
 
@@ -148,11 +156,6 @@ public class GenericDialog extends JDialog implements CloseableDialog {
 	}
 
 	public boolean isSearch() {
-		return this.isSearchNotSave;
+		return this.isSearch;
 	}
-
-	public String getOrderBy() {
-		return "todo";
-	}
-
 }
