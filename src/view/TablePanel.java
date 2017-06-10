@@ -42,13 +42,8 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		if (entity instanceof File) {
-			File f = (File) entity;
-			if (autoRefresh) {
-				f.addUpdateBlockListener(this);
-			}
-		} else {
-			System.out.println("Not a file");
+		if (autoRefresh) {
+			entity.addUpdateBlockListener(this);
 		}
 		add(new JScrollPane(table), "grow");
 		if (autoRefresh && entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {

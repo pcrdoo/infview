@@ -18,8 +18,6 @@ import model.datatypes.DateType;
 import model.datatypes.VarCharType;
 
 public abstract class File extends Entity {
-	private ArrayList<UpdateBlockListener> updateBlockListeners;
-
 	// Velicina bloka u slogovima, menja korisnik.
 	protected int blockFactor = 20;
 
@@ -47,7 +45,6 @@ public abstract class File extends Entity {
 	public File(String name, String path, InfResource parent) {
 		super(name, parent);
 		// TODO Auto-generated constructor stub
-		updateBlockListeners = new ArrayList<UpdateBlockListener>();
 		this.path = path;
 	}
 
@@ -227,28 +224,6 @@ public abstract class File extends Entity {
 
 	public void setFilePointer(int filePointer) {
 		this.filePointer = filePointer;
-	}
-
-	/*
-	 * // lista sluÅ¡aÄ�a koja se koristi da se osveÅ¾i prikaz tabele u klasi
-	 * FileView // prilikom uÄ�itavanja novog bloka iz datoteke
-	 * 
-	 * EventListenerList listenerBlockList = new EventListenerList();
-	 * UpdateBlockEvent updateBlockEvent = null;
-	 * 
-	 */
-	public void addUpdateBlockListener(UpdateBlockListener l) {
-		updateBlockListeners.add(l);
-	}
-
-	public void removeUpdateBlockListener(UpdateBlockListener l) {
-		updateBlockListeners.remove(l);
-	}
-
-	public void fireUpdateBlockPerformed(ArrayList<Record> currentBlock) {
-		for (UpdateBlockListener listener : updateBlockListeners) {
-			listener.blockUpdated(currentBlock);
-		}
 	}
 
 	// ;

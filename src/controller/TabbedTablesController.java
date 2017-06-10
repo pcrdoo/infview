@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import model.Attribute;
 import model.Entity;
 import model.Record;
 import model.Table;
@@ -91,6 +92,7 @@ public class TabbedTablesController {
 			 * if (!(entity instanceof Table)) { return; } Table table = (Table)
 			 * entity;
 			 */
+			ArrayList<Record> records = new ArrayList<>();
 			StringBuilder stmtBuilder = new StringBuilder();
 			stmtBuilder.append("SELECT * FROM ");
 			stmtBuilder.append("proizvodna_hala");
@@ -98,22 +100,27 @@ public class TabbedTablesController {
 				PreparedStatement stmt = Warehouse.getInstance().getDbConnection()
 						.prepareStatement(stmtBuilder.toString());
 				ResultSet results = stmt.executeQuery();
-				int numColumns = results.getMetaData().getColumnCount();
-				System.out.println(numColumns);
+				Record record = new Record(entity);
+				if (results.getMetaData().getColumnCount() != entity.getAttributes().size()) {
+					throw new Exception("Metaschema and database out of sync.");
+				}
 				while (results.next()) {
-					System.out.println("NOVI RED");
-					for (int i = 1; i <= numColumns; i++) {
-						System.out.print(results.getString(i) + " ");
-						// moze i po nazivu
+					for (Attribute attr : entity.getAttributes()) {
+						Object value = results.getObject(attr.getName());
+						record.addAttribute(attr, value);
 					}
-					System.out.println();
+					records.add(record);
 				}
 				// obavezno je zatvaranje Statement i ResultSet objekta
+				entity.fireUpdateBlockPerformed(records); // ozvezavanje
 				results.close();
 				stmt.close();
 			} catch (SQLException ex) {
 				System.out.println("SQL error: " + ex);
+			} catch (Exception ex) {
+				System.out.println(ex);
 			}
+
 		}
 
 	}
@@ -203,8 +210,7 @@ public class TabbedTablesController {
 			if (entity != null && entity instanceof File) {
 				try {
 					ArrayList<Record> currentBlock = ((File) entity).fetchNextBlock();
-					((File) entity)
-							.fireUpdateBlockPerformed(currentBlock == null ? new ArrayList<Record>() : currentBlock); // ozvezavanje
+					entity.fireUpdateBlockPerformed(currentBlock == null ? new ArrayList<Record>() : currentBlock); // ozvezavanje
 					// tabele
 					tt.getBlocksFetched().setText(String.valueOf(((File) entity).getBlocksFetched()));
 				} catch (IOException | InvalidRecordException ex) {

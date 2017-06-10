@@ -3,11 +3,15 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.UpdateBlockListener;
+
 public class Entity extends InfResource {
 
 	protected ArrayList<Attribute> attributes;
 	protected ArrayList<Relation> relations;
 	protected ArrayList<Relation> inverseRelations;
+	private ArrayList<UpdateBlockListener> updateBlockListeners;
+
 
 	public Entity(String name, InfResource parent) {
 		super(name, parent);
@@ -16,6 +20,7 @@ public class Entity extends InfResource {
 		attributes = new ArrayList<Attribute>();
 		relations = new ArrayList<Relation>();
 		inverseRelations = new ArrayList<Relation>();
+		updateBlockListeners = new ArrayList<UpdateBlockListener>();
 	}
 
 	@Override
@@ -30,6 +35,28 @@ public class Entity extends InfResource {
 		return false;
 	}
 
+	/*
+	 * // lista sluÅ¡aÄ�a koja se koristi da se osveÅ¾i prikaz tabele u klasi
+	 * FileView // prilikom uÄ�itavanja novog bloka iz datoteke
+	 * 
+	 * EventListenerList listenerBlockList = new EventListenerList();
+	 * UpdateBlockEvent updateBlockEvent = null;
+	 * 
+	 */
+	public void addUpdateBlockListener(UpdateBlockListener l) {
+		updateBlockListeners.add(l);
+	}
+
+	public void removeUpdateBlockListener(UpdateBlockListener l) {
+		updateBlockListeners.remove(l);
+	}
+
+	public void fireUpdateBlockPerformed(ArrayList<Record> currentBlock) {
+		for (UpdateBlockListener listener : updateBlockListeners) {
+			listener.blockUpdated(currentBlock);
+		}
+	}
+	
 	@Override
 	public List<? extends InfResource> getChildren() {
 		// return Stream.concat(this.attributes.stream(),
