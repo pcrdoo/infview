@@ -1,672 +1,640 @@
 {
     "location": "ui-2016-tim201.5:ui-2015-tim201.5.MuY991@147.91.175.155,1433/ui-2016-tim201.5",
-    "name": "VSP",
-    "description": "Veliki set podataka u tri organizacije.",
-    "type": "files",
-    "packages": 
-    [
+    "name": "MaliPoslovniSistem",
+    "description": "Mali poslovni sistem za proizvodnju.",
+    "type": "mssql",
+    "packages": [
+
+    ],
+    "entities": [
         {
-            "name": "Serijske datoteke",
-            "entities": 
-            [
+            "name": "jedinica_mere",
+            "url": "jedinica_mere",
+            "type": "sqlTable",
+            "attributes": [
                 {
-                    "name": "Student",
-                    "type": "serial",
-                    "url": "Serijske datoteke/Studenti.txt",
-                    "attributes": 
-                    [
-                        {   "name": "Struka",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": true
-                        },
-                        {   "name": "BrojIndeksa",
-                            "type": "numeric",
-                            "length": 6,
-                            "primaryKey": true
-                        },
-                        {   "name": "Prezime",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "ImeRoditelja",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "Ime",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "Pol",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "Jmbg",
-                            "type": "char",
-                            "length": 13,
-                            "primaryKey": false
-                        },
-                        {   "name": "DatumRodjenja",
-                            "type": "datetime",
-                            "length": 25,
-                            "primaryKey": false
-                        },
-                        {   "name": "Adresa",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "Telefon",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        }
+                    "name": "jm_oznaka",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "naziv",
+                    "type": "varchar",
+                    "length": 64,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+
+            ]
+        },
+        {
+            "name": "kategorija",
+            "url": "kategorija",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "kategorija_oznaka",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "naziv",
+                    "type": "varchar",
+                    "length": 256,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+
+            ]
+        },
+        {
+            "name": "kolicina_sirovine",
+            "url": "kolicina_sirovine",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "sirovina_sifra",
+                    "type": "char",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "proizvod_sifra",
+                    "type": "char",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "kolicina",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "sirovina\/sirovina_sifra"
                     ],
-                    "relations": 
-                    [
+                    "referringAttributes": [
+                        "sirovina_sifra"
                     ]
                 },
                 {
-                    "name": "NastavniPredmet",
-                    "type": "serial",
-                    "url": "Serijske datoteke/NastavniPredmeti.txt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPlana",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": true
-                        },
-                        {   "name": "SifraPredmeta",
-                            "type": "varchar",
-                            "length": 5,
-                            "primaryKey": true
-                        },
-                        {   "name": "NazivPredmeta",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "TrajeSemestara",
-                            "type": "numeric",
-                            "length": 2,
-                            "primaryKey": false
-                        },
-                        {   "name": "BrojKredita",
-                            "type": "numeric",
-                            "length": 3,
-                            "primaryKey": false
-                        }
+                    "referencedAttributes": [
+                        "proizvod\/proizvod_sifra"
                     ],
-                    "relations": 
-                    [
-                    ]
-                },
-                {
-                    "name": "StudijskiProgram",
-                    "type": "serial",
-                    "url": "Serijske datoteke/StudijskiProgrami.txt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "NazivKojiSeStice",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "NazivPrograma",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        }
-                    ],
-                    "relations": 
-                    [
-                    ]
-                },
-                {
-                    "name": "PlanStudijskogPrograma",
-                    "type": "serial",
-                    "url": "Serijske datoteke/PlanStudijskogPrograma.txt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "OznakaPlana",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": true
-                        },
-                        {   "name": "SifraPredmeta",
-                            "type": "varchar",
-                            "length": 5,
-                            "primaryKey": true
-                        },
-                        {   "name": "GodinaPredmeta",
-                            "type": "numeric",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "SemestarPredmeta",
-                            "type": "numeric",
-                            "length": 2,
-                            "primaryKey": false
-                        }
-                    ],
-                    "relations": 
-                    [
-                        {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
-                        },
-                        {
-                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
-                            "referringAttribute" : "SifraPredmeta"
-                        }
-                    ]
-                },
-                {
-                    "name": "TokStudija",
-                    "type": "serial",
-                    "url": "Serijske datoteke/TokStudija.txt",
-                    "attributes": 
-                    [
-                        {   "name": "Struka",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": true
-                        },
-                        {   "name": "BrojIndeksa",
-                            "type": "numeric",
-                            "length": 6,
-                            "primaryKey": true
-                        },
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "SkolskaGodina",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "GodinaStudija",
-                            "type": "numeric",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "UpisujePoPlanu",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": false
-                        }
-                    ],
-                    "relations": 
-                    [
-                        {
-                            "referencedAttribute": "Student/Struka",
-                            "referringAttribute" : "Struka"
-                        },
-                        {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
-                        }
+                    "referringAttributes": [
+                        "proizvod_sifra"
                     ]
                 }
             ]
         },
         {
-            "name": "Sekvencijalne datoteke",
-            "entities": 
-            [
+            "name": "proizvod",
+            "url": "proizvod",
+            "type": "sqlTable",
+            "attributes": [
                 {
-                    "name": "Student",
-                    "type": "sequential",
-                    "url": "Sekvencijalne datoteke/Studenti.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "Struka",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": true
-                        },
-                        {   "name": "BrojIndeksa",
-                            "type": "numeric",
-                            "length": 6,
-                            "primaryKey": true
-                        },
-                        {   "name": "Prezime",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "ImeRoditelja",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "Ime",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "Pol",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "Jmbg",
-                            "type": "char",
-                            "length": 13,
-                            "primaryKey": false
-                        },
-                        {   "name": "DatumRodjenja",
-                            "type": "datetime",
-                            "length": 25,
-                            "primaryKey": false
-                        },
-                        {   "name": "Adresa",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "Telefon",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        }
+                    "name": "proizvod_sifra",
+                    "type": "char",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "kategorija_oznaka",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "jm_oznaka",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "naziv",
+                    "type": "varchar",
+                    "length": 256,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "opis",
+                    "type": "varchar",
+                    "length": 1024,
+                    "primaryKey": false,
+                    "mandatory": false
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "jedinica_mere\/jm_oznaka"
                     ],
-                    "relations": 
-                    [
+                    "referringAttributes": [
+                        "jm_oznaka"
                     ]
                 },
                 {
-                    "name": "NastavniPredmet",
-                    "type": "sequential",
-                    "url": "Sekvencijalne datoteke/NastavniPredmeti.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPlana",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": true
-                        },
-                        {   "name": "SifraPredmeta",
-                            "type": "varchar",
-                            "length": 5,
-                            "primaryKey": true
-                        },
-                        {   "name": "NazivPredmeta",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "TrajeSemestara",
-                            "type": "numeric",
-                            "length": 2,
-                            "primaryKey": false
-                        },
-                        {   "name": "BrojKredita",
-                            "type": "numeric",
-                            "length": 3,
-                            "primaryKey": false
-                        }
+                    "referencedAttributes": [
+                        "kategorija\/kategorija_oznaka"
                     ],
-                    "relations": 
-                    [
-                    ]
-                },
-                {
-                    "name": "StudijskiProgram",
-                    "type": "sequential",
-                    "url": "Sekvencijalne datoteke/StudijskiProgrami.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "NazivKojiSeStice",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "NazivPrograma",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        }
-                    ],
-                    "relations": 
-                    [
-                    ]
-                },
-                {
-                    "name": "PlanStudijskogPrograma",
-                    "type": "sequential",
-                    "url": "Sekvencijalne datoteke/PlanStudijskogPrograma.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "OznakaPlana",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": true
-                        },
-                        {   "name": "SifraPredmeta",
-                            "type": "varchar",
-                            "length": 5,
-                            "primaryKey": true
-                        },
-                        {   "name": "GodinaPredmeta",
-                            "type": "numeric",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "SemestarPredmeta",
-                            "type": "numeric",
-                            "length": 2,
-                            "primaryKey": false
-                        }
-                    ],
-                    "relations": 
-                    [
-                        {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
-                        },
-                        {
-                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
-                            "referringAttribute" : "SifraPredmeta"
-                        }
-                    ]
-                },
-                {
-                    "name": "TokStudija",
-                    "type": "sequential",
-                    "url": "Sekvencijalne datoteke/TokStudija.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "Struka",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": true
-                        },
-                        {   "name": "BrojIndeksa",
-                            "type": "numeric",
-                            "length": 6,
-                            "primaryKey": true
-                        },
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "SkolskaGodina",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "GodinaStudija",
-                            "type": "numeric",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "UpisujePoPlanu",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": false
-                        }
-                    ],
-                    "relations": 
-                    [
-                        {
-                            "referencedAttribute": "Student/Struka",
-                            "referringAttribute" : "Struka"
-                        },
-                        {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
-                        }
+                    "referringAttributes": [
+                        "kategorija_oznaka"
                     ]
                 }
             ]
         },
         {
-            "name": "Indeks - sekvencijalne datoteke",
-            "entities": 
-            [
+            "name": "proizvod_na_stanju",
+            "url": "proizvod_na_stanju",
+            "type": "sqlTable",
+            "attributes": [
                 {
-                    "name": "Student",
-                    "type": "indexedSequential",
-                    "url": "Indeks - sekvencijalne datoteke/Studenti.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "Struka",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": true
-                        },
-                        {   "name": "BrojIndeksa",
-                            "type": "numeric",
-                            "length": 6,
-                            "primaryKey": true
-                        },
-                        {   "name": "Prezime",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "ImeRoditelja",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "Ime",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        },
-                        {   "name": "Pol",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "Jmbg",
-                            "type": "char",
-                            "length": 13,
-                            "primaryKey": false
-                        },
-                        {   "name": "DatumRodjenja",
-                            "type": "datetime",
-                            "length": 25,
-                            "primaryKey": false
-                        },
-                        {   "name": "Adresa",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "Telefon",
-                            "type": "varchar",
-                            "length": 20,
-                            "primaryKey": false
-                        }
+                    "name": "skladiste_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "proizvod_sifra",
+                    "type": "char",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "kolicina",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "skladiste\/skladiste_id"
                     ],
-                    "relations": 
-                    [
+                    "referringAttributes": [
+                        "skladiste_id"
                     ]
                 },
                 {
-                    "name": "NastavniPredmet",
-                    "type": "indexedSequential",
-                    "url": "Indeks - sekvencijalne datoteke/NastavniPredmeti.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPlana",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": true
-                        },
-                        {   "name": "SifraPredmeta",
-                            "type": "varchar",
-                            "length": 5,
-                            "primaryKey": true
-                        },
-                        {   "name": "NazivPredmeta",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "TrajeSemestara",
-                            "type": "numeric",
-                            "length": 2,
-                            "primaryKey": false
-                        },
-                        {   "name": "BrojKredita",
-                            "type": "numeric",
-                            "length": 3,
-                            "primaryKey": false
-                        }
+                    "referencedAttributes": [
+                        "proizvod\/proizvod_sifra"
                     ],
-                    "relations": 
-                    [
+                    "referringAttributes": [
+                        "proizvod_sifra"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "proizvodna_hala",
+            "url": "proizvodna_hala",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "hala_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "pogon_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "adresa",
+                    "type": "varchar",
+                    "length": 1024,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "povrsina",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "proizvodni_pogon\/pogon_id"
+                    ],
+                    "referringAttributes": [
+                        "pogon_id"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "proizvodni_pogon",
+            "url": "proizvodni_pogon",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "pogon_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "rukovodilac_jmbg",
+                    "type": "char",
+                    "length": 13,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": {
+                        "zaposleni\/zaposleni_jmbg"
+                    },
+                    "referringAttributes": {
+                        "rukovodilac_jmbg"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "proizvodnja_serije",
+            "url": "proizvodnja_serije",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "serija_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "proizvod_sifra",
+                    "type": "char",
+                    "length": 16,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "hala_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "vreme_pocetka",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "vreme_zavrsetka",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "kolicina",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "proizvod\/proizvod_sifra"
+                    ],
+                    "referringAttributes": [
+                        "proizvod_sifra"
                     ]
                 },
                 {
-                    "name": "StudijskiProgram",
-                    "type": "indexedSequential",
-                    "url": "Indeks - sekvencijalne datoteke/StudijskiProgrami.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "NazivKojiSeStice",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        },
-                        {   "name": "NazivPrograma",
-                            "type": "varchar",
-                            "length": 80,
-                            "primaryKey": false
-                        }
+                    "referencedAttributes": [
+                        "proizvodna_hala\/hala_id"
                     ],
-                    "relations": 
-                    [
+                    "referringAttributes": [
+                        "hala_id"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "sirovina",
+            "url": "sirovina",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "sirovina_sifra",
+                    "type": "char",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "jm_oznaka",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "naziv",
+                    "type": "varchar",
+                    "length": 256,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "opis",
+                    "type": "varchar",
+                    "length": 1024,
+                    "primaryKey": false,
+                    "mandatory": false
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "jedinica_mere\/jm_oznaka"
+                    ],
+                    "referringAttributes": [
+                        "jm_oznaka"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "sirovina_na_stanju",
+            "url": "sirovina_na_stanju",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "sirovina_sifra",
+                    "type": "char",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "skladiste_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "kolicina",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "skladiste\/skladiste_id"
+                    ],
+                    "referringAttributes": [
+                        "skladiste_id"
                     ]
                 },
                 {
-                    "name": "PlanStudijskogPrograma",
-                    "type": "indexedSequential",
-                    "url": "Indeks - sekvencijalne datoteke/PlanStudijskogPrograma.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "OznakaPlana",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": true
-                        },
-                        {   "name": "SifraPredmeta",
-                            "type": "varchar",
-                            "length": 5,
-                            "primaryKey": true
-                        },
-                        {   "name": "GodinaPredmeta",
-                            "type": "numeric",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "SemestarPredmeta",
-                            "type": "numeric",
-                            "length": 2,
-                            "primaryKey": false
-                        }
+                    "referencedAttributes": [
+                        "sirovina\/sirovina_sifra"
                     ],
-                    "relations": 
-                    [
-                        {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
-                        },
-                        {
-                            "referencedAttribute": "NastavniPredmet/SifraPredmeta",
-                            "referringAttribute" : "SifraPredmeta"
-                        }
+                    "referringAttributes": [
+                        "sirovina_sifra"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "skladiste",
+            "url": "skladiste",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "skladiste_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "pogon_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "kapacitet",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "adresa",
+                    "type": "varchar",
+                    "length": 1024,
+                    "primaryKey": false,
+                    "mandatory": false
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "proizvodni_pogon\/pogon_id"
+                    ],
+                    "referringAttributes": [
+                        "pogon_id"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "tip_zaposlenog",
+            "url": "tip_zaposlenog",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "tip_zaposlenog_oznaka",
+                    "type": "char",
+                    "length": 2,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "naziv",
+                    "type": "varchar",
+                    "length": 256,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+
+            ]
+        },
+        {
+            "name": "zaposleni",
+            "url": "zaposleni",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "zaposleni_jmbg",
+                    "type": "char",
+                    "length": 13,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "nadredjeni_id",
+                    "type": "char",
+                    "length": 13,
+                    "primaryKey": false,
+                    "mandatory": false
+                },
+                {
+                    "name": "pogon_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": false
+                },
+                {
+                    "name": "serija_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": false
+                },
+                {
+                    "name": "tip_zaposlenog_oznaka",
+                    "type": "char",
+                    "length": 2,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "ime",
+                    "type": "varchar",
+                    "length": 1024,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "plata",
+                    "type": "numeric",
+                    "length": 18,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "tip_zaposlenog\/tip_zaposlenog_oznaka"
+                    ],
+                    "referringAttributes": [
+                        "tip_zaposlenog_oznaka"
                     ]
                 },
                 {
-                    "name": "TokStudija",
-                    "type": "indexedSequential",
-                    "url": "Indeks - sekvencijalne datoteke/TokStudija.stxt",
-                    "attributes": 
-                    [
-                        {   "name": "Struka",
-                            "type": "char",
-                            "length": 1,
-                            "primaryKey": true
-                        },
-                        {   "name": "BrojIndeksa",
-                            "type": "numeric",
-                            "length": 6,
-                            "primaryKey": true
-                        },
-                        {   "name": "OznakaPrograma",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "SkolskaGodina",
-                            "type": "char",
-                            "length": 4,
-                            "primaryKey": true
-                        },
-                        {   "name": "GodinaStudija",
-                            "type": "numeric",
-                            "length": 1,
-                            "primaryKey": false
-                        },
-                        {   "name": "UpisujePoPlanu",
-                            "type": "char",
-                            "length": 2,
-                            "primaryKey": false
-                        }
+                    "referencedAttributes": [
+                        "proizvodnja_serije\/serija_id"
                     ],
-                    "relations": 
-                    [
-                        {
-                            "referencedAttribute": "Student/Struka",
-                            "referringAttribute" : "Struka"
-                        },
-                        {
-                            "referencedAttribute": "StudijskiProgram/OznakaPrograma",
-                            "referringAttribute" : "OznakaPrograma"
-                        }
+                    "referringAttributes": [
+                        "serija_id"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "proizvodni_pogon\/pogon_id"
+                    ],
+                    "referringAttributes": [
+                        "pogon_id"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "zaposleni\/zaposleni_jmbg"
+                    ],
+                    "referringAttributes": [
+                        "nadredjeni_id"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "zaposlenje",
+            "url": "zaposlenje",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "zaposleni_jmbg",
+                    "type": "char",
+                    "length": 13,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "pogon_id",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "zaposleni\/zaposleni_jmbg"
+                    ],
+                    "referringAttributes": [
+                        "zaposleni_jmbg"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "proizvodni_pogon\/pogon_id"
+                    ],
+                    "referringAttributes": [
+                        "pogon_id"
                     ]
                 }
             ]
