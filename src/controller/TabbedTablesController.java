@@ -104,7 +104,8 @@ public class TabbedTablesController {
 			}
 			Table table = (Table) entity;
 			// Neki gui dialog koji to sredjuje i vraca record za dodati
-			Record record = new Record(table);
+			GenericDialog addDialog = new GenericDialog(entity, null, false, true, false);
+			Record record = addDialog.getRecord();
 			try {
 				table.addRecord(record);
 				table.fetchRecords();
@@ -117,15 +118,15 @@ public class TabbedTablesController {
 
 	}
 
-	/* Realizovati metodu updateRecord() koja služi za izmenu selektovanog
-	sloga. Izmena sloga se radi na osnovu primarnog ključa. Dozvoljena je i
-	izmena vrednosti primarnog ključa.
-	Metoda treba da bude realizovana korišćenjem objekta PreparedStatement.
-	Sve SQLException-e u slučaju neuspešnog dodavanja sloga prikazivati kroz
-	JOptionPane.
-	Nakon uspešne izmene sloga, sadržaj tabele treba da bude osvežen (ponovo
-	pročitan iz baze podataka) i u tabeli treba da bude selektovan izmenjeni
-	slog. */
+	/*
+	 * Realizovati metodu updateRecord() koja služi za izmenu selektovanog
+	 * sloga. Izmena sloga se radi na osnovu primarnog ključa. Dozvoljena je i
+	 * izmena vrednosti primarnog ključa. Metoda treba da bude realizovana
+	 * korišćenjem objekta PreparedStatement. Sve SQLException-e u slučaju
+	 * neuspešnog dodavanja sloga prikazivati kroz JOptionPane. Nakon uspešne
+	 * izmene sloga, sadržaj tabele treba da bude osvežen (ponovo pročitan iz
+	 * baze podataka) i u tabeli treba da bude selektovan izmenjeni slog.
+	 */
 	private class DbUpdateClickListener implements ActionListener {
 
 		@Override
@@ -138,7 +139,8 @@ public class TabbedTablesController {
 			Table table = (Table) entity;
 			// Neki gui dialog koji to sredjuje i vraca record za updateovati
 			Record record = tt.getSelectedRow();
-			Record newRecord = new Record(table);
+			GenericDialog addDialog = new GenericDialog(entity, record, false, true, false);
+			Record newRecord = addDialog.getRecord();
 			try {
 				table.updateRecord(record, newRecord);
 				table.fetchRecords();
@@ -168,7 +170,6 @@ public class TabbedTablesController {
 				return;
 			}
 			Table table = (Table) entity;
-			// Todo: DB Filter
 			DBSearchDialog dialog = new DBSearchDialog(entity);
 			dialog.setVisible(true);
 			try {
@@ -186,7 +187,14 @@ public class TabbedTablesController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Entity entity = tt.getSelectedEntity();
-			// Todo: DB Sort
+
+			if (!(entity instanceof Table)) {
+				return;
+			}
+			Table table = (Table) entity;
+			GenericDialog dialog = new GenericDialog(entity, null, true, true, false);
+			dialog.setVisible(true);
+			/**/
 		}
 	}
 

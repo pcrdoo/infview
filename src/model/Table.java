@@ -131,9 +131,11 @@ public class Table extends Entity {
 
 	public ArrayList<Record> filterRecords(String sql, ArrayList<Object> items) throws SQLException {
 		ArrayList<Record> records = new ArrayList<>();
+		//System.out.println(sql);
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(sql);
+		//System.out.println(stmt.getParameterMetaData().getParameterCount());
 		for(int i = 0; i < items.size(); i++) {
-			setByType(stmt, i, items.get(i));
+			setByType(stmt, i+1, items.get(i));
 		}
 		ResultSet results = stmt.executeQuery();
 		Record record = new Record(this);
@@ -164,18 +166,10 @@ public class Table extends Entity {
 		int idx = 0;
 		for (Entry<Attribute, Object> attr : fkMap.entrySet()) {
 			stmtBuilder.append(attr.getKey().getName());
-			stmtBuilder.append("=?, ");
+			stmtBuilder.append("= ? , ");
 			values.add(attr.getValue());
 		}
 		stmtBuilder.delete(stmtBuilder.length() - 2, stmtBuilder.length());
-		stmtBuilder.append("WHERE ");
-		for (Attribute attr : attributes) {
-			if (attr.isPrimaryKey()) {
-				stmtBuilder.append(attr.getName());
-				stmtBuilder.append("=? AND ");
-			}
-		}
-		stmtBuilder.delete(stmtBuilder.length() - 5, stmtBuilder.length());
 		return filterRecords(stmtBuilder.toString(), values);
 	}
 

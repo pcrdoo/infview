@@ -128,7 +128,6 @@ public class Warehouse extends InfResource {
 		String password = unpw[1];
 		try {
 			dbConnection = DriverManager.getConnection(loc, username, password);
-			System.out.println("OGI JE MNOGO KUL LIK");
 			if(dbConnection == null) {
 				throw new Exception("Couldn't establish a connection: " + loc + " " + username + " " + password);
 			}
