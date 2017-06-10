@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -15,6 +16,7 @@ import model.files.File;
 import model.files.IndexedSequentialFile;
 import model.files.InvalidRecordException;
 import model.files.SequentialFile;
+import view.BaseSearchDialog;
 import view.GenericDialog;
 import view.MainView;
 import view.TabbedTables;
@@ -34,8 +36,98 @@ public class TabbedTablesController {
 		tt.getDoModify().addActionListener(new ModifyClickListener());
 		tt.getDoDelete().addActionListener(new DeleteClickListener());
 		tt.getDoMerge().addActionListener(new MergeClickListener());
+
+		tt.getDoDbFetch().addActionListener(new DbFetchClickListener());
+		tt.getDoDbAdd().addActionListener(new DbAddClickListener());
+		tt.getDoDbUpdate().addActionListener(new DbUpdateClickListener());
+		tt.getDoDbFilter().addActionListener(new DbFilterClickListener());
+		tt.getDoDbSort().addActionListener(new DbSortClickListener());
 	}
 
+	// Table
+
+
+	private class TabChangeListener implements ChangeListener {
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			Entity entity = tt.getSelectedEntity();
+			if (entity != null) {
+				tt.enableToolbar(entity);
+				if (entity instanceof IndexedSequentialFile) {
+					MainView.getInstance().getDesktopView().detachDetailsTable();
+					MainView.getInstance().getDesktopView()
+							.attachIndexTree(((IndexedSequentialFile) entity).getTree().getRoot());
+				} else if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
+					MainView.getInstance().getDesktopView().attachDetailsTable();
+					MainView.getInstance().getDesktopView().detachIndexTree();
+				} else {
+					MainView.getInstance().getDesktopView().detachDetailsTable();
+					MainView.getInstance().getDesktopView().detachIndexTree();
+				}
+			} else {
+				tt.disableToolbar();
+				MainView.getInstance().getDesktopView().detachDetailsTable();
+				MainView.getInstance().getDesktopView().detachIndexTree();
+			}
+
+		}
+
+	}
+	
+	// Db
+	
+	private class DbFetchClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Entity entity = tt.getSelectedEntity();
+			// Todo: DB Fetch
+			
+		}
+	}
+	
+	private class DbAddClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Entity entity = tt.getSelectedEntity();
+			// Todo: DB Add
+		}
+	}
+	
+	private class DbUpdateClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Entity entity = tt.getSelectedEntity();
+			// Todo: DB Update
+		}
+	}
+	
+	private class DbFilterClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Entity entity = tt.getSelectedEntity();
+			// Todo: DB Filter
+			new BaseSearchDialog(entity).setVisible(true);;
+			System.out.println("KLIK FILTER");
+		}
+	}
+
+	private class DbSortClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Entity entity = tt.getSelectedEntity();
+			// Todo: DB Sort
+		}
+	}
+	
+	// Files
+	
+	
 	private class BlockFactorChangeListener implements ChangeListener {
 
 		@Override
@@ -89,34 +181,6 @@ public class TabbedTablesController {
 					ex.printStackTrace();
 				}
 			}
-		}
-
-	}
-
-	private class TabChangeListener implements ChangeListener {
-
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			Entity entity = tt.getSelectedEntity();
-			if (entity != null) {
-				tt.enableToolbar(entity);
-				if (entity instanceof IndexedSequentialFile) {
-					MainView.getInstance().getDesktopView().detachDetailsTable();
-					MainView.getInstance().getDesktopView()
-							.attachIndexTree(((IndexedSequentialFile) entity).getTree().getRoot());
-				} else if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
-					MainView.getInstance().getDesktopView().attachDetailsTable();
-					MainView.getInstance().getDesktopView().detachIndexTree();
-				} else {
-					MainView.getInstance().getDesktopView().detachDetailsTable();
-					MainView.getInstance().getDesktopView().detachIndexTree();
-				}
-			} else {
-				tt.disableToolbar();
-				MainView.getInstance().getDesktopView().detachDetailsTable();
-				MainView.getInstance().getDesktopView().detachIndexTree();
-			}
-
 		}
 
 	}

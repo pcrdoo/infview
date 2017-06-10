@@ -1,11 +1,13 @@
 package view;
 
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -21,9 +23,12 @@ import javax.swing.SwingConstants;
 import javax.swing.text.DefaultFormatter;
 
 import controller.TabbedTablesController;
+import javafx.scene.control.ToolBar;
+import model.Attribute;
 import model.Entity;
 import model.Record;
 import model.Relation;
+import model.Table;
 import model.datatypes.CharType;
 import model.datatypes.DateType;
 import model.datatypes.VarCharType;
@@ -37,7 +42,11 @@ public class TabbedTables extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1167886373482792472L;
-	private JToolBar toolbar;
+	private JPanel toolbarArea;
+	private JToolBar fileToolbar;
+	private JToolBar dbToolbar;
+	private JToolBar emptyToolbar;
+	
 	private JTabbedPane tabs; // dodajemo tablePanele
 	private boolean mainTable;
 
@@ -50,16 +59,30 @@ public class TabbedTables extends JPanel {
 	private JButton doModify;
 	private JButton doDelete;
 	private JButton doMerge;
+	
+	private JButton doDbFetch, doDbAdd, doDbUpdate, doDbFilter, doDbSort;
+	
 
 	public TabbedTables(boolean mainTable) {
 		this.setLayout(new MigLayout("fill", "", "0[]0[grow]0"));
-		toolbar = new JToolBar();
-		toolbar.setFloatable(false);
-		populateToolbar();
-		if (mainTable) {
-			this.add(toolbar, "grow, wrap, height 50px");
-			toolbar.setVisible(true);
-		} else {
+		
+		// Toolbars
+		emptyToolbar = new JToolBar();
+		emptyToolbar.setFloatable(false);
+		populateFileToolbar();
+		populateDbToolbar();
+
+		toolbarArea = new JPanel(new CardLayout());
+		toolbarArea.add(emptyToolbar, "empty");
+		toolbarArea.add(fileToolbar, "file");
+		toolbarArea.add(dbToolbar, "db");
+		this.add(toolbarArea, "grow, wrap, height 50px");
+		toolbarArea.setVisible(true);
+
+		setToolbar("empty");
+		
+		// Go
+		if (!mainTable) {
 			JLabel relations = new JLabel("Relations:");
 			relations.setFont(new Font("Garamond", Font.PLAIN, 20));
 			this.add(relations, "grow, wrap, height 50px");
@@ -72,6 +95,7 @@ public class TabbedTables extends JPanel {
 
 	public void enableToolbar(Entity entity) {
 		if (entity instanceof File) {
+			setToolbar("db"); // CHANGE TO FILE TODO
 			File file = (File) entity;
 			blockFactor.setValue(file.getBlockFactor());
 			blocksFetched.setText(String.valueOf(file.getBlocksFetched()));
@@ -94,23 +118,26 @@ public class TabbedTables extends JPanel {
 				doDelete.setEnabled(false);
 				doMerge.setEnabled(false);
 			}
+		} else {
+			// za table sta vec treba nezavisno od toolbara
+			setToolbar("db");
 		}
 	}
 
 	public void disableToolbar() {
-		blockFactor.setEnabled(false);
-		blockFactor.setValue(20);
-		nextBlock.setEnabled(false);
-		doSearch.setEnabled(false);
-		blocksFetched.setEnabled(false);
-		blocksFetched.setText("0");
-		doInsert.setEnabled(false);
-		doModify.setEnabled(false);
-		doDelete.setEnabled(false);
-		doMerge.setEnabled(false);
+		setToolbar("empty");
+	}
+	
+	private void setToolbar(String cardID) {
+		CardLayout cardLayout = (CardLayout) toolbarArea.getLayout();
+		cardLayout.show(toolbarArea, cardID);
+		toolbarArea.revalidate();
+		toolbarArea.repaint();
 	}
 
-	private void populateToolbar() {
+	private void populateFileToolbar() {
+		fileToolbar = new JToolBar();
+		fileToolbar.setFloatable(false);
 		// FETCH NEXT BLOCK
 		nextBlock = new JButton("Fetch Next Block");
 		nextBlock.setEnabled(false);
@@ -118,9 +145,9 @@ public class TabbedTables extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		toolbar.add(nextBlock);
-		toolbar.addSeparator();
-		toolbar.add(new JLabel("Block Factor: "));
+		fileToolbar.add(nextBlock);
+		fileToolbar.addSeparator();
+		fileToolbar.add(new JLabel("Block Factor: "));
 
 		// Block factor spinner
 		SpinnerModel numberModel = new SpinnerNumberModel(20, 1, 100, 1);
@@ -129,39 +156,68 @@ public class TabbedTables extends JPanel {
 		JFormattedTextField field = (JFormattedTextField) blockFactor.getEditor().getComponent(0);
 		DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
 		formatter.setCommitsOnValidEdit(true);
-		toolbar.add(blockFactor);
-		toolbar.addSeparator();
+		fileToolbar.add(blockFactor);
+		fileToolbar.addSeparator();
 
 		// Search
 		doSearch = new JButton("Search");
 		doSearch.setEnabled(false);
-		toolbar.add(doSearch);
-		toolbar.addSeparator();
+		fileToolbar.add(doSearch);
+		fileToolbar.addSeparator();
 
 		// Counter:
-		toolbar.add(new JLabel("Number of blocks fetched:"));
+		fileToolbar.add(new JLabel("Number of blocks fetched:"));
 		blocksFetched = new JTextField("0");
 		blocksFetched.setEditable(false);
 		blocksFetched.setEnabled(false);
 		blocksFetched.setPreferredSize(new Dimension(100, 30));
 		blocksFetched.setHorizontalAlignment(SwingConstants.CENTER);
-		toolbar.add(blocksFetched);
-		toolbar.addSeparator();
+		fileToolbar.add(blocksFetched);
+		fileToolbar.addSeparator();
 
 		// Insert Modify Delete
 		doInsert = new JButton("Insert");
-		toolbar.add(doInsert);
+		fileToolbar.add(doInsert);
 		doInsert.setEnabled(false);
 		doModify = new JButton("Modify");
-		toolbar.add(doModify);
+		fileToolbar.add(doModify);
 		doModify.setEnabled(false);
 		doDelete = new JButton("Delete");
-		toolbar.add(doDelete);
+		fileToolbar.add(doDelete);
 		doDelete.setEnabled(false);
 		doMerge = new JButton("Merge");
-		toolbar.add(doMerge);
+		fileToolbar.add(doMerge);
 		doMerge.setEnabled(false);
-		toolbar.addSeparator();
+		fileToolbar.addSeparator();
+
+	}
+
+	private void populateDbToolbar() {
+		dbToolbar = new JToolBar();
+		dbToolbar.setFloatable(false);
+		
+		// OPS
+		doDbFetch = new JButton("Fetch");
+		dbToolbar.add(doDbFetch);
+		doDbFetch.setEnabled(false);
+		
+		doDbAdd = new JButton("Add");
+		dbToolbar.add(doDbAdd);
+		doDbAdd.setEnabled(false);
+		
+		doDbUpdate = new JButton("Update");
+		dbToolbar.add(doDbUpdate);
+		doDbUpdate.setEnabled(false);
+
+		doDbFilter = new JButton("Filter");
+		dbToolbar.add(doDbFilter);
+		doDbFilter.setEnabled(false);
+
+		doDbSort = new JButton("Sort");
+		dbToolbar.add(doDbSort);
+		doDbSort.setEnabled(false);
+		
+		dbToolbar.addSeparator();
 
 	}
 
@@ -227,35 +283,48 @@ public class TabbedTables extends JPanel {
 			return;
 		}
 		// VELIKI REFACTORING
-		SequentialFile referencedEntity = ((SequentialFile) record.getEntity());
+		Entity referencedEntity = record.getEntity();
 		for (Relation r : referencedEntity.getInverseRelations()) {
-			SequentialFile referringEntity = ((SequentialFile) r.getReferringAttribute().getParent());
+			Entity referringEntity = (Entity)(r.getReferringAttributes().get(0).getParent());
 
 			// referenced value to str
-			Object referencedValue = record.getAttributes().get(r.getReferencedAttribute());
-			String referencedValueStr = "";
-			try {
-				referencedValueStr = objectToString(referencedValue);
-			} catch (Exception ex) {
-				// todo
-				System.out.println("Failed to convert obj to str.");
+			Object referencedValue;
+			String referencedValueStr;
+				
+			// map referrring attribute to referenced attr. value
+			HashMap<Attribute, String> fkMap = new HashMap<>();
+			for(int i = 0; i < r.getReferringAttributes().size(); i++) {
+				referencedValue = record.getAttributes().get(r.getReferencedAttributes().get(i));
+				try {
+					referencedValueStr = objectToString(referencedValue);
+					fkMap.put(r.getReferringAttributes().get(i), referencedValueStr);
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 			}
-
-			// build terms
+			
 			int numAttrs = referringEntity.getAttributes().size();
 			String[] terms = new String[numAttrs];
 			for (int i = 0; i < numAttrs; i++) {
-				if (referringEntity.getAttributes().get(i) == r.getReferringAttribute()) {
-					terms[i] = referencedValueStr;
+				Attribute currAttr = referringEntity.getAttributes().get(i);
+				if (r.getReferringAttributes().contains(currAttr)) {
+					terms[i] = fkMap.get(currAttr);
 				} else {
 					terms[i] = "";
 				}
 			}
 
-			// VRATI POINTER
-			int filePointer = referringEntity.getFilePointer();
-			ArrayList<Record> results = referringEntity.findRecord(terms, true, false, true);
-			referringEntity.setFilePointer(filePointer);
+			ArrayList<Record> results = null;
+			if(referringEntity instanceof SequentialFile) {
+				SequentialFile referringFile = (SequentialFile)referringEntity;
+				// VRATI POINTER
+				int filePointer = referringFile.getFilePointer();
+				results = referringFile.findRecord(terms, true, false, true);
+				referringFile.setFilePointer(filePointer);
+			} else if(referringEntity instanceof Table) {
+				Table referringTable = (Table)referringEntity;
+				results = referringTable.findRecord(terms);
+			}
 
 			// dodaj tabelu
 			TablePanel panel = addTab(referringEntity);
@@ -302,5 +371,27 @@ public class TabbedTables extends JPanel {
 	public JButton getDoMerge() {
 		return doMerge;
 	}
+	
+
+	public JButton getDoDbFetch() {
+		return doDbFetch;
+	}
+
+	public JButton getDoDbAdd() {
+		return doDbAdd;
+	}
+
+	public JButton getDoDbUpdate() {
+		return doDbUpdate;
+	}
+
+	public JButton getDoDbFilter() {
+		return doDbFilter;
+	}
+
+	public JButton getDoDbSort() {
+		return doDbSort;
+	}
+
 
 }
