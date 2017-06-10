@@ -37,6 +37,7 @@ public class DBGenericDialog extends JDialog {
 	private int fieldHeight = 50;
 	private JButton ok;
 	private JPanel panel;
+	private boolean isOkClicked = false;
 
 	private ArrayList<ExpressionRow> expression;
 	
@@ -89,6 +90,14 @@ public class DBGenericDialog extends JDialog {
 
 	public Entity getEntity() {
 		return entity;
+	}
+
+	public boolean isOkClicked() {
+		return isOkClicked;
+	}
+
+	public void setOkClicked(boolean isOkClicked) {
+		this.isOkClicked = isOkClicked;
 	}
 
 	public void setEntity(Entity entity) {

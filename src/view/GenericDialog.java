@@ -18,7 +18,7 @@ import model.Attribute;
 import model.Entity;
 import model.Record;
 import model.files.InvalidRecordException;
-
+import java.awt
 public class GenericDialog extends JDialog {
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class GenericDialog extends JDialog {
 	Record record;
 	boolean doShit = false;
 	boolean isSearchNotSave;
-
+	
 	public GenericDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey,
 			boolean isSearchNotSave) {
 		this.setModalityType(ModalityType.APPLICATION_MODAL);

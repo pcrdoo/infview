@@ -98,7 +98,13 @@ public class TabbedTablesController {
 			// Neki gui dialog koji to sredjuje i vraca record za dodati
 			GenericDialog addDialog = new GenericDialog(entity, null, false, true, false);
 			addDialog.setVisible(true);
+
+			if (!addDialog.isDoShit()) {
+				return;
+			}
+			
 			Record record = addDialog.getRecord();
+			
 			try {
 				table.addRecord(record);
 				table.fetchRecords();
@@ -137,8 +143,14 @@ public class TabbedTablesController {
 			if (record == null) {
 				return;
 			}
+			
 			GenericDialog updateDialog = new GenericDialog(entity, record, false, true, false);
 			updateDialog.setVisible(true);
+
+			if (!updateDialog.isDoShit()) {
+				return;
+			}
+			;
 			Record newRecord = updateDialog.getRecord();
 			try {
 				table.updateRecord(record, newRecord);
@@ -173,6 +185,11 @@ public class TabbedTablesController {
 			Table table = (Table) entity;
 			DBGenericDialog dialog = new DBGenericDialog(entity, true);
 			dialog.setVisible(true);
+
+			if (!dialog.isOkClicked()) {
+				return;
+			}
+			
 			try {
 				if (!dialog.getFilterParams().getObjects().isEmpty()) {
 					table.filterRecords(dialog.getFilterParams(), "");
@@ -206,6 +223,11 @@ public class TabbedTablesController {
 			DBGenericDialog dialog = new DBGenericDialog(entity, false);
 
 			dialog.setVisible(true);
+
+			if (!dialog.isOkClicked()) {
+				return;
+			}
+			
 			try {
 				table.sortRecords(dialog.getFilterParams().getQuery());
 			} catch (SQLException ex) {
