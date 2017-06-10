@@ -197,12 +197,14 @@ public class TabbedTablesController {
 				return;
 			}
 			Table table = (Table) entity;
-			GenericDialog dialog = new GenericDialog(entity, null, true, true, false); // SORT DIALOG TODO
+			DBGenericDialog dialog = new DBGenericDialog(entity, false);
 			dialog.setVisible(true);
 			try {
-				table.sortRecords(dialog.getOrderBy());
+				table.sortRecords(dialog.getFilterParams().getQuery());
 			} catch (SQLException ex) {
 				launchErrorPane(ex);
+			} catch (InvalidRecordException e1) {
+				e1.printStackTrace();
 			}
 		}
 	}

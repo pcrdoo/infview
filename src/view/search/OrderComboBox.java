@@ -12,6 +12,10 @@ public class OrderComboBox extends JComboBox<String> implements ExpressionCompon
 		super();
 		mapa.put("rastuce", "ASC ");
 		mapa.put("opadajuce", "DSC ");
+		
+		for(String s : mapa.keySet()) {
+			this.addItem(s);
+		}
 	}
 
 	@Override
