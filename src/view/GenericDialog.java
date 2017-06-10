@@ -18,7 +18,6 @@ import model.Attribute;
 import model.Entity;
 import model.Record;
 import model.files.InvalidRecordException;
-import java.awt
 public class GenericDialog extends JDialog {
 	/**
 	 * 
@@ -50,7 +49,7 @@ public class GenericDialog extends JDialog {
 		fromStart = new JCheckBox("Search from start");
 
 		atrCount = entity.getAttributes().size();
-		int num = (atrCount + 4);
+		int num = (atrCount + 6);
 
 		if (!allowCheckBoxes)
 			num -= 3;
