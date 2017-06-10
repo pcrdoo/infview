@@ -6,6 +6,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -118,7 +119,7 @@ public class Warehouse extends InfResource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String location = "ui-2016-tim201.5:ui-2015-tim201.5.MuY991@jdbc:jtds:sqlserver://147.91.175.155,1433/ui-2016-tim201.5";
+		String location = "ui-2016-tim201.5:ui-2015-tim201.5.MuY991@jdbc:jtds:sqlserver://147.91.175.155/ui-2016-tim201.5";
 		String[] parts = location.split("@");
 		String loc = parts[1];
 		String[] unpw = parts[0].split(":");
@@ -126,6 +127,7 @@ public class Warehouse extends InfResource {
 		String password = unpw[1];
 		try {
 			dbConnection = DriverManager.getConnection(loc, username, password);
+			// print tables for fun
 			DatabaseMetaData dbMetadata = dbConnection.getMetaData();
 			String[] dbTypes = { "TABLE" };
 			ResultSet rsTables = dbMetadata.getTables(null, null, null, dbTypes);
@@ -138,5 +140,9 @@ public class Warehouse extends InfResource {
 			e.printStackTrace();
 		}
 
+	}
+
+	public Connection getDbConnection() {
+		return dbConnection;
 	}
 }

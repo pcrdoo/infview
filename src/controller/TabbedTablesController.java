@@ -3,6 +3,10 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -12,6 +16,8 @@ import javax.swing.event.ChangeListener;
 
 import model.Entity;
 import model.Record;
+import model.Table;
+import model.Warehouse;
 import model.files.File;
 import model.files.IndexedSequentialFile;
 import model.files.InvalidRecordException;
@@ -46,7 +52,6 @@ public class TabbedTablesController {
 
 	// Table
 
-
 	private class TabChangeListener implements ChangeListener {
 
 		@Override
@@ -74,19 +79,45 @@ public class TabbedTablesController {
 		}
 
 	}
-	
+
 	// Db
-	
+
 	private class DbFetchClickListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Entity entity = tt.getSelectedEntity();
-			// Todo: DB Fetch
-			
+			/*
+			 * if (!(entity instanceof Table)) { return; } Table table = (Table)
+			 * entity;
+			 */
+			StringBuilder stmtBuilder = new StringBuilder();
+			stmtBuilder.append("SELECT * FROM ");
+			stmtBuilder.append("proizvodna_hala");
+			try {
+				PreparedStatement stmt = Warehouse.getInstance().getDbConnection()
+						.prepareStatement(stmtBuilder.toString());
+				ResultSet results = stmt.executeQuery();
+				int numColumns = results.getMetaData().getColumnCount();
+				System.out.println(numColumns);
+				while (results.next()) {
+					System.out.println("NOVI RED");
+					for (int i = 1; i <= numColumns; i++) {
+						System.out.print(results.getString(i) + " ");
+						// moze i po nazivu
+					}
+					System.out.println();
+				}
+				// obavezno je zatvaranje Statement i ResultSet objekta
+				results.close();
+				stmt.close();
+			} catch (SQLException ex) {
+				System.out.println("SQL error: " + ex);
+			}
 		}
+
 	}
-	
+
 	private class DbAddClickListener implements ActionListener {
 
 		@Override
@@ -95,7 +126,7 @@ public class TabbedTablesController {
 			// Todo: DB Add
 		}
 	}
-	
+
 	private class DbUpdateClickListener implements ActionListener {
 
 		@Override
@@ -104,14 +135,15 @@ public class TabbedTablesController {
 			// Todo: DB Update
 		}
 	}
-	
+
 	private class DbFilterClickListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Entity entity = tt.getSelectedEntity();
 			// Todo: DB Filter
-			new BaseSearchDialog(entity).setVisible(true);;
+			new BaseSearchDialog(entity).setVisible(true);
+			;
 			System.out.println("KLIK FILTER");
 		}
 	}
@@ -124,10 +156,9 @@ public class TabbedTablesController {
 			// Todo: DB Sort
 		}
 	}
-	
+
 	// Files
-	
-	
+
 	private class BlockFactorChangeListener implements ChangeListener {
 
 		@Override
