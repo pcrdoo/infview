@@ -23,10 +23,10 @@ import model.files.File;
 import model.files.IndexedSequentialFile;
 import model.files.InvalidRecordException;
 import model.files.SequentialFile;
-import view.BaseSearchDialog;
 import view.GenericDialog;
 import view.MainView;
 import view.TabbedTables;
+import view.search.DBSearchDialog;
 
 public class TabbedTablesController {
 
@@ -149,8 +149,8 @@ public class TabbedTablesController {
 		public void actionPerformed(ActionEvent e) {
 			Entity entity = tt.getSelectedEntity();
 			// Todo: DB Filter
-			new BaseSearchDialog(entity).setVisible(true);
-			;
+			new DBSearchDialog(entity).setVisible(true);
+			
 			System.out.println("KLIK FILTER");
 		}
 	}

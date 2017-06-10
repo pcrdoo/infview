@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import metaschema.MetaschemaTransmogrifier;
 import model.Warehouse;
 import view.MainView;
+import view.search.DBSearchDialog;
 
 public class Main {
 
