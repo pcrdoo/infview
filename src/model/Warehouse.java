@@ -60,6 +60,7 @@ public class Warehouse extends InfResource {
 
 		MetaschemaDeserializer d = new MetaschemaDeserializer();
 		MetaschemaValidator v = new MetaschemaValidator();
+		System.out.println(metaschemaString);
 		v.validate(metaschemaString);
 		d.deserialize(metaschemaString, this);
 	}
@@ -127,6 +128,10 @@ public class Warehouse extends InfResource {
 		String password = unpw[1];
 		try {
 			dbConnection = DriverManager.getConnection(loc, username, password);
+			System.out.println("OGI JE MNOGO KUL LIK");
+			if(dbConnection == null) {
+				throw new Exception("Couldn't establish a connection: " + loc + " " + username + " " + password);
+			}
 			// print tables for fun
 			DatabaseMetaData dbMetadata = dbConnection.getMetaData();
 			String[] dbTypes = { "TABLE" };
@@ -135,7 +140,7 @@ public class Warehouse extends InfResource {
 				String tableName = rsTables.getString("TABLE_NAME");
 				System.out.println(tableName);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

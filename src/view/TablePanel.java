@@ -14,6 +14,7 @@ import controller.UpdateBlockListener;
 import model.Entity;
 import model.InfTableModel;
 import model.Record;
+import model.Table;
 import model.files.File;
 import model.files.IndexedSequentialFile;
 import model.files.SequentialFile;
@@ -39,19 +40,24 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 		// table.setPreferredScrollableViewportSize(new Dimension(900, 300));
 		table.setFillsViewportHeight(true);
 		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
-
+		table.getTableHeader().setReorderingAllowed(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		if (autoRefresh) {
+			System.out.println(entity.getName() + "registered");
 			entity.addUpdateBlockListener(this);
 		}
 		add(new JScrollPane(table), "grow");
-		if (autoRefresh && entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
-			new TableController(table);
+		if (autoRefresh) {
+			if (entity instanceof Table
+					|| (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile))) {
+				new TableController(table);
+			}
 		}
 	}
 
 	public void blockUpdated(ArrayList<Record> currentBlock) {
+		System.out.println("block updated!");
 		tableModel.setCurrentBlock(currentBlock);
 		tableModel.fireTableDataChanged();
 	}

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,7 +47,6 @@ public class TabbedTables extends JPanel {
 	private JToolBar fileToolbar;
 	private JToolBar dbToolbar;
 	private JToolBar emptyToolbar;
-	
 	private JTabbedPane tabs; // dodajemo tablePanele
 	private boolean mainTable;
 
@@ -59,13 +59,12 @@ public class TabbedTables extends JPanel {
 	private JButton doModify;
 	private JButton doDelete;
 	private JButton doMerge;
-	
+
 	private JButton doDbFetch, doDbAdd, doDbUpdate, doDbFilter, doDbSort;
-	
 
 	public TabbedTables(boolean mainTable) {
 		this.setLayout(new MigLayout("fill", "", "0[]0[grow]0"));
-		
+
 		// Toolbars
 		emptyToolbar = new JToolBar();
 		emptyToolbar.setFloatable(false);
@@ -80,7 +79,7 @@ public class TabbedTables extends JPanel {
 		toolbarArea.setVisible(true);
 
 		setToolbar("empty");
-		
+
 		// Go
 		if (!mainTable) {
 			JLabel relations = new JLabel("Relations:");
@@ -95,7 +94,7 @@ public class TabbedTables extends JPanel {
 
 	public void enableToolbar(Entity entity) {
 		if (entity instanceof File) {
-			setToolbar("db"); // CHANGE TO FILE TODO
+			setToolbar("file"); 
 			File file = (File) entity;
 			blockFactor.setValue(file.getBlockFactor());
 			blocksFetched.setText(String.valueOf(file.getBlocksFetched()));
@@ -127,7 +126,7 @@ public class TabbedTables extends JPanel {
 	public void disableToolbar() {
 		setToolbar("empty");
 	}
-	
+
 	private void setToolbar(String cardID) {
 		CardLayout cardLayout = (CardLayout) toolbarArea.getLayout();
 		cardLayout.show(toolbarArea, cardID);
@@ -195,16 +194,16 @@ public class TabbedTables extends JPanel {
 	private void populateDbToolbar() {
 		dbToolbar = new JToolBar();
 		dbToolbar.setFloatable(false);
-		
+
 		// OPS
 		doDbFetch = new JButton("Fetch");
 		dbToolbar.add(doDbFetch);
 		doDbFetch.setEnabled(true);
-		
+
 		doDbAdd = new JButton("Add");
 		dbToolbar.add(doDbAdd);
 		doDbAdd.setEnabled(true);
-		
+
 		doDbUpdate = new JButton("Update");
 		dbToolbar.add(doDbUpdate);
 		doDbUpdate.setEnabled(true);
@@ -216,7 +215,7 @@ public class TabbedTables extends JPanel {
 		doDbSort = new JButton("Sort");
 		dbToolbar.add(doDbSort);
 		doDbSort.setEnabled(true);
-		
+
 		dbToolbar.addSeparator();
 
 	}
@@ -226,6 +225,17 @@ public class TabbedTables extends JPanel {
 			return null;
 		}
 		return ((TablePanel) tabs.getSelectedComponent()).getEntity();
+	}
+
+	public void setSelectedRecord(Record record) {
+		if (tabs.getSelectedComponent() == null) {
+			return;
+		}
+		TablePanel panel = ((TablePanel) tabs.getSelectedComponent());
+		int idx = panel.getTableModel().getRecordIndex(record);
+		if (idx != -1) {
+			panel.getTable().setRowSelectionInterval(idx, idx);
+		}
 	}
 
 	public Record getSelectedRow() {
@@ -269,6 +279,7 @@ public class TabbedTables extends JPanel {
 				}
 			}
 		}
+		System.out.println(mainTable + "!!");
 		TablePanel panel = new TablePanel(entity, mainTable); //
 		TabComponent tabComponent = new TabComponent(tabs, entity);
 		tabs.addTab(entity.getName(), panel);
@@ -285,53 +296,59 @@ public class TabbedTables extends JPanel {
 		// VELIKI REFACTORING
 		Entity referencedEntity = record.getEntity();
 		for (Relation r : referencedEntity.getInverseRelations()) {
-			Entity referringEntity = (Entity)(r.getReferringAttributes().get(0).getParent());
+			Entity referringEntity = (Entity) (r.getReferringAttributes().get(0).getParent());
 
 			// referenced value to str
 			Object referencedValue;
 			String referencedValueStr;
-				
+
 			// map referrring attribute to referenced attr. value
-			HashMap<Attribute, String> fkMap = new HashMap<>();
-			for(int i = 0; i < r.getReferringAttributes().size(); i++) {
+			HashMap<Attribute, Object> fkMap = new HashMap<>();
+			for (int i = 0; i < r.getReferringAttributes().size(); i++) {
 				referencedValue = record.getAttributes().get(r.getReferencedAttributes().get(i));
 				try {
-					referencedValueStr = objectToString(referencedValue);
-					fkMap.put(r.getReferringAttributes().get(i), referencedValueStr);
+					fkMap.put(r.getReferringAttributes().get(i), referencedValue);
 				} catch (Exception e) {
 					System.out.println(e);
 				}
 			}
-			
-			int numAttrs = referringEntity.getAttributes().size();
-			String[] terms = new String[numAttrs];
-			for (int i = 0; i < numAttrs; i++) {
-				Attribute currAttr = referringEntity.getAttributes().get(i);
-				if (r.getReferringAttributes().contains(currAttr)) {
-					terms[i] = fkMap.get(currAttr);
-				} else {
-					terms[i] = "";
-				}
-			}
 
-			ArrayList<Record> results = null;
-			if(referringEntity instanceof SequentialFile) {
-				SequentialFile referringFile = (SequentialFile)referringEntity;
+			ArrayList<Record> results = new ArrayList<Record>();
+			if (referringEntity instanceof SequentialFile) {
+				SequentialFile referringFile = (SequentialFile) referringEntity;
+				int numAttrs = referringFile.getAttributes().size();
+				String[] terms = new String[numAttrs];
+				for (int i = 0; i < numAttrs; i++) {
+					Attribute currAttr = referringFile.getAttributes().get(i);
+					if (r.getReferringAttributes().contains(currAttr)) {
+						try {
+							terms[i] = objectToString(fkMap.get(currAttr));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						terms[i] = "";
+					}
+				}
 				// VRATI POINTER
 				int filePointer = referringFile.getFilePointer();
 				results = referringFile.findRecord(terms, true, false, true);
 				referringFile.setFilePointer(filePointer);
-			} else if(referringEntity instanceof Table) {
-				Table referringTable = (Table)referringEntity;
-				results = referringTable.findRecord(terms);
+			} else if (referringEntity instanceof Table) {
+				Table referringTable = (Table) referringEntity;
+				try {
+					results = referringTable.findRecordsByFk(fkMap);
+				} catch (SQLException e) {
+					System.out.println("Sql exception in findRecordsByFk: " + e.getMessage());
+					e.printStackTrace();
+				}
 			}
-
 			// dodaj tabelu
 			TablePanel panel = addTab(referringEntity);
 			if (panel != null) {
 				panel.getTableModel().setCurrentBlock(results);
 			}
-
 		}
 		// sve childrene
 	}
@@ -371,7 +388,6 @@ public class TabbedTables extends JPanel {
 	public JButton getDoMerge() {
 		return doMerge;
 	}
-	
 
 	public JButton getDoDbFetch() {
 		return doDbFetch;
@@ -392,6 +408,5 @@ public class TabbedTables extends JPanel {
 	public JButton getDoDbSort() {
 		return doDbSort;
 	}
-
 
 }

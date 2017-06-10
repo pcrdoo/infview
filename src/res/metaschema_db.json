@@ -274,12 +274,12 @@
             ],
             "relations": [
                 {
-                    "referencedAttributes": {
+                    "referencedAttributes": [
                         "zaposleni\/zaposleni_jmbg"
-                    },
-                    "referringAttributes": {
+                    ],
+                    "referringAttributes": [
                         "rukovodilac_jmbg"
-                    }
+                    ]
                 }
             ]
         },

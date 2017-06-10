@@ -36,10 +36,7 @@ public class InfTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		if (entity instanceof File) {
-			return currentBlock.size();
-		}
-		return 0; // TODO Baza
+		return currentBlock.size();
 	}
 
 	@Override
@@ -49,12 +46,9 @@ public class InfTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if (entity instanceof File) {
-			Record record = currentBlock.get(rowIndex);
-			Attribute attribute = entity.getAttributes().get(columnIndex);
-			return record.getAttributes().get(attribute);
-		}
-		return null; // TODO Baza
+		Record record = currentBlock.get(rowIndex);
+		Attribute attribute = entity.getAttributes().get(columnIndex);
+		return record.getAttributes().get(attribute);
 	}
 
 	@Override
@@ -79,16 +73,23 @@ public class InfTableModel extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object value, int row, int col) {
-		if (entity instanceof File) {
-			Attribute attr = entity.getAttributes().get(col);
-			currentBlock.get(row).getAttributes().put(attr, value);
-			fireTableCellUpdated(row, col);
-		}
-		return; // TODO Baza
+		Attribute attr = entity.getAttributes().get(col);
+		currentBlock.get(row).getAttributes().put(attr, value);
+		fireTableCellUpdated(row, col);
 	}
 
 	public void setCurrentBlock(ArrayList<Record> currentBlock) {
+		System.out.println(currentBlock.size());
 		this.currentBlock = currentBlock;
+	}
+
+	public int getRecordIndex(Record record) {
+		for (int i = 0; i < currentBlock.size(); i++) {
+			if (record.equals(currentBlock.get(i))) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 }

@@ -172,6 +172,9 @@ public class MetaschemaDeserializer {
 		case "indexedSequential":
 			e = new IndexedSequentialFile("", fullPath, parent);
 			break;
+		case "sqlTable":
+			e = new Table("", parent);
+			break;
 		default:
 			throw new MetaschemaDeserializationException("Unkown entity type: " + type);
 		}
@@ -252,7 +255,7 @@ public class MetaschemaDeserializer {
 		destination.setDescription(o.get("description").getAsString());
 		destination.setLocation(o.get("location").getAsString());
 		
-		if(o.get("type").getAsString().equals("files")) { // database
+		if(o.get("type").getAsString().equals("mssql")) {
 			destination.buildConnection();
 		}
 

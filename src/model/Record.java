@@ -109,6 +109,7 @@ public class Record implements Comparable<Record> {
 		return r;
 	}
 
+	@Override
 	public int compareTo(Record other) {
 		if (entity != other.entity) {
 			return -1;
@@ -136,4 +137,25 @@ public class Record implements Comparable<Record> {
 
 		return 0;
 	}
+
+	@Override
+	public boolean equals(Object other) {
+		if(!(other instanceof Record)) {
+			return false;
+		}
+		Record record = (Record)other;
+		if(record.getEntity() != entity) {
+			return false;
+		}
+		if(record.getAttributes().size() != attributes.size()) {
+			return false;
+		}
+		for(int i = 0; i < attributes.size(); i++) {
+			if(!attributes.get(i).equals(record.getAttributes().get(i))) {
+				return false; // ovo nece da radi
+			}
+		}
+		return true;
+	}
+	
 }

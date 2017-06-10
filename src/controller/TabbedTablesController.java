@@ -51,34 +51,18 @@ public class TabbedTablesController {
 		tt.getDoDbSort().addActionListener(new DbSortClickListener());
 	}
 
-	// Table
-
-	private class TabChangeListener implements ChangeListener {
-
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			Entity entity = tt.getSelectedEntity();
-			if (entity != null) {
-				tt.enableToolbar(entity);
-				if (entity instanceof IndexedSequentialFile) {
-					MainView.getInstance().getDesktopView().detachDetailsTable();
-					MainView.getInstance().getDesktopView()
-							.attachIndexTree(((IndexedSequentialFile) entity).getTree().getRoot());
-				} else if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
-					MainView.getInstance().getDesktopView().attachDetailsTable();
-					MainView.getInstance().getDesktopView().detachIndexTree();
-				} else {
-					MainView.getInstance().getDesktopView().detachDetailsTable();
-					MainView.getInstance().getDesktopView().detachIndexTree();
-				}
-			} else {
-				tt.disableToolbar();
-				MainView.getInstance().getDesktopView().detachDetailsTable();
-				MainView.getInstance().getDesktopView().detachIndexTree();
-			}
-
+	private void launchErrorPane(SQLException ex) {
+		StringBuilder errorBuilder = new StringBuilder();
+		while (ex != null) {
+			errorBuilder.append(ex.getSQLState());
+			errorBuilder.append("[");
+			errorBuilder.append(ex.getErrorCode());
+			errorBuilder.append("]: ");
+			errorBuilder.append(ex.getMessage());
+			errorBuilder.append("\n ");
+			ex = ex.getNextException();
 		}
-
+		new JOptionPane(errorBuilder.toString(), JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION);
 	}
 
 	// Db
@@ -88,70 +72,112 @@ public class TabbedTablesController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Entity entity = tt.getSelectedEntity();
-			/*
-			 * if (!(entity instanceof Table)) { return; } Table table = (Table)
-			 * entity;
-			 */
-			ArrayList<Record> records = new ArrayList<>();
-			StringBuilder stmtBuilder = new StringBuilder();
-			stmtBuilder.append("SELECT * FROM ");
-			stmtBuilder.append("proizvodna_hala");
+			if (!(entity instanceof Table)) {
+				return;
+			}
+			Table table = (Table) entity;
 			try {
-				PreparedStatement stmt = Warehouse.getInstance().getDbConnection()
-						.prepareStatement(stmtBuilder.toString());
-				ResultSet results = stmt.executeQuery();
-				Record record = new Record(entity);
-				if (results.getMetaData().getColumnCount() != entity.getAttributes().size()) {
-					throw new Exception("Metaschema and database out of sync.");
-				}
-				while (results.next()) {
-					for (Attribute attr : entity.getAttributes()) {
-						Object value = results.getObject(attr.getName());
-						record.addAttribute(attr, value);
-					}
-					records.add(record);
-				}
-				// obavezno je zatvaranje Statement i ResultSet objekta
-				entity.fireUpdateBlockPerformed(records); // ozvezavanje
-				results.close();
-				stmt.close();
+				table.fetchRecords();
 			} catch (SQLException ex) {
-				System.out.println("SQL error: " + ex);
-			} catch (Exception ex) {
-				System.out.println(ex);
+				launchErrorPane(ex);
+			}
+		}
+
+	}
+
+	/*
+	 * Realizovati metodu addRecord() koja služi za dodavanje sloga u tabelu.
+	 * Metoda treba da bude realizovana korišćenjem objekta PreparedStatement.
+	 * Sve SQLException-e u slučaju neuspešnog dodavanja sloga prikazivati kroz
+	 * JOptionPane. Nakon uspešnog dodavanja sloga, sadržaj tabele treba da bude
+	 * osvežen (ponovo pročitan iz baze podataka) i u tabeli treba da bude
+	 * selektovan dodati slog.
+	 */
+	private class DbAddClickListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Entity entity = tt.getSelectedEntity();
+
+			if (!(entity instanceof Table)) {
+				return;
+			}
+			Table table = (Table) entity;
+			// Neki gui dialog koji to sredjuje i vraca record za dodati
+			Record record = new Record(table);
+			try {
+				table.addRecord(record);
+				table.fetchRecords();
+				tt.setSelectedRecord(record);
+			} catch (SQLException ex) {
+				launchErrorPane(ex);
 			}
 
 		}
 
 	}
 
-	private class DbAddClickListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Entity entity = tt.getSelectedEntity();
-			// Todo: DB Add
-		}
-	}
-
+	/* Realizovati metodu updateRecord() koja služi za izmenu selektovanog
+	sloga. Izmena sloga se radi na osnovu primarnog ključa. Dozvoljena je i
+	izmena vrednosti primarnog ključa.
+	Metoda treba da bude realizovana korišćenjem objekta PreparedStatement.
+	Sve SQLException-e u slučaju neuspešnog dodavanja sloga prikazivati kroz
+	JOptionPane.
+	Nakon uspešne izmene sloga, sadržaj tabele treba da bude osvežen (ponovo
+	pročitan iz baze podataka) i u tabeli treba da bude selektovan izmenjeni
+	slog. */
 	private class DbUpdateClickListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Entity entity = tt.getSelectedEntity();
-			// Todo: DB Update
+
+			if (!(entity instanceof Table)) {
+				return;
+			}
+			Table table = (Table) entity;
+			// Neki gui dialog koji to sredjuje i vraca record za updateovati
+			Record record = tt.getSelectedRow();
+			Record newRecord = new Record(table);
+			try {
+				table.updateRecord(record, newRecord);
+				table.fetchRecords();
+				tt.setSelectedRecord(record);
+			} catch (SQLException ex) {
+				launchErrorPane(ex);
+			}
 		}
 	}
 
+	/*
+	 * Realizovati metodu findFilterRecord() koja služi za pretragu tabele po
+	 * zadatim parametrima pretrage. Pretraga po zadatom kriterijumu uz
+	 * mogućnost korišćenja specijalnog karaktera % za VARCHAR i CHAR polja, kao
+	 * i operator =,>,< za NUMERIC i INTEGER polja. Metoda treba da bude
+	 * realizovana korišćenjem objekta PreparedStatement. Kao rezultat metode u
+	 * tabeli se prikazuju samo oni slogovi koji odgovaraju parametrima
+	 * pretrage.
+	 */
 	private class DbFilterClickListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Entity entity = tt.getSelectedEntity();
+
+			if (!(entity instanceof Table)) {
+				return;
+			}
+			Table table = (Table) entity;
 			// Todo: DB Filter
-			new DBSearchDialog(entity).setVisible(true);
-			
-			System.out.println("KLIK FILTER");
+			DBSearchDialog dialog = new DBSearchDialog(entity);
+			dialog.setVisible(true);
+			try {
+				table.filterRecords(dialog.getQuery(), dialog.getObjects());
+			} catch (SQLException ex) {
+				launchErrorPane(ex);
+			} catch (InvalidRecordException ex) {
+				System.out.println("Invalid record ex: " + ex);
+			}
 		}
 	}
 
@@ -311,5 +337,35 @@ public class TabbedTablesController {
 				ex.printStackTrace();
 			}
 		}
+	}
+
+	// Table
+
+	private class TabChangeListener implements ChangeListener {
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			Entity entity = tt.getSelectedEntity();
+			if (entity != null) {
+				tt.enableToolbar(entity);
+				if (entity instanceof IndexedSequentialFile) {
+					MainView.getInstance().getDesktopView().detachDetailsTable();
+					MainView.getInstance().getDesktopView()
+							.attachIndexTree(((IndexedSequentialFile) entity).getTree().getRoot());
+				} else if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
+					MainView.getInstance().getDesktopView().attachDetailsTable();
+					MainView.getInstance().getDesktopView().detachIndexTree();
+				} else {
+					MainView.getInstance().getDesktopView().detachDetailsTable();
+					MainView.getInstance().getDesktopView().detachIndexTree();
+				}
+			} else {
+				tt.disableToolbar();
+				MainView.getInstance().getDesktopView().detachDetailsTable();
+				MainView.getInstance().getDesktopView().detachIndexTree();
+			}
+
+		}
+
 	}
 }
