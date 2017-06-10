@@ -285,6 +285,7 @@ public class TabbedTables extends JPanel {
 		tabs.addTab(entity.getName(), panel);
 		tabs.setTabComponentAt(tabs.indexOfComponent(panel), tabComponent);
 		tabs.setSelectedComponent(panel);
+		tabs.setVisible(true);
 		return panel;
 	}
 
@@ -347,6 +348,9 @@ public class TabbedTables extends JPanel {
 			// dodaj tabelu
 			TablePanel panel = addTab(referringEntity);
 			if (panel != null) {
+				for(Record result : results) {
+					System.out.println(result);
+				}
 				panel.getTableModel().setCurrentBlock(results);
 			}
 		}

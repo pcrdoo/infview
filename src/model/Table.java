@@ -136,7 +136,7 @@ public class Table extends Entity {
 		stmt.close();
 	}
 
-	public ArrayList<Record> filterRecords(FilterParams filterParams, String orderBy) throws SQLException {
+	public ArrayList<Record> filterRecords(FilterParams filterParams, String orderBy) throws SQLException, InvalidLengthException {
 		lastParams = filterParams;
 		ArrayList<Record> records = new ArrayList<>();
 		//System.out.println(sql);
@@ -154,7 +154,7 @@ public class Table extends Entity {
 		while (results.next()) {
 			for (Attribute attr : attributes) {
 				Object value = results.getObject(attr.getName());
-				record.addAttribute(attr, value);
+				record.addAttribute(attr, Attribute.fromValue(attr, value));
 			}
 			records.add(record);
 		}
@@ -178,14 +178,25 @@ public class Table extends Entity {
 			values.add(attr.getValue());
 		}
 		stmtBuilder.delete(stmtBuilder.length() - 2, stmtBuilder.length());
-		return filterRecords(new FilterParams(stmtBuilder.toString(), values), "");
+		try {
+			return filterRecords(new FilterParams(stmtBuilder.toString(), values), "");
+		} catch (InvalidLengthException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Invalid length error: " + e.getMessage());
+			return new ArrayList<Record>();
+		}
 	}
 
 	public void sortRecords(String orderBy) throws SQLException {
 		if(lastParams == null) {
 			return;
 		}
-		filterRecords(lastParams, orderBy);
+		try {
+			filterRecords(lastParams, orderBy);
+		} catch (InvalidLengthException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Invalid length error: " + e.getMessage());
+		}
 	}
 
 }

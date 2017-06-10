@@ -10,12 +10,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import model.Attribute;
 import model.Entity;
+import model.InvalidLengthException;
 import model.Record;
 import model.Table;
 import model.Warehouse;
@@ -25,6 +27,7 @@ import model.files.InvalidRecordException;
 import model.files.SequentialFile;
 import view.GenericDialog;
 import view.MainView;
+import view.SQLErrorDialog;
 import view.TabbedTables;
 import view.search.DBGenericDialog;
 
@@ -51,20 +54,6 @@ public class TabbedTablesController {
 		tt.getDoDbSort().addActionListener(new DbSortClickListener());
 	}
 
-	private void launchErrorPane(SQLException ex) {
-		StringBuilder errorBuilder = new StringBuilder();
-		while (ex != null) {
-			errorBuilder.append(ex.getSQLState());
-			errorBuilder.append("[");
-			errorBuilder.append(ex.getErrorCode());
-			errorBuilder.append("]: ");
-			errorBuilder.append(ex.getMessage());
-			errorBuilder.append("\n ");
-			ex = ex.getNextException();
-		}
-		new JOptionPane(errorBuilder.toString(), JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION).setVisible(true);
-	}
-
 	// Db
 
 	private class DbFetchClickListener implements ActionListener {
@@ -79,7 +68,8 @@ public class TabbedTablesController {
 			try {
 				table.fetchRecords();
 			} catch (SQLException ex) {
-				launchErrorPane(ex);
+
+				new SQLErrorDialog(ex).launch();
 			} catch (Exception ex) {
 				System.err.println("gusim jastukom: " + ex.toString());
 			}
@@ -114,7 +104,7 @@ public class TabbedTablesController {
 				table.fetchRecords();
 				tt.setSelectedRecord(record);
 			} catch (SQLException ex) {
-				launchErrorPane(ex);
+				new SQLErrorDialog(ex).launch();
 			} catch (Exception ex) {
 				System.err.println("gusim jastukom: " + ex.toString());
 			}
@@ -144,7 +134,7 @@ public class TabbedTablesController {
 			Table table = (Table) entity;
 			// Neki gui dialog koji to sredjuje i vraca record za updateovati
 			Record record = tt.getSelectedRow();
-			if(record == null) {
+			if (record == null) {
 				return;
 			}
 			GenericDialog updateDialog = new GenericDialog(entity, record, false, true, false);
@@ -155,7 +145,7 @@ public class TabbedTablesController {
 				table.fetchRecords();
 				tt.setSelectedRecord(record);
 			} catch (SQLException ex) {
-				launchErrorPane(ex);
+				new SQLErrorDialog(ex).launch();
 			} catch (Exception ex) {
 				System.err.println("gusim jastukom: " + ex.toString());
 			}
@@ -188,9 +178,11 @@ public class TabbedTablesController {
 					table.filterRecords(dialog.getFilterParams(), "");
 				}
 			} catch (SQLException ex) {
-				launchErrorPane(ex);
+				new SQLErrorDialog(ex).launch();
 			} catch (InvalidRecordException ex) {
 				System.out.println("Invalid record ex: " + ex);
+			} catch (InvalidLengthException ex) {
+				System.out.println("Invalid len ex: " + ex);
 			}
 		}
 	}
@@ -217,7 +209,7 @@ public class TabbedTablesController {
 			try {
 				table.sortRecords(dialog.getFilterParams().getQuery());
 			} catch (SQLException ex) {
-				launchErrorPane(ex);
+				new SQLErrorDialog(ex).launch();
 			} catch (InvalidRecordException e1) {
 				e1.printStackTrace();
 			}
@@ -386,7 +378,7 @@ public class TabbedTablesController {
 					MainView.getInstance().getDesktopView().detachDetailsTable();
 					MainView.getInstance().getDesktopView()
 							.attachIndexTree(((IndexedSequentialFile) entity).getTree().getRoot());
-				} else if (entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) {
+				} else if ((entity instanceof SequentialFile && !(entity instanceof IndexedSequentialFile)) || entity instanceof Table) {
 					MainView.getInstance().getDesktopView().attachDetailsTable();
 					MainView.getInstance().getDesktopView().detachIndexTree();
 				} else {
