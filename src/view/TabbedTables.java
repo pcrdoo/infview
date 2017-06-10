@@ -95,7 +95,7 @@ public class TabbedTables extends JPanel {
 
 	public void enableToolbar(Entity entity) {
 		if (entity instanceof File) {
-			setToolbar("file"); // CHANGE TO FILE TODO
+			setToolbar("db"); // CHANGE TO FILE TODO
 			File file = (File) entity;
 			blockFactor.setValue(file.getBlockFactor());
 			blocksFetched.setText(String.valueOf(file.getBlocksFetched()));
@@ -199,23 +199,23 @@ public class TabbedTables extends JPanel {
 		// OPS
 		doDbFetch = new JButton("Fetch");
 		dbToolbar.add(doDbFetch);
-		doDbFetch.setEnabled(false);
+		doDbFetch.setEnabled(true);
 		
 		doDbAdd = new JButton("Add");
 		dbToolbar.add(doDbAdd);
-		doDbAdd.setEnabled(false);
+		doDbAdd.setEnabled(true);
 		
 		doDbUpdate = new JButton("Update");
 		dbToolbar.add(doDbUpdate);
-		doDbUpdate.setEnabled(false);
+		doDbUpdate.setEnabled(true);
 
 		doDbFilter = new JButton("Filter");
 		dbToolbar.add(doDbFilter);
-		doDbFilter.setEnabled(false);
+		doDbFilter.setEnabled(true);
 
 		doDbSort = new JButton("Sort");
 		dbToolbar.add(doDbSort);
-		doDbSort.setEnabled(false);
+		doDbSort.setEnabled(true);
 		
 		dbToolbar.addSeparator();
 

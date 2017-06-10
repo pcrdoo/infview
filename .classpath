@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/org.json-20161124.jar"/>
 	<classpathentry kind="lib" path="lib/commons-validator-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/guava-21.0.jar"/>
+	<classpathentry kind="lib" path="lib/jtds-1.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
