@@ -2,7 +2,10 @@ package model;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -109,8 +112,31 @@ public class Warehouse extends InfResource {
 	}
 
 	public void buildConnection() {
-		Class.forName("net.sourceforge.jtds.jdbc.Driver");
-		//dbConnection = DriverManager.getConnection("jdbc:jtds:sqlserver://" + serverName + "/" + databaseName, userName,
-		//		password);
+		try {
+			Class.forName("net.sourceforge.jtds.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String location = "ui-2016-tim201.5:ui-2015-tim201.5.MuY991@jdbc:jtds:sqlserver://147.91.175.155,1433/ui-2016-tim201.5";
+		String[] parts = location.split("@");
+		String loc = parts[1];
+		String[] unpw = parts[0].split(":");
+		String username = unpw[0];
+		String password = unpw[1];
+		try {
+			dbConnection = DriverManager.getConnection(loc, username, password);
+			DatabaseMetaData dbMetadata = dbConnection.getMetaData();
+			String[] dbTypes = { "TABLE" };
+			ResultSet rsTables = dbMetadata.getTables(null, null, null, dbTypes);
+			while (rsTables.next()) {
+				String tableName = rsTables.getString("TABLE_NAME");
+				System.out.println(tableName);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }

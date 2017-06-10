@@ -251,6 +251,10 @@ public class MetaschemaDeserializer {
 		deserializeToInfResource(o, destination);
 		destination.setDescription(o.get("description").getAsString());
 		destination.setLocation(o.get("location").getAsString());
+		
+		if(o.get("type").getAsString().equals("files")) { // database
+			destination.buildConnection();
+		}
 
 		HashMap<String, Package> packages = new HashMap<>();
 		Package root = deserializePackage(o, packages, destination, destination.getLocation());
