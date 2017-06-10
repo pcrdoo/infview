@@ -1,6 +1,7 @@
 package view.search;
 
 import java.awt.Color;
+import view.CloseableDialog;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -29,7 +30,7 @@ import model.datatypes.DateType;
 import model.datatypes.VarCharType;
 import model.files.InvalidRecordException;
 
-public class DBGenericDialog extends JDialog {
+public class DBGenericDialog extends JDialog implements CloseableDialog {
 	private Entity entity;
 	private boolean isSearch;
 	private DBSearchDialogController controller;
@@ -37,7 +38,7 @@ public class DBGenericDialog extends JDialog {
 	private int fieldHeight = 50;
 	private JButton ok;
 	private JPanel panel;
-	private boolean isOkClicked = false;
+	private boolean closed = true;
 
 	private ArrayList<ExpressionRow> expression;
 	
@@ -92,12 +93,12 @@ public class DBGenericDialog extends JDialog {
 		return entity;
 	}
 
-	public boolean isOkClicked() {
-		return isOkClicked;
+	public boolean isClosed() {
+		return closed;
 	}
 
-	public void setOkClicked(boolean isOkClicked) {
-		this.isOkClicked = isOkClicked;
+	public void setClosed(boolean closed) {
+		this.closed = closed;
 	}
 
 	public void setEntity(Entity entity) {

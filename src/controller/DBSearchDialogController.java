@@ -20,7 +20,7 @@ public class DBSearchDialogController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//ArrayList<Object> objects = view.getObjects();
-			view.setOkClicked(true);
+			view.setClosed(false);
 			view.setVisible(false);
 		}
 	}

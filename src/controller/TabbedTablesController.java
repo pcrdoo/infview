@@ -99,7 +99,7 @@ public class TabbedTablesController {
 			GenericDialog addDialog = new GenericDialog(entity, null, false, true, false);
 			addDialog.setVisible(true);
 
-			if (!addDialog.isDoShit()) {
+			if (addDialog.isClosed()) {
 				return;
 			}
 			
@@ -147,10 +147,10 @@ public class TabbedTablesController {
 			GenericDialog updateDialog = new GenericDialog(entity, record, false, true, false);
 			updateDialog.setVisible(true);
 
-			if (!updateDialog.isDoShit()) {
+			if (updateDialog.isClosed()) {
 				return;
 			}
-			;
+			
 			Record newRecord = updateDialog.getRecord();
 			try {
 				table.updateRecord(record, newRecord);
@@ -186,7 +186,7 @@ public class TabbedTablesController {
 			DBGenericDialog dialog = new DBGenericDialog(entity, true);
 			dialog.setVisible(true);
 
-			if (!dialog.isOkClicked()) {
+			if (dialog.isClosed()) {
 				return;
 			}
 			
@@ -224,7 +224,7 @@ public class TabbedTablesController {
 
 			dialog.setVisible(true);
 
-			if (!dialog.isOkClicked()) {
+			if (dialog.isClosed()) {
 				return;
 			}
 			
@@ -259,7 +259,7 @@ public class TabbedTablesController {
 			d.setModal(true);
 			d.setVisible(true); // block!
 
-			if (!d.isDoShit())
+			if (d.isClosed())
 				return;
 
 			if (tt.getSelectedEntity() instanceof SequentialFile) {
@@ -304,7 +304,7 @@ public class TabbedTablesController {
 			genericDialog.setModal(true);
 			genericDialog.setVisible(true);
 
-			if (!genericDialog.isDoShit())
+			if (genericDialog.isClosed())
 				return;
 
 			Entity entity = tt.getSelectedEntity();
@@ -332,7 +332,7 @@ public class TabbedTablesController {
 			genericDialog.setModal(true);
 			genericDialog.setVisible(true);
 
-			if (!genericDialog.isDoShit())
+			if (genericDialog.isClosed())
 				return;
 
 			Entity entity = tt.getSelectedEntity();

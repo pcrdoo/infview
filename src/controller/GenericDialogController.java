@@ -19,7 +19,7 @@ public class GenericDialogController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (view.isSearch() || view.validateRecord()) {
-				view.setDoShit(true);
+				view.setClosed(false);
 				view.setVisible(false);
 			}
 		}

@@ -18,7 +18,8 @@ import model.Attribute;
 import model.Entity;
 import model.Record;
 import model.files.InvalidRecordException;
-public class GenericDialog extends JDialog {
+
+public class GenericDialog extends JDialog implements CloseableDialog {
 	/**
 	 * 
 	 */
@@ -33,7 +34,7 @@ public class GenericDialog extends JDialog {
 	JButton ok;
 	Entity entity;
 	Record record;
-	boolean doShit = false;
+	boolean closed = true;
 	boolean isSearchNotSave;
 	
 	public GenericDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey,
@@ -138,12 +139,12 @@ public class GenericDialog extends JDialog {
 		this.ok.addActionListener(l);
 	}
 
-	public boolean isDoShit() {
-		return doShit;
+	public boolean isClosed() {
+		return closed;
 	}
 
-	public void setDoShit(boolean doShit) {
-		this.doShit = doShit;
+	public void setClosed(boolean closed) {
+		this.closed = closed;
 	}
 
 	public boolean isSearch() {
