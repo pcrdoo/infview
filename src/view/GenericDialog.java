@@ -39,6 +39,7 @@ public class GenericDialog extends JDialog {
 
 	public GenericDialog(Entity entity, Record record, boolean allowCheckBoxes, boolean allowPrimaryKey,
 			boolean isSearchNotSave) {
+		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.entity = entity;
 		this.record = record;
 		this.isSearchNotSave = isSearchNotSave;

@@ -32,6 +32,8 @@ public class Table extends Entity {
 			stmt.setBoolean(idx, (Boolean) obj);
 		} else if (obj instanceof Integer) {
 			stmt.setInt(idx, (Integer) obj);
+		} else {
+			System.out.println("Pa druskane nemoj tako");
 		}
 		
 	}
@@ -41,7 +43,7 @@ public class Table extends Entity {
 		return null;
 	}
 
-	public void fetchRecords() throws SQLException {
+	public void fetchRecords() throws SQLException, InvalidLengthException {
 		ArrayList<Record> records = new ArrayList<>();
 		StringBuilder stmtBuilder = new StringBuilder();
 		stmtBuilder.append("SELECT * FROM ");
@@ -49,22 +51,23 @@ public class Table extends Entity {
 		System.out.println(stmtBuilder.toString());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
 		ResultSet results = stmt.executeQuery();
-		Record record = new Record(this);
+		
 		if (results.getMetaData().getColumnCount() != attributes.size()) {
 			System.err.println("DB and MS out of sync.");
 			return;
 		}
 		while (results.next()) {
+			Record record = new Record(this);
+			
 			System.out.println("ROW FOUND");
 			for (Attribute attr : attributes) {
 				Object value = results.getObject(attr.getName());
-				System.out.println(attr.getName() + " " + value);
-				record.addAttribute(attr, value);
+				record.addAttribute(attr, Attribute.fromValue(attr, value));
 			}
+			System.out.println(record);
 			records.add(record);
 		}
 		// obavezno je zatvaranje Statement i ResultSet objekta
-		for(Record r:records) System.out.println(r);
 		fireUpdateBlockPerformed(records); // ozvezavanje
 		results.close();
 		stmt.close();
@@ -85,11 +88,14 @@ public class Table extends Entity {
 		for (int i = 0; i < attributes.size(); i++) {
 			stmtBuilder.append("?,");
 		}
+		stmtBuilder.deleteCharAt(stmtBuilder.length() - 1);
 		stmtBuilder.append(")");
+		System.out.println(stmtBuilder.toString());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
-			setByType(stmt, i, record.getAttributes().get(attr));
+			setByType(stmt, i + 1, record.getAttributes().get(attr));
+			System.out.println(record.getAttributes().get(attr));
 		}
 		int updatedRows = stmt.executeUpdate();
 		stmt.close();
@@ -117,9 +123,9 @@ public class Table extends Entity {
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
-			setByType(stmt, i, newRecord.getAttributes().get(attr));
+			setByType(stmt, i + 1, newRecord.getAttributes().get(attr));
 		}
-		int idx = attributes.size();
+		int idx = 1;
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
 			if (attr.isPrimaryKey()) {

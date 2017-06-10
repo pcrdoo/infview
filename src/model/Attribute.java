@@ -1,5 +1,9 @@
 package model;
 
+import model.datatypes.CharType;
+import model.datatypes.DateType;
+import model.datatypes.VarCharType;
+
 public class Attribute extends InfResource {
 	Class<?> valueClass;
 	int length;
@@ -44,6 +48,41 @@ public class Attribute extends InfResource {
 		
 	public boolean isMandatory() {
 		return mandatory;
+	}
+	
+	public static Object fromValue(Attribute a, Object value) throws InvalidLengthException {
+		if (a.valueClass == VarCharType.class || a.valueClass == CharType.class) {
+			String s = (String)value;
+			if (a.valueClass == VarCharType.class) {
+				VarCharType varchar = new VarCharType(s.length());
+				varchar.set(s);
+				
+				return varchar;
+			} else {
+				CharType ch = new CharType(s.length());
+				ch.set(s);
+				
+				return ch;
+			}
+		} else if (a.valueClass == Integer.class) {
+			Integer i = (Integer)value;
+			return i;
+		} else if (a.valueClass == DateType.class) {
+			java.sql.Date d;
+			if (value instanceof java.sql.Timestamp) {
+				java.sql.Timestamp ts = (java.sql.Timestamp)value;
+				d = new java.sql.Date(ts.getYear(), ts.getMonth(), ts.getDay());
+			} else {
+				d = (java.sql.Date)value;
+			}
+			
+			return new DateType(d);
+		} else if (a.valueClass == Boolean.class) {
+			Boolean b = (Boolean)value;		
+			return b;
+		} else {
+			throw new IllegalArgumentException("Invalid data type");
+		}
 	}
 	
 	public void setMandatory(boolean mandatory) {

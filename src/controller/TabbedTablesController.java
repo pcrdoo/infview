@@ -62,7 +62,7 @@ public class TabbedTablesController {
 			errorBuilder.append("\n ");
 			ex = ex.getNextException();
 		}
-		new JOptionPane(errorBuilder.toString(), JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION);
+		new JOptionPane(errorBuilder.toString(), JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION).setVisible(true);
 	}
 
 	// Db
@@ -80,6 +80,8 @@ public class TabbedTablesController {
 				table.fetchRecords();
 			} catch (SQLException ex) {
 				launchErrorPane(ex);
+			} catch (Exception ex) {
+				System.err.println("gusim jastukom: " + ex.toString());
 			}
 		}
 
@@ -105,6 +107,7 @@ public class TabbedTablesController {
 			Table table = (Table) entity;
 			// Neki gui dialog koji to sredjuje i vraca record za dodati
 			GenericDialog addDialog = new GenericDialog(entity, null, false, true, false);
+			addDialog.setVisible(true);
 			Record record = addDialog.getRecord();
 			try {
 				table.addRecord(record);
@@ -112,6 +115,8 @@ public class TabbedTablesController {
 				tt.setSelectedRecord(record);
 			} catch (SQLException ex) {
 				launchErrorPane(ex);
+			} catch (Exception ex) {
+				System.err.println("gusim jastukom: " + ex.toString());
 			}
 
 		}
@@ -139,14 +144,20 @@ public class TabbedTablesController {
 			Table table = (Table) entity;
 			// Neki gui dialog koji to sredjuje i vraca record za updateovati
 			Record record = tt.getSelectedRow();
-			GenericDialog addDialog = new GenericDialog(entity, record, false, true, false);
-			Record newRecord = addDialog.getRecord();
+			if(record == null) {
+				return;
+			}
+			GenericDialog updateDialog = new GenericDialog(entity, record, false, true, false);
+			updateDialog.setVisible(true);
+			Record newRecord = updateDialog.getRecord();
 			try {
 				table.updateRecord(record, newRecord);
 				table.fetchRecords();
 				tt.setSelectedRecord(record);
 			} catch (SQLException ex) {
 				launchErrorPane(ex);
+			} catch (Exception ex) {
+				System.err.println("gusim jastukom: " + ex.toString());
 			}
 		}
 	}
@@ -173,7 +184,9 @@ public class TabbedTablesController {
 			DBGenericDialog dialog = new DBGenericDialog(entity, true);
 			dialog.setVisible(true);
 			try {
-				table.filterRecords(dialog.getFilterParams(), "");
+				if (!dialog.getFilterParams().getObjects().isEmpty()) {
+					table.filterRecords(dialog.getFilterParams(), "");
+				}
 			} catch (SQLException ex) {
 				launchErrorPane(ex);
 			} catch (InvalidRecordException ex) {
@@ -197,7 +210,9 @@ public class TabbedTablesController {
 				return;
 			}
 			Table table = (Table) entity;
+
 			DBGenericDialog dialog = new DBGenericDialog(entity, false);
+
 			dialog.setVisible(true);
 			try {
 				table.sortRecords(dialog.getFilterParams().getQuery());
