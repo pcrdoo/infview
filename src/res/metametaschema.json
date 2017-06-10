@@ -47,6 +47,11 @@
                             "primaryKey":
                             {
                                 "type": "boolean"
+                            },
+
+                            "mandatory":
+                            {
+                                "type": "boolean"
                             }
 						},
 
@@ -68,21 +73,27 @@
 						"additionalProperties": false,
 						"properties": 
 						{
-							"referencedAttribute": 
+							"referencedAttributes": 
 							{
-								"type": "string"
+								"type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
 							},
 
-                            "referringAttribute":
+                            "referringAttributes":
                             {
-                                "type": "string"
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
                             }
 						},
 
 						"required": 
 						[
-							"referringAttribute",
-                            "referencedAttribute"
+							"referringAttributes",
+                            "referencedAttributes"
 						]
 					}
 				},
@@ -93,7 +104,8 @@
                     [
                         "serial",
                         "sequential",
-                        "indexedSequential"
+                        "indexedSequential",
+                        "sqlTable"
                     ]
                 },
 
@@ -174,7 +186,8 @@
 
         "type": {
             "enum": [
-                "files"
+                "files",
+                "mssql"
             ]
         },
 		
