@@ -1,6 +1,8 @@
 package model;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +22,8 @@ public class Warehouse extends InfResource {
 	private static Warehouse instance;
 	private ArrayList<Package> packages;
 	private ArrayList<Entity> entities;
+
+	private Connection dbConnection;
 
 	private Warehouse(String name) {
 		super(name, null);
@@ -102,5 +106,11 @@ public class Warehouse extends InfResource {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public void buildConnection() {
+		Class.forName("net.sourceforge.jtds.jdbc.Driver");
+		//dbConnection = DriverManager.getConnection("jdbc:jtds:sqlserver://" + serverName + "/" + databaseName, userName,
+		//		password);
 	}
 }
