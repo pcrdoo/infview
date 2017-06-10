@@ -29,6 +29,10 @@ public class VarCharType implements Comparable<VarCharType>, Serializable {
 		this.string = s.trim();
 	}
 
+	public String getString() {
+		return string;
+	}
+
 	@Override
 	public String toString() {
 		return string;
@@ -37,6 +41,15 @@ public class VarCharType implements Comparable<VarCharType>, Serializable {
 	@Override
 	public int compareTo(VarCharType o) {
 		return string.compareTo(o.string);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof VarCharType)) {
+			return false;
+		}
+		VarCharType varChar = (VarCharType)obj;
+		return this.string.equals(varChar.getString());
 	}
 
 }

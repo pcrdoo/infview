@@ -29,6 +29,9 @@ public class CharType implements Comparable<CharType>, Serializable {
 		this.string = s;
 	}
 
+	public String getString() {
+		return string;
+	}
 	@Override
 	public String toString() {
 		return string;
@@ -37,5 +40,14 @@ public class CharType implements Comparable<CharType>, Serializable {
 	@Override
 	public int compareTo(CharType o) {
 		return string.compareTo(o.string);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof CharType)) {
+			return false;
+		}
+		CharType ch = (CharType)obj;
+		return this.string.equals(ch.getString());
 	}
 }

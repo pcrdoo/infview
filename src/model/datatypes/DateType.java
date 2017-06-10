@@ -44,4 +44,13 @@ public class DateType implements Comparable<DateType>, Serializable {
 	public int compareTo(DateType o) {
 		return date.compareTo(o.date);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof DateType)) {
+			return false;
+		}
+		DateType date = (DateType)obj;
+		return this.date.equals(date.getDate());
+	}
 }

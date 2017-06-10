@@ -70,7 +70,7 @@ public class TabbedTablesController {
 			} catch (SQLException ex) {
 
 				new SQLErrorDialog(ex).launch();
-			} catch (Exception ex) {
+			} catch (InvalidLengthException ex) {
 				System.err.println("gusim jastukom: " + ex.toString());
 			}
 		}
@@ -111,7 +111,8 @@ public class TabbedTablesController {
 				tt.setSelectedRecord(record);
 			} catch (SQLException ex) {
 				new SQLErrorDialog(ex).launch();
-			} catch (Exception ex) {
+			} catch (InvalidLengthException ex) {
+				System.out.println("NE VALJA DRUGAR");
 				System.err.println("gusim jastukom: " + ex.toString());
 			}
 
@@ -158,7 +159,7 @@ public class TabbedTablesController {
 				tt.setSelectedRecord(record);
 			} catch (SQLException ex) {
 				new SQLErrorDialog(ex).launch();
-			} catch (Exception ex) {
+			} catch (InvalidLengthException ex) {
 				System.err.println("gusim jastukom: " + ex.toString());
 			}
 		}

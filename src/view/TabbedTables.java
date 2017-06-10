@@ -75,9 +75,10 @@ public class TabbedTables extends JPanel {
 		toolbarArea.add(emptyToolbar, "empty");
 		toolbarArea.add(fileToolbar, "file");
 		toolbarArea.add(dbToolbar, "db");
-		this.add(toolbarArea, "grow, wrap, height 50px");
-		toolbarArea.setVisible(true);
-
+		if (mainTable) {
+			this.add(toolbarArea, "grow, wrap, height 50px");
+			toolbarArea.setVisible(true);
+		}
 		setToolbar("empty");
 
 		// Go
@@ -94,7 +95,7 @@ public class TabbedTables extends JPanel {
 
 	public void enableToolbar(Entity entity) {
 		if (entity instanceof File) {
-			setToolbar("file"); 
+			setToolbar("file");
 			File file = (File) entity;
 			blockFactor.setValue(file.getBlockFactor());
 			blocksFetched.setText(String.valueOf(file.getBlocksFetched()));
@@ -232,9 +233,10 @@ public class TabbedTables extends JPanel {
 			return;
 		}
 		TablePanel panel = ((TablePanel) tabs.getSelectedComponent());
-		int idx = panel.getTableModel().getRecordIndex(record);
-		if (idx != -1) {
-			panel.getTable().setRowSelectionInterval(idx, idx);
+		int rowIdx = panel.getTableModel().getRecordIndex(record);
+		if (rowIdx != -1) {
+			panel.getTable().setRowSelectionInterval(rowIdx, rowIdx);
+			panel.getTable().scrollRectToVisible(panel.getTable().getCellRect(rowIdx,0, true));
 		}
 	}
 
@@ -348,7 +350,7 @@ public class TabbedTables extends JPanel {
 			// dodaj tabelu
 			TablePanel panel = addTab(referringEntity);
 			if (panel != null) {
-				for(Record result : results) {
+				for (Record result : results) {
 					System.out.println(result);
 				}
 				panel.getTableModel().setCurrentBlock(results);

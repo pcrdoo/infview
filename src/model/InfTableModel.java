@@ -84,7 +84,10 @@ public class InfTableModel extends AbstractTableModel {
 	}
 
 	public int getRecordIndex(Record record) {
+		System.out.println("Trazim index");
+		System.out.println(record);
 		for (int i = 0; i < currentBlock.size(); i++) {
+			System.out.println(currentBlock.get(i));
 			if (record.equals(currentBlock.get(i))) {
 				return i;
 			}

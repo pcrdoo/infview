@@ -59,12 +59,10 @@ public class Table extends Entity {
 		while (results.next()) {
 			Record record = new Record(this);
 			
-			System.out.println("ROW FOUND");
 			for (Attribute attr : attributes) {
 				Object value = results.getObject(attr.getName());
 				record.addAttribute(attr, Attribute.fromValue(attr, value));
 			}
-			System.out.println(record);
 			records.add(record);
 		}
 		// obavezno je zatvaranje Statement i ResultSet objekta

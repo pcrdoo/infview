@@ -140,6 +140,9 @@ public class Record implements Comparable<Record> {
 
 	@Override
 	public boolean equals(Object other) {
+		if(other == null) {
+			return false;
+		}
 		if(!(other instanceof Record)) {
 			return false;
 		}
@@ -150,11 +153,19 @@ public class Record implements Comparable<Record> {
 		if(record.getAttributes().size() != attributes.size()) {
 			return false;
 		}
-		for(int i = 0; i < attributes.size(); i++) {
-			if(!attributes.get(i).equals(record.getAttributes().get(i))) {
+		if(record.getAttributes().size() != entity.getAttributes().size()) {
+			return false;
+		}
+		for(int i = 0; i < entity.getAttributes().size(); i++) {
+			Attribute attr = entity.getAttributes().get(i);
+			Object valMe = attributes.get(attr);
+			Object valOther = record.getAttributes().get(attr);
+			System.out.println(valMe.getClass() + " " + valOther + "! " + valMe.equals(valOther));
+			if(!valMe.equals(valOther)) {
 				return false; // ovo nece da radi
 			}
 		}
+		System.out.println("TRUE JEE");
 		return true;
 	}
 	
