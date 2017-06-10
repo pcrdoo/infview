@@ -23,6 +23,7 @@ import controller.GenericDialogController;
 import model.Attribute;
 import model.AttributeWrapper;
 import model.Entity;
+import model.FilterParams;
 import model.datatypes.CharType;
 import model.datatypes.DateType;
 import model.datatypes.VarCharType;
@@ -37,8 +38,6 @@ public class DBSearchDialog extends JDialog{
 	private JPanel panel;
 
 	private ArrayList<ExpressionPanel> expression;
-	private String query;
-	private ArrayList<Object> objects;
 	
 	public DBSearchDialog(Entity entity) {
 		this.setEntity(entity);
@@ -46,8 +45,6 @@ public class DBSearchDialog extends JDialog{
 		this.controller = new DBSearchDialogController(this);
 		
 		this.expression = new ArrayList<>();
-		this.query = "SELECT * WHERE ";
-		this.objects = new ArrayList<>();
 		
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -95,19 +92,20 @@ public class DBSearchDialog extends JDialog{
 	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}
-
-	public String getQuery() {
+	
+	public FilterParams getFilterParams()  throws InvalidRecordException{
+		FilterParams params = new FilterParams();
+		
+		StringBuilder sb = new StringBuilder("SELECT * WHERE ");
 		for (ExpressionPanel ep : this.expression) {
-			query += ep.getQuery();
+			sb.append(ep.getQuery());
+		}
+		params.setQuery(sb.toString());
+		
+		for (ExpressionPanel ep : this.expression) {
+			params.addObject(ep.getObject());
 		}
 		
-		return query;
-	}
-
-	public ArrayList<Object> getObjects() throws InvalidRecordException {
-		for (ExpressionPanel ep : this.expression) {
-			objects.add(ep.getObject());
-		}
-		return null;
+		return params;
 	}
 }

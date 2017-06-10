@@ -173,7 +173,7 @@ public class TabbedTablesController {
 			DBSearchDialog dialog = new DBSearchDialog(entity);
 			dialog.setVisible(true);
 			try {
-				table.filterRecords(dialog.getQuery(), dialog.getObjects());
+				table.filterRecords(dialog.getFilterParams(), "");
 			} catch (SQLException ex) {
 				launchErrorPane(ex);
 			} catch (InvalidRecordException ex) {
@@ -182,6 +182,11 @@ public class TabbedTablesController {
 		}
 	}
 
+	/*
+	 * Realizovati metodu sortMDI() klase UIDBFile koja služi za sortiranje
+	 * slogova po zadatim kriterijumima. Metoda treba da bude realizovana
+	 * korišćenjem objekta Statement.
+	 */
 	private class DbSortClickListener implements ActionListener {
 
 		@Override
@@ -192,9 +197,13 @@ public class TabbedTablesController {
 				return;
 			}
 			Table table = (Table) entity;
-			GenericDialog dialog = new GenericDialog(entity, null, true, true, false);
+			GenericDialog dialog = new GenericDialog(entity, null, true, true, false); // SORT DIALOG TODO
 			dialog.setVisible(true);
-			/**/
+			try {
+				table.sortRecords(dialog.getOrderBy());
+			} catch (SQLException ex) {
+				launchErrorPane(ex);
+			}
 		}
 	}
 

@@ -15,7 +15,7 @@ import model.datatypes.VarCharType;
 
 public class Table extends Entity {
 	
-	String lastSelect;
+	private FilterParams lastParams;
 	
 	public Table(String name, InfResource parent) {
 		super(name, parent);
@@ -113,6 +113,7 @@ public class Table extends Entity {
 			}
 		}
 		stmtBuilder.delete(stmtBuilder.length() - 5, stmtBuilder.length());
+		lastParams = new FilterParams(stmtBuilder.toString(), new ArrayList<Object>());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
@@ -129,13 +130,14 @@ public class Table extends Entity {
 		stmt.close();
 	}
 
-	public ArrayList<Record> filterRecords(String sql, ArrayList<Object> items) throws SQLException {
+	public ArrayList<Record> filterRecords(FilterParams filterParams, String orderBy) throws SQLException {
+		lastParams = filterParams;
 		ArrayList<Record> records = new ArrayList<>();
 		//System.out.println(sql);
-		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(sql);
+		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(filterParams.getQuery() + orderBy);
 		//System.out.println(stmt.getParameterMetaData().getParameterCount());
-		for(int i = 0; i < items.size(); i++) {
-			setByType(stmt, i+1, items.get(i));
+		for(int i = 0; i < filterParams.getObjects().size(); i++) {
+			setByType(stmt, i+1, filterParams.getObjects().get(i));
 		}
 		ResultSet results = stmt.executeQuery();
 		Record record = new Record(this);
@@ -170,7 +172,14 @@ public class Table extends Entity {
 			values.add(attr.getValue());
 		}
 		stmtBuilder.delete(stmtBuilder.length() - 2, stmtBuilder.length());
-		return filterRecords(stmtBuilder.toString(), values);
+		return filterRecords(new FilterParams(stmtBuilder.toString(), values), "");
+	}
+
+	public void sortRecords(String orderBy) throws SQLException {
+		if(lastParams == null) {
+			return;
+		}
+		filterRecords(lastParams, orderBy);
 	}
 
 }

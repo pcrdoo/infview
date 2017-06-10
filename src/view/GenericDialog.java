@@ -150,4 +150,8 @@ public class GenericDialog extends JDialog {
 		return this.isSearchNotSave;
 	}
 
+	public String getOrderBy() {
+		return "todo";
+	}
+
 }

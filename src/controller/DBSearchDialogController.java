@@ -19,8 +19,6 @@ public class DBSearchDialogController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String query = view.getQuery();
-			System.out.println(query);
 			//ArrayList<Object> objects = view.getObjects();
 			view.setVisible(false);
 		}
