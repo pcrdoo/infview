@@ -16,6 +16,7 @@ import model.InfResource;
 import model.Package;
 import model.Relation;
 import model.Warehouse;
+import model.Table;
 import model.datatypes.CharType;
 import model.datatypes.DateType;
 import model.datatypes.VarCharType;
@@ -33,34 +34,67 @@ public class MetaschemaDeserializer {
 		HashSet<String> relationNames = new HashSet<>();
 		for (JsonElement relationElement : relationsJson) {
 			JsonObject relation = relationElement.getAsJsonObject();
-			String[] referencedAttributeNamePieces = relation.get("referencedAttribute").getAsString().split("/");
-			if (referencedAttributeNamePieces.length != 2) {
-				throw new MetaschemaDeserializationException(
-						"Referenced attribute '" + String.join("/", referencedAttributeNamePieces)
-								+ "' is not valid (expected format is 'EntityName/AttributeName')");
+			
+			JsonArray referencedAttributesJson = relation.get("referencedAttributes").getAsJsonArray();
+			JsonArray referringAttributesJson = relation.get("referringAttributes").getAsJsonArray();
+			
+			if (referencedAttributesJson.size() == 0) {
+				throw new MetaschemaDeserializationException("Entity '" + source.getName() + "' has a relation with 0 referenced attributes");
 			}
-
-			String referringAttributeName = relation.get("referringAttribute").getAsString();
-			Attribute referringAttribute = source.findAttributeByName(referringAttributeName);
-
-			String fqn = source.getName() + "/" + referringAttributeName;
-			if (referringAttribute == null) {
-				throw new MetaschemaDeserializationException("Referring attribute '" + fqn + "' does not exist");
+			
+			if (referringAttributesJson.size() == 0) {
+				throw new MetaschemaDeserializationException("Entity '" + source.getName() + "' has a relation with 0 referring attributes");
 			}
-
-			if (!entities.containsKey(referencedAttributeNamePieces[0])) {
-				throw new MetaschemaDeserializationException("Attribute '" + fqn
-						+ "' has a relation to unknown entity '" + referencedAttributeNamePieces[0] + "'");
+			
+			if (referencedAttributesJson.size() != referringAttributesJson.size()) {
+				throw new MetaschemaDeserializationException("Entity '" + source.getName() + "' has a relation with mismatching attribute counts");
 			}
+			
+			ArrayList<Attribute> referencedAttributes = new ArrayList<>();
+			InfResource parent = null;
+			for (JsonElement referenced : referencedAttributesJson) {
+				String[] referencedAttributeNamePieces = referenced.getAsString().split("/");
+				if (referencedAttributeNamePieces.length != 2) {
+					throw new MetaschemaDeserializationException(
+							"Referenced attribute '" + String.join("/", referencedAttributeNamePieces)
+									+ "' is not valid (expected format is 'EntityName/AttributeName')");
+				}
+				
+				if (!entities.containsKey(referencedAttributeNamePieces[0])) {
+					throw new MetaschemaDeserializationException("Entity '" + source.getName()
+							+ "' has a relation to unknown entity '" + referencedAttributeNamePieces[0] + "'");
+				}
 
-			Entity referenced = entities.get(referencedAttributeNamePieces[0]);
-			Attribute referencedAttribute = referenced.findAttributeByName(referencedAttributeNamePieces[1]);
-			if (referencedAttribute == null) {
-				throw new MetaschemaDeserializationException("Referenced attribute '"
-						+ String.join("/", referencedAttributeNamePieces) + "' does not exist");
+				Entity referencedEntity = entities.get(referencedAttributeNamePieces[0]);
+				Attribute referencedAttribute = referencedEntity.findAttributeByName(referencedAttributeNamePieces[1]);
+				if (referencedAttribute == null) {
+					throw new MetaschemaDeserializationException("Referenced attribute '"
+							+ String.join("/", referencedAttributeNamePieces) + "' does not exist");
+				}
+
+				if (parent == null) {
+					parent = referencedAttribute.getParent();
+				} else if (parent != referencedAttribute.getParent()) {
+					throw new MetaschemaDeserializationException("Cannot have a composite key that refers to attributes in multiple tables on entity '" + source.getName() + "'");
+				}
+				
+				referencedAttributes.add(referencedAttribute);
 			}
+			
+			ArrayList<Attribute> referringAttributes = new ArrayList<>();
+			for (JsonElement referring : referringAttributesJson) {
+				String referringAttributeName = referring.getAsString();
+				Attribute referringAttribute = source.findAttributeByName(referringAttributeName);
 
-			Relation r = new Relation(referringAttribute, referencedAttribute, source);
+				String fqn = source.getName() + "/" + referringAttributeName;
+				if (referringAttribute == null) {
+					throw new MetaschemaDeserializationException("Referring attribute '" + fqn + "' does not exist");
+				}
+				
+				referringAttributes.add(referringAttribute);
+			}
+			
+			Relation r = new Relation(referringAttributes, referencedAttributes, source);
 
 			if (relationNames.contains(r.getName())) {
 				throw new MetaschemaDeserializationException("Duplicate relation with name '" + r.getName() + "'");
@@ -68,9 +102,12 @@ public class MetaschemaDeserializer {
 
 			relationNames.add(r.getName());
 			source.addRelation(r);
-			if (referencedAttribute.getParent() instanceof SequentialFile
-					&& !(referencedAttribute.getParent() instanceof IndexedSequentialFile)) {
-				((Entity) (referencedAttribute.getParent())).addInverseRelation(r);
+			
+			Entity referencedEntity = (Entity) referencedAttributes.get(0).getParent();
+			if (referencedEntity instanceof SequentialFile
+					&& !(referencedEntity instanceof IndexedSequentialFile) ||
+					referencedEntity instanceof Table) {
+				referencedEntity.addInverseRelation(r);
 			}
 		}
 	}
@@ -80,6 +117,13 @@ public class MetaschemaDeserializer {
 		String type = attributeJson.get("type").getAsString();
 		int length = attributeJson.get("length").getAsInt();
 		boolean primaryKey = attributeJson.get("primaryKey").getAsBoolean();
+		
+		boolean mandatory = false;
+		JsonElement mandatoryElem = attributeJson.get("mandatory");
+		if (mandatoryElem != null) {
+			mandatory = mandatoryElem.getAsBoolean();
+		}
+		
 		Class<?> clazz = null;
 		switch (type) {
 		case "char":
@@ -100,7 +144,7 @@ public class MetaschemaDeserializer {
 		default:
 			throw new MetaschemaDeserializationException("Unknown type '" + type + "'");
 		}
-		Attribute a = new Attribute("", parent, clazz, length, primaryKey);
+		Attribute a = new Attribute("", parent, clazz, length, primaryKey, mandatory);
 
 		deserializeToInfResource(attributeJson, a);
 
