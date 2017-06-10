@@ -156,7 +156,7 @@ public class TabbedTablesController {
 			try {
 				table.updateRecord(record, newRecord);
 				table.fetchRecords();
-				tt.setSelectedRecord(record);
+				tt.setSelectedRecord(newRecord);
 			} catch (SQLException ex) {
 				new SQLErrorDialog(ex).launch();
 			} catch (InvalidLengthException ex) {

@@ -109,7 +109,7 @@ public class Table extends Entity {
 			stmtBuilder.append("=?, ");
 		}
 		stmtBuilder.delete(stmtBuilder.length() - 2, stmtBuilder.length());
-		stmtBuilder.append("WHERE ");
+		stmtBuilder.append(" WHERE ");
 		for (Attribute attr : attributes) {
 			if (attr.isPrimaryKey()) {
 				stmtBuilder.append(attr.getName());
@@ -119,11 +119,12 @@ public class Table extends Entity {
 		stmtBuilder.delete(stmtBuilder.length() - 5, stmtBuilder.length());
 		lastParams = new FilterParams(stmtBuilder.toString(), new ArrayList<Object>());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
+		System.out.println(stmtBuilder.toString());
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
 			setByType(stmt, i + 1, newRecord.getAttributes().get(attr));
 		}
-		int idx = 1;
+		int idx = attributes.size() + 1;
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
 			if (attr.isPrimaryKey()) {
