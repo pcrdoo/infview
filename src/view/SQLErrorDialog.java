@@ -7,24 +7,21 @@ import javax.swing.JOptionPane;
 
 public class SQLErrorDialog {
 
-	private JDialog dialog;
+	private StringBuilder errorBuilder;
 
 	public SQLErrorDialog(SQLException ex) {
-		StringBuilder errorBuilder = new StringBuilder();
+		errorBuilder = new StringBuilder();
 		while (ex != null) {
-			errorBuilder.append(ex.getSQLState());
-			errorBuilder.append("[");
+			errorBuilder.append("[Err. ");
 			errorBuilder.append(ex.getErrorCode());
 			errorBuilder.append("]: ");
 			errorBuilder.append(ex.getMessage());
 			errorBuilder.append("\n ");
 			ex = ex.getNextException();
 		}
-		JOptionPane pane = new JOptionPane(errorBuilder.toString(), JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION);
-		dialog = pane.createDialog("SQL Error");
 	}
 
 	public void launch() {
-		dialog.setVisible(true);
+		JOptionPane.showMessageDialog(null, errorBuilder.toString(), "Greška", JOptionPane.ERROR_MESSAGE);
 	}
 }
