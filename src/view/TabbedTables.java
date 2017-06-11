@@ -281,9 +281,10 @@ public class TabbedTables extends JPanel {
 				}
 			}
 		}
-		System.out.println(mainTable + "!!");
+		System.out.println(mainTable + " je da li je main");
 		TablePanel panel = new TablePanel(entity, mainTable); //
 		TabComponent tabComponent = new TabComponent(tabs, entity);
+		System.out.println("DODAT TAB");
 		tabs.addTab(entity.getName(), panel);
 		tabs.setTabComponentAt(tabs.indexOfComponent(panel), tabComponent);
 		tabs.setSelectedComponent(panel);
@@ -303,7 +304,6 @@ public class TabbedTables extends JPanel {
 
 			// referenced value to str
 			Object referencedValue;
-			String referencedValueStr;
 
 			// map referrring attribute to referenced attr. value
 			HashMap<Attribute, Object> fkMap = new HashMap<>();

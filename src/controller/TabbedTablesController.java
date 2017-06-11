@@ -191,7 +191,10 @@ public class TabbedTablesController {
 		
 		protected void doAction() throws Exception {
 			if (!filterDialog.getFilterParams().getObjects().isEmpty()) {
-				table.filterRecords(filterDialog.getFilterParams(), "");
+				
+				ArrayList<Record> records = table.filterRecords(filterDialog.getFilterParams(), "");
+				table.setLastParams(filterDialog.getFilterParams());
+				table.fireUpdateBlockPerformed(records); 
 			}
 		}
 	}

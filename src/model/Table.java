@@ -23,6 +23,10 @@ public class Table extends Entity {
 		super(name, parent);
 	}
 
+	public void setLastParams(FilterParams lastParams) {
+		this.lastParams = lastParams;
+	}
+
 	private void setByType(PreparedStatement stmt, int idx, Object obj) throws SQLException {
 		if (obj instanceof CharType) {
 			stmt.setString(idx, ((CharType) obj).get());
@@ -141,7 +145,6 @@ public class Table extends Entity {
 	}
 
 	public ArrayList<Record> filterRecords(FilterParams filterParams, String orderBy) throws SQLException, InvalidLengthException {
-		lastParams = filterParams;
 		ArrayList<Record> records = new ArrayList<>();
 		//System.out.println(sql);
 		String fullQuery = filterParams.getQuery() + " " + orderBy;
@@ -165,7 +168,6 @@ public class Table extends Entity {
 			records.add(record);
 		}
 		// obavezno je zatvaranje Statement i ResultSet objekta
-		fireUpdateBlockPerformed(records); // ozvezavanje
 		results.close();
 		stmt.close();
 		return records;
@@ -199,7 +201,9 @@ public class Table extends Entity {
 			return;
 		}
 		try {
-			filterRecords(lastParams, orderBy);
+			ArrayList<Record> records = filterRecords(lastParams, orderBy);
+			System.out.println(records.size() + "vrlo bitno");
+			fireUpdateBlockPerformed(records); // ozvezavanje
 		} catch (InvalidLengthException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Invalid length error: " + e.getMessage());
