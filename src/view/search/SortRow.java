@@ -33,7 +33,7 @@ public class SortRow extends ExpressionRow {
 
 	@Override
 	public String getQuery() {
-		return this.attribute.getExpression() + this.order.getExpression();
+		return this.attribute.getExpression() + this.order.getExpression() + then.getExpression();
 	}
 
 	@Override
