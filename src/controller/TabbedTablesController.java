@@ -71,6 +71,9 @@ public class TabbedTablesController {
 			
 			Table table = (Table) entity;
 			CloseableDialog dialog = createDialog(table);
+			if (dialog == null) {
+				return;
+			}
 
 			boolean actionSuccessful = false;
 			do {
