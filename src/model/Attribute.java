@@ -1,5 +1,7 @@
 package model;
 
+import java.math.BigDecimal;
+
 import model.datatypes.CharType;
 import model.datatypes.DateType;
 import model.datatypes.VarCharType;
@@ -51,6 +53,9 @@ public class Attribute extends InfResource {
 	}
 	
 	public static Object fromValue(Attribute a, Object value) throws InvalidLengthException {
+		if(value == null) {
+			return null;
+		}
 		if (a.valueClass == VarCharType.class || a.valueClass == CharType.class) {
 			String s = (String)value;
 			if (a.valueClass == VarCharType.class) {
@@ -65,7 +70,13 @@ public class Attribute extends InfResource {
 				return ch;
 			}
 		} else if (a.valueClass == Integer.class) {
-			Integer i = (Integer)value;
+			System.out.println(value);
+			Integer i;
+			if (value instanceof java.math.BigDecimal) {
+				i = ((BigDecimal)value).intValue();
+			} else {
+				i = (Integer)value;
+			}
 			return i;
 		} else if (a.valueClass == DateType.class) {
 			java.sql.Date d;

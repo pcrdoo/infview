@@ -25,7 +25,7 @@ public class Record implements Comparable<Record> {
 	public void addAttribute(Attribute attribute, Object value) {
 		if (!entity.getAttributes().contains(attribute))
 			return;
-		if (attribute.getValueClass() != value.getClass()) {
+		if (value != null && attribute.getValueClass() != value.getClass()) {
 			return;
 		}
 		attributes.put(attribute, value);

@@ -3,7 +3,9 @@ package model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -27,7 +29,8 @@ public class Table extends Entity {
 		} else if (obj instanceof VarCharType) {
 			stmt.setString(idx, ((VarCharType) obj).get());
 		} else if (obj instanceof DateType) {
-			//stmt.setDate(idx, ((DateType) obj).getDate());
+			Date date = ((DateType) obj).getDate();
+			stmt.setTimestamp(idx, new Timestamp(date.getTime()));
 		} else if (obj instanceof Boolean) {
 			stmt.setBoolean(idx, (Boolean) obj);
 		} else if (obj instanceof Integer) {
@@ -62,6 +65,7 @@ public class Table extends Entity {
 			
 			for (Attribute attr : attributes) {
 				Object value = results.getObject(attr.getName());
+				System.out.println(attr + " " + value);
 				record.addAttribute(attr, Attribute.fromValue(attr, value));
 			}
 			records.add(record);
@@ -119,6 +123,7 @@ public class Table extends Entity {
 		}
 		stmtBuilder.delete(stmtBuilder.length() - 5, stmtBuilder.length());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
+		System.out.println("Query");
 		System.out.println(stmtBuilder.toString());
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
