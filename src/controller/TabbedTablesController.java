@@ -30,6 +30,7 @@ import view.MainView;
 import view.SQLErrorDialog;
 import view.TabbedTables;
 import view.search.DBGenericDialog;
+import view.CloseableDialog;
 
 public class TabbedTablesController {
 
@@ -56,6 +57,41 @@ public class TabbedTablesController {
 
 	// Db
 
+	private abstract class DbActionListener implements ActionListener {
+		protected abstract CloseableDialog createDialog(Table table);
+		protected abstract void doAction() throws Exception;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Entity entity = tt.getSelectedEntity();
+
+			if (!(entity instanceof Table)) {
+				return;
+			}
+			
+			Table table = (Table) entity;
+			CloseableDialog dialog = createDialog(table);
+
+			boolean actionSuccessful = false;
+			do {
+				try {
+					dialog.showModal();
+					if (dialog.isClosed()) {
+						return;
+					}
+					
+					doAction();
+					actionSuccessful = true;
+				} catch (SQLException ex) {
+					new SQLErrorDialog(ex).launch();
+					actionSuccessful = false;
+				} catch (Exception ex) {
+					actionSuccessful = false;
+				}
+			} while (!actionSuccessful);
+		}
+	}
+	
 	private class DbFetchClickListener implements ActionListener {
 
 		@Override
@@ -85,39 +121,20 @@ public class TabbedTablesController {
 	 * osvežen (ponovo pročitan iz baze podataka) i u tabeli treba da bude
 	 * selektovan dodati slog.
 	 */
-	private class DbAddClickListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Entity entity = tt.getSelectedEntity();
-
-			if (!(entity instanceof Table)) {
-				return;
-			}
-			Table table = (Table) entity;
-			// Neki gui dialog koji to sredjuje i vraca record za dodati
-			GenericDialog addDialog = new GenericDialog(entity, null, false, true, false);
-			addDialog.setVisible(true);
-
-			if (addDialog.isClosed()) {
-				return;
-			}
-			
-			Record record = addDialog.getRecord();
-			
-			try {
-				table.addRecord(record);
-				table.fetchRecords();
-				tt.setSelectedRecord(record);
-			} catch (SQLException ex) {
-				new SQLErrorDialog(ex).launch();
-			} catch (InvalidLengthException ex) {
-				System.out.println("NE VALJA DRUGAR");
-				System.err.println("gusim jastukom: " + ex.toString());
-			}
-
+	private class DbAddClickListener extends DbActionListener {
+		GenericDialog addDialog;
+		Table table;
+		
+		protected CloseableDialog createDialog(Table table) {
+			return addDialog = new GenericDialog(this.table = table, null, false, true, false);	
 		}
-
+		
+		protected void doAction() throws Exception {
+			Record record = addDialog.getRecord();
+			table.addRecord(record);
+			table.fetchRecords();
+			tt.setSelectedRecord(record);
+		}
 	}
 
 	/*
@@ -129,39 +146,26 @@ public class TabbedTablesController {
 	 * izmene sloga, sadržaj tabele treba da bude osvežen (ponovo pročitan iz
 	 * baze podataka) i u tabeli treba da bude selektovan izmenjeni slog.
 	 */
-	private class DbUpdateClickListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Entity entity = tt.getSelectedEntity();
-
-			if (!(entity instanceof Table)) {
-				return;
-			}
-			Table table = (Table) entity;
-			// Neki gui dialog koji to sredjuje i vraca record za updateovati
+	private class DbUpdateClickListener extends DbActionListener {
+		GenericDialog updateDialog;
+		Record oldRecord;
+		Table table;
+		
+		protected CloseableDialog createDialog(Table table) {
 			Record record = tt.getSelectedRow();
 			if (record == null) {
-				return;
+				return null;
 			}
 			
-			GenericDialog updateDialog = new GenericDialog(entity, record, false, true, false);
-			updateDialog.setVisible(true);
-
-			if (updateDialog.isClosed()) {
-				return;
-			}
-			
+			return updateDialog = new GenericDialog(this.table = table, oldRecord = record, false, true, false);	
+		}
+		
+		protected void doAction() throws Exception {
 			Record newRecord = updateDialog.getRecord();
-			try {
-				table.updateRecord(record, newRecord);
-				table.fetchRecords();
-				tt.setSelectedRecord(newRecord);
-			} catch (SQLException ex) {
-				new SQLErrorDialog(ex).launch();
-			} catch (InvalidLengthException ex) {
-				System.err.println("gusim jastukom: " + ex.toString());
-			}
+
+			table.updateRecord(oldRecord, newRecord);
+			table.fetchRecords();
+			tt.setSelectedRecord(newRecord);
 		}
 	}
 
@@ -174,33 +178,17 @@ public class TabbedTablesController {
 	 * tabeli se prikazuju samo oni slogovi koji odgovaraju parametrima
 	 * pretrage.
 	 */
-	private class DbFilterClickListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Entity entity = tt.getSelectedEntity();
-
-			if (!(entity instanceof Table)) {
-				return;
-			}
-			Table table = (Table) entity;
-			DBGenericDialog dialog = new DBGenericDialog(entity, true);
-			dialog.setVisible(true);
-
-			if (dialog.isClosed()) {
-				return;
-			}
-			
-			try {
-				if (!dialog.getFilterParams().getObjects().isEmpty()) {
-					table.filterRecords(dialog.getFilterParams(), "");
-				}
-			} catch (SQLException ex) {
-				new SQLErrorDialog(ex).launch();
-			} catch (InvalidRecordException ex) {
-				System.out.println("Invalid record ex: " + ex);
-			} catch (InvalidLengthException ex) {
-				System.out.println("Invalid len ex: " + ex);
+	private class DbFilterClickListener extends DbActionListener {
+		DBGenericDialog filterDialog;
+		Table table;
+		
+		protected CloseableDialog createDialog(Table table) {
+			return filterDialog = new DBGenericDialog(this.table = table, true);
+		}
+		
+		protected void doAction() throws Exception {
+			if (!filterDialog.getFilterParams().getObjects().isEmpty()) {
+				table.filterRecords(filterDialog.getFilterParams(), "");
 			}
 		}
 	}
@@ -210,33 +198,16 @@ public class TabbedTablesController {
 	 * slogova po zadatim kriterijumima. Metoda treba da bude realizovana
 	 * korišćenjem objekta Statement.
 	 */
-	private class DbSortClickListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Entity entity = tt.getSelectedEntity();
-
-			if (!(entity instanceof Table)) {
-				return;
-			}
-			Table table = (Table) entity;
-			
-			DBGenericDialog dialog = new DBGenericDialog(entity, false);
-
-			dialog.setVisible(true);
-
-			if (dialog.isClosed()) {
-				System.out.println("EVO ME");
-				return;
-			}
-			
-			try {
-				table.sortRecords(dialog.getFilterParams().getQuery());
-			} catch (SQLException ex) {
-				new SQLErrorDialog(ex).launch();
-			} catch (InvalidRecordException e1) {
-				e1.printStackTrace();
-			}
+	private class DbSortClickListener extends DbActionListener {
+		DBGenericDialog sortDialog;
+		Table table;
+		
+		protected CloseableDialog createDialog(Table table) {
+			return sortDialog = new DBGenericDialog(this.table = table, false);
+		}
+		
+		protected void doAction() throws Exception {
+			table.sortRecords(sortDialog.getFilterParams().getQuery());
 		}
 	}
 

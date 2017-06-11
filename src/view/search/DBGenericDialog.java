@@ -107,6 +107,12 @@ public class DBGenericDialog extends JDialog implements CloseableDialog {
 		this.entity = entity;
 	}
 	
+	public void showModal() {
+		setClosed(true);
+		setModal(true);
+		setVisible(true);
+	}
+	
 	public FilterParams getFilterParams()  throws InvalidRecordException{
 		FilterParams params = new FilterParams();
 		

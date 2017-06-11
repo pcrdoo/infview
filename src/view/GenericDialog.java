@@ -154,7 +154,13 @@ public class GenericDialog extends JDialog implements CloseableDialog {
 	public void setClosed(boolean closed) {
 		this.closed = closed;
 	}
-
+	
+	public void showModal() {
+		setClosed(true);
+		setModal(true);
+		setVisible(true);
+	}
+	
 	public boolean isSearch() {
 		return this.isSearch;
 	}
