@@ -79,47 +79,7 @@ public class MetaschemaTransmogrifier {
 		
 		sb = new StringBuilder();
 	
-		HashMap<String, String> colNameToTable = new HashMap<>();
 		ResultSet tbls = mtdt.getTables(null, null, null, new String[]{"TABLE"});
-		while (tbls.next()) {
-			String tname = tbls.getString(tbls.findColumn("TABLE_NAME"));
-			ResultSet cls = mtdt.getColumns(null,  null,  tname, null);
-			while (cls.next()) {
-				String cname = cls.getString(cls.findColumn("COLUMN_NAME"));
-				if (tname.startsWith("trace") || tname.equals("sysdiagrams")) {
-					continue;
-				}
-				
-				boolean found = false;
-				ResultSet pk = mtdt.getPrimaryKeys(null, null, tname);
-				ArrayList<String> pks = new ArrayList<>();
-				while (pk.next()) {
-					if (pk.getString(pk.findColumn("COLUMN_NAME")).equals(cname)) {
-						found = true;
-						break;
-					}
-				}
-				
-				if (!found) {
-					continue;
-				}
-				
-				if (colNameToTable.containsKey(cname)) {
-					System.out.println("!!! many sorry, but duplicate is column " + cname + " in " + tname + "! raheed is not ability to deduction!");
-				}
-				
-				String firstPart = cname.split("_")[0];
-				if (colNameToTable.containsKey(cname)) {
-					System.out.println("firstPart = " + firstPart + " cname = " + cname + " tname = " + tname + " actual = " + colNameToTable.get(cname));
-					if (tname.equals(firstPart) || (firstPart.equals("hala") && tname.equals("proizvodna_hala"))) {
-						System.out.println("is replace!");
-						colNameToTable.put(cname, tname);
-					}
-				}
-				else colNameToTable.put(cname, tname);
-			}
-		}
-		tbls = mtdt.getTables(null, null, null, new String[]{"TABLE"});
 		
 		sobj(); {
 			kvstr("location", "nzm");
@@ -156,21 +116,6 @@ public class MetaschemaTransmogrifier {
 									ResultSet cols = mtdt.getColumns(null, null, tableName, null);	
 									while (cols.next()) {
 										String colName = cols.getString(cols.findColumn("COLUMN_NAME"));
-										if (colNameToTable.containsKey(colName)) {
-											ArrayList<String> relattr;
-											String othertbl = colNameToTable.get(colName);
-											if (!othertbl.equals(tableName)) {
-												if (rels.containsKey(othertbl)) {
-													relattr = rels.get(othertbl);
-												} else {
-													relattr = new ArrayList<>();
-													rels.put(othertbl, relattr);
-												}
-												
-												relattr.add(colName);
-											}
-										}
-										System.out.println("    it is with good luck i information that column " + colName + " is find! many greeting raheed");
 										
 										sobj(); {
 											kvstr("name", colName);
@@ -186,6 +131,7 @@ public class MetaschemaTransmogrifier {
 												typs = "datetime"; break;
 											case java.sql.Types.INTEGER:
 											case java.sql.Types.DECIMAL:
+											case java.sql.Types.BIGINT:
 												typs = "numeric"; break;
 											default: System.out.println("        bahen ke takke! it is not good type, is " + Integer.toString(typ) + ", must to fix type or raheed not can create");
 											}
@@ -202,6 +148,22 @@ public class MetaschemaTransmogrifier {
 								} earr(); delim();
 							}
 							
+
+							ResultSet importedKeys = mtdt.getImportedKeys(null, null, tableName);
+							while (importedKeys.next()) {
+								String otherTbl = importedKeys.getString("PKTABLE_NAME");
+								
+								ArrayList<String> relattrs;
+								if (rels.containsKey(otherTbl)) {
+									relattrs = rels.get(otherTbl);
+								} else {
+									relattrs = new ArrayList<>();
+									rels.put(otherTbl, relattrs);
+								}
+								
+								relattrs.add(importedKeys.getString("PKCOLUMN_NAME") + ";" + importedKeys.getString("FKCOLUMN_NAME"));
+							}
+							
 							key("relations"); {
 								sarr(); {
 									for (HashMap.Entry<String, ArrayList<String>> entry : rels.entrySet()) {
@@ -209,7 +171,7 @@ public class MetaschemaTransmogrifier {
 											key("referencedAttributes"); {
 												sarr(); {
 													for (String attr : entry.getValue()) {
-														aestr(entry.getKey() + "/" + attr);
+														aestr(entry.getKey() + "/" + attr.split(";")[0]);
 													}
 												} earr(); delim();
 											}
@@ -217,7 +179,7 @@ public class MetaschemaTransmogrifier {
 											key("referringAttributes"); {
 												sarr(); {
 													for (String attr: entry.getValue()) {
-														aestr(attr);
+														aestr(attr.split(";")[1]);
 													}
 												} earr(); delim();
 											}

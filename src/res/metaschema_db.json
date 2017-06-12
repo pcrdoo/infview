@@ -1,26 +1,26 @@
 {
-    "location": "ui-2016-tim201.5:ui-2015-tim201.5.MuY991@147.91.175.155,1433/ui-2016-tim201.5",
-    "name": "MaliPoslovniSistem",
-    "description": "Mali poslovni sistem za proizvodnju.",
+    "location": "nzm",
+    "name": "nzm",
+    "description": "nzm tbr!",
     "type": "mssql",
     "packages": [
 
     ],
     "entities": [
         {
-            "name": "jedinica_mere",
-            "url": "jedinica_mere",
+            "name": "JEDINICAMERE",
+            "url": "JEDINICAMERE",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "jm_oznaka",
+                    "name": "JM_OZNAKA",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "naziv",
+                    "name": "JM_NAZIV",
                     "type": "varchar",
                     "length": 64,
                     "primaryKey": false,
@@ -32,19 +32,19 @@
             ]
         },
         {
-            "name": "kategorija",
-            "url": "kategorija",
+            "name": "KATEGORIJA",
+            "url": "KATEGORIJA",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "kategorija_oznaka",
+                    "name": "KA_OZNAKA",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "naziv",
+                    "name": "KA_NAZIV",
                     "type": "varchar",
                     "length": 256,
                     "primaryKey": false,
@@ -56,26 +56,47 @@
             ]
         },
         {
-            "name": "kolicina_sirovine",
-            "url": "kolicina_sirovine",
+            "name": "KOLICINAMATERIJALA",
+            "url": "KOLICINAMATERIJALA",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "sirovina_sifra",
-                    "type": "char",
+                    "name": "MAT_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MAT_ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_SIFRA",
+                    "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "proizvod_sifra",
-                    "type": "char",
+                    "name": "PR_SIFRA",
+                    "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "kolicina",
+                    "name": "JM_OZNAKA",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "MS_KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -85,57 +106,162 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "sirovina\/sirovina_sifra"
+                        "JEDINICAMERE\/JM_OZNAKA"
                     ],
                     "referringAttributes": [
-                        "sirovina_sifra"
+                        "JM_OZNAKA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "proizvod\/proizvod_sifra"
+                        "PROIZVOD\/DR_OZNAKA2",
+                        "PROIZVOD\/ATTRIBUTE_2",
+                        "PROIZVOD\/PR_SIFRA"
                     ],
                     "referringAttributes": [
-                        "proizvod_sifra"
+                        "MAT_DR_OZNAKA",
+                        "MAT_ATTRIBUTE_2",
+                        "PR_SIFRA"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "MATERIJAL\/DR_OZNAKA",
+                        "MATERIJAL\/ATTRIBUTE_2",
+                        "MATERIJAL\/MA_SIFRA"
+                    ],
+                    "referringAttributes": [
+                        "MAT_DR_OZNAKA",
+                        "MAT_ATTRIBUTE_2",
+                        "MA_SIFRA"
                     ]
                 }
             ]
         },
         {
-            "name": "proizvod",
-            "url": "proizvod",
+            "name": "KOMADASKLOPA",
+            "url": "KOMADASKLOPA",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "proizvod_sifra",
-                    "type": "char",
+                    "name": "SKL_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "SKL_ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "SK_SIFRA",
+                    "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "kategorija_oznaka",
+                    "name": "PR_SIFRA",
                     "type": "varchar",
-                    "length": 8,
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "KS_KOLICINA",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "SKLOP\/DR_OZNAKA",
+                        "SKLOP\/ATTRIBUTE_2",
+                        "SKLOP\/SK_SIFRA"
+                    ],
+                    "referringAttributes": [
+                        "SKL_DR_OZNAKA",
+                        "SKL_ATTRIBUTE_2",
+                        "SK_SIFRA"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "PROIZVOD\/DR_OZNAKA2",
+                        "PROIZVOD\/ATTRIBUTE_2",
+                        "PROIZVOD\/PR_SIFRA"
+                    ],
+                    "referringAttributes": [
+                        "SKL_DR_OZNAKA",
+                        "SKL_ATTRIBUTE_2",
+                        "PR_SIFRA"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "MAGACIN",
+            "url": "MAGACIN",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_KAPACITET",
+                    "type": "numeric",
+                    "length": 10,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "jm_oznaka",
-                    "type": "varchar",
-                    "length": 8,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "naziv",
-                    "type": "varchar",
-                    "length": 256,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "opis",
+                    "name": "PH_ADRESA",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
@@ -145,43 +271,151 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "jedinica_mere\/jm_oznaka"
+                        "PROIZVODNIPOGON\/PP_NAS_DR_OZNAKA",
+                        "PROIZVODNIPOGON\/NM_OZNAKA",
+                        "PROIZVODNIPOGON\/PP_DR_OZNAKA",
+                        "PROIZVODNIPOGON\/ATTRIBUTE_2",
+                        "PROIZVODNIPOGON\/PO_ID"
                     ],
                     "referringAttributes": [
-                        "jm_oznaka"
-                    ]
-                },
-                {
-                    "referencedAttributes": [
-                        "kategorija\/kategorija_oznaka"
-                    ],
-                    "referringAttributes": [
-                        "kategorija_oznaka"
+                        "NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "PO_ID"
                     ]
                 }
             ]
         },
         {
-            "name": "proizvod_na_stanju",
-            "url": "proizvod_na_stanju",
+            "name": "MATERIJAL",
+            "url": "MATERIJAL",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "skladiste_id",
+                    "name": "DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "proizvod_sifra",
-                    "type": "char",
+                    "name": "MA_SIFRA",
+                    "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "kolicina",
+                    "name": "JM_OZNAKA",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "KA_NAZIV",
+                    "type": "varchar",
+                    "length": 256,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_TIP",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_OPIS",
+                    "type": "varchar",
+                    "length": 1024,
+                    "primaryKey": false,
+                    "mandatory": false
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "JEDINICAMERE\/JM_OZNAKA"
+                    ],
+                    "referringAttributes": [
+                        "JM_OZNAKA"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "MATERIJALNASTANJU",
+            "url": "MATERIJALNASTANJU",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_SIFRA",
+                    "type": "varchar",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "JM_OZNAKA",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "MS_KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -191,50 +425,328 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "skladiste\/skladiste_id"
+                        "JEDINICAMERE\/JM_OZNAKA"
                     ],
                     "referringAttributes": [
-                        "skladiste_id"
+                        "JM_OZNAKA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "proizvod\/proizvod_sifra"
+                        "MATERIJAL\/DR_OZNAKA",
+                        "MATERIJAL\/ATTRIBUTE_2",
+                        "MATERIJAL\/MA_SIFRA"
                     ],
                     "referringAttributes": [
-                        "proizvod_sifra"
+                        "DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "MA_SIFRA"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "MAGACIN\/NAS_DR_OZNAKA",
+                        "MAGACIN\/NM_OZNAKA",
+                        "MAGACIN\/DR_OZNAKA",
+                        "MAGACIN\/ATTRIBUTE_2",
+                        "MAGACIN\/PO_ID",
+                        "MAGACIN\/MA_ID"
+                    ],
+                    "referringAttributes": [
+                        "NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "PO_ID",
+                        "MA_ID"
                     ]
                 }
             ]
         },
         {
-            "name": "proizvodna_hala",
-            "url": "proizvodna_hala",
+            "name": "NALOG_ZA_PROIZVODNJU",
+            "url": "NALOG_ZA_PROIZVODNJU",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "hala_id",
+                    "name": "NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PRO_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PRO_ATTRIBUTE_2",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "pogon_id",
+                    "name": "PO_ID",
                     "type": "numeric",
                     "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PH_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PG_OD",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NP_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NP_VREME_POCETKA",
+                    "type": "datetime",
+                    "length": 23,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "adresa",
+                    "name": "NP_VREME_ZAVRSETKA",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "POSLOVNA_GODINA\/DR_OZNAKA",
+                        "POSLOVNA_GODINA\/ATTRIBUTE_2",
+                        "POSLOVNA_GODINA\/PG_OD"
+                    ],
+                    "referringAttributes": [
+                        "PRO_DR_OZNAKA",
+                        "PRO_ATTRIBUTE_2",
+                        "PG_OD"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "PROIZVODNAHALA\/PR_NAS_DR_OZNAKA",
+                        "PROIZVODNAHALA\/NM_OZNAKA",
+                        "PROIZVODNAHALA\/PR_DR_OZNAKA",
+                        "PROIZVODNAHALA\/ATTRIBUTE_2",
+                        "PROIZVODNAHALA\/PO_ID",
+                        "PROIZVODNAHALA\/PH_ID"
+                    ],
+                    "referringAttributes": [
+                        "NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "PRO_DR_OZNAKA",
+                        "PRO_ATTRIBUTE_2",
+                        "PO_ID",
+                        "PH_ID"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "POSLOVNA_GODINA",
+            "url": "POSLOVNA_GODINA",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PG_OD",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ZP_DO",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": false,
+                    "mandatory": false
+                }
+            ],
+            "relations": [
+
+            ]
+        },
+        {
+            "name": "PROIZVOD",
+            "url": "PROIZVOD",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "DR_OZNAKA2",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PR_SIFRA",
+                    "type": "varchar",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "KA_OZNAKA",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "JM_OZNAKA",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "PR_NAZIV",
+                    "type": "varchar",
+                    "length": 256,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "PR_OPIS",
+                    "type": "varchar",
+                    "length": 1024,
+                    "primaryKey": false,
+                    "mandatory": false
+                },
+                {
+                    "name": "PR_CENA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "KATEGORIJA\/KA_OZNAKA"
+                    ],
+                    "referringAttributes": [
+                        "KA_OZNAKA"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "JEDINICAMERE\/JM_OZNAKA"
+                    ],
+                    "referringAttributes": [
+                        "JM_OZNAKA"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "PROIZVODNAHALA",
+            "url": "PROIZVODNAHALA",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "PR_NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PR_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PH_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PH_ADRESA",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "povrsina",
+                    "name": "PH_POVRSINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -244,140 +756,429 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "proizvodni_pogon\/pogon_id"
+                        "PROIZVODNIPOGON\/PP_NAS_DR_OZNAKA",
+                        "PROIZVODNIPOGON\/NM_OZNAKA",
+                        "PROIZVODNIPOGON\/PP_DR_OZNAKA",
+                        "PROIZVODNIPOGON\/ATTRIBUTE_2",
+                        "PROIZVODNIPOGON\/PO_ID"
                     ],
                     "referringAttributes": [
-                        "pogon_id"
+                        "PR_NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "PR_DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "PO_ID"
                     ]
                 }
             ]
         },
         {
-            "name": "proizvodni_pogon",
-            "url": "proizvodni_pogon",
+            "name": "PROIZVODNANALOGU",
+            "url": "PROIZVODNANALOGU",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "pogon_id",
+                    "name": "PN_NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NAL_PRO_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NAL_PRO_ATTRIBUTE_2",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "rukovodilac_jmbg",
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PH_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PG_OD",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NP_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PR_SIFRA",
+                    "type": "varchar",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "JM_OZNAKA",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "PN_KOLICINA",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "JEDINICAMERE\/JM_OZNAKA"
+                    ],
+                    "referringAttributes": [
+                        "JM_OZNAKA"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "NALOG_ZA_PROIZVODNJU\/NAS_DR_OZNAKA",
+                        "NALOG_ZA_PROIZVODNJU\/NM_OZNAKA",
+                        "NALOG_ZA_PROIZVODNJU\/PRO_DR_OZNAKA",
+                        "NALOG_ZA_PROIZVODNJU\/PRO_ATTRIBUTE_2",
+                        "NALOG_ZA_PROIZVODNJU\/PO_ID",
+                        "NALOG_ZA_PROIZVODNJU\/PH_ID",
+                        "NALOG_ZA_PROIZVODNJU\/PG_OD",
+                        "NALOG_ZA_PROIZVODNJU\/NP_ID"
+                    ],
+                    "referringAttributes": [
+                        "PN_NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "NAL_PRO_DR_OZNAKA",
+                        "NAL_PRO_ATTRIBUTE_2",
+                        "PO_ID",
+                        "PH_ID",
+                        "PG_OD",
+                        "NP_ID"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "PROIZVOD\/DR_OZNAKA2",
+                        "PROIZVOD\/ATTRIBUTE_2",
+                        "PROIZVOD\/PR_SIFRA"
+                    ],
+                    "referringAttributes": [
+                        "NAL_PRO_DR_OZNAKA",
+                        "NAL_PRO_ATTRIBUTE_2",
+                        "PR_SIFRA"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "PROIZVODNASTANJU",
+            "url": "PROIZVODNASTANJU",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "PS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PR_SIFRA",
+                    "type": "varchar",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PS_NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "JM_OZNAKA",
+                    "type": "varchar",
+                    "length": 8,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "PS_KOLICINA",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "JEDINICAMERE\/JM_OZNAKA"
+                    ],
+                    "referringAttributes": [
+                        "JM_OZNAKA"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "PROIZVOD\/DR_OZNAKA2",
+                        "PROIZVOD\/ATTRIBUTE_2",
+                        "PROIZVOD\/PR_SIFRA"
+                    ],
+                    "referringAttributes": [
+                        "PS_DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "PR_SIFRA"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "MAGACIN\/NAS_DR_OZNAKA",
+                        "MAGACIN\/NM_OZNAKA",
+                        "MAGACIN\/DR_OZNAKA",
+                        "MAGACIN\/ATTRIBUTE_2",
+                        "MAGACIN\/PO_ID",
+                        "MAGACIN\/MA_ID"
+                    ],
+                    "referringAttributes": [
+                        "PS_NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "PS_DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "PO_ID",
+                        "MA_ID"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "PROIZVODNIPOGON",
+            "url": "PROIZVODNIPOGON",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "PP_NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PP_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+
+            ]
+        },
+        {
+            "name": "RUKOVODILAC_POGONA",
+            "url": "RUKOVODILAC_POGONA",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "JMBG",
                     "type": "char",
                     "length": 13,
-                    "primaryKey": false,
+                    "primaryKey": true,
                     "mandatory": true
+                },
+                {
+                    "name": "RP_OD",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ZP_DO",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": false,
+                    "mandatory": false
                 }
             ],
             "relations": [
                 {
                     "referencedAttributes": [
-                        "zaposleni\/zaposleni_jmbg"
+                        "ZAPOSLENI\/JMBG"
                     ],
                     "referringAttributes": [
-                        "rukovodilac_jmbg"
+                        "JMBG"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "PROIZVODNIPOGON\/PP_NAS_DR_OZNAKA",
+                        "PROIZVODNIPOGON\/NM_OZNAKA",
+                        "PROIZVODNIPOGON\/PP_DR_OZNAKA",
+                        "PROIZVODNIPOGON\/ATTRIBUTE_2",
+                        "PROIZVODNIPOGON\/PO_ID"
+                    ],
+                    "referringAttributes": [
+                        "NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "PO_ID"
                     ]
                 }
             ]
         },
         {
-            "name": "proizvodnja_serije",
-            "url": "proizvodnja_serije",
+            "name": "SKLOP",
+            "url": "SKLOP",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "serija_id",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "proizvod_sifra",
-                    "type": "char",
-                    "length": 16,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "hala_id",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "vreme_pocetka",
-                    "type": "datetime",
-                    "length": 23,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "vreme_zavrsetka",
-                    "type": "datetime",
-                    "length": 23,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "kolicina",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": false,
-                    "mandatory": true
-                }
-            ],
-            "relations": [
-                {
-                    "referencedAttributes": [
-                        "proizvod\/proizvod_sifra"
-                    ],
-                    "referringAttributes": [
-                        "proizvod_sifra"
-                    ]
-                },
-                {
-                    "referencedAttributes": [
-                        "proizvodna_hala\/hala_id"
-                    ],
-                    "referringAttributes": [
-                        "hala_id"
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "sirovina",
-            "url": "sirovina",
-            "type": "sqlTable",
-            "attributes": [
-                {
-                    "name": "sirovina_sifra",
-                    "type": "char",
-                    "length": 16,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "jm_oznaka",
+                    "name": "DR_OZNAKA",
                     "type": "varchar",
-                    "length": 8,
-                    "primaryKey": false,
+                    "length": 4,
+                    "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "naziv",
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "SK_SIFRA",
+                    "type": "varchar",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "KA_NAZIV",
                     "type": "varchar",
                     "length": 256,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "opis",
+                    "name": "MA_OPIS",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
@@ -385,37 +1186,65 @@
                 }
             ],
             "relations": [
-                {
-                    "referencedAttributes": [
-                        "jedinica_mere\/jm_oznaka"
-                    ],
-                    "referringAttributes": [
-                        "jm_oznaka"
-                    ]
-                }
+
             ]
         },
         {
-            "name": "sirovina_na_stanju",
-            "url": "sirovina_na_stanju",
+            "name": "SKLOPNASTANJU",
+            "url": "SKLOPNASTANJU",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "sirovina_sifra",
-                    "type": "char",
+                    "name": "NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MAG_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MAG_ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "MA_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "SK_SIFRA",
+                    "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "skladiste_id",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "kolicina",
+                    "name": "SS_KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -425,81 +1254,105 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "skladiste\/skladiste_id"
+                        "SKLOP\/DR_OZNAKA",
+                        "SKLOP\/ATTRIBUTE_2",
+                        "SKLOP\/SK_SIFRA"
                     ],
                     "referringAttributes": [
-                        "skladiste_id"
+                        "MAG_DR_OZNAKA",
+                        "MAG_ATTRIBUTE_2",
+                        "SK_SIFRA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "sirovina\/sirovina_sifra"
+                        "MAGACIN\/NAS_DR_OZNAKA",
+                        "MAGACIN\/NM_OZNAKA",
+                        "MAGACIN\/DR_OZNAKA",
+                        "MAGACIN\/ATTRIBUTE_2",
+                        "MAGACIN\/PO_ID",
+                        "MAGACIN\/MA_ID"
                     ],
                     "referringAttributes": [
-                        "sirovina_sifra"
+                        "NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "MAG_DR_OZNAKA",
+                        "MAG_ATTRIBUTE_2",
+                        "PO_ID",
+                        "MA_ID"
                     ]
                 }
             ]
         },
         {
-            "name": "skladiste",
-            "url": "skladiste",
+            "name": "SLOZEN_PROIZVOD",
+            "url": "SLOZEN_PROIZVOD",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "skladiste_id",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "pogon_id",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "kapacitet",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "adresa",
+                    "name": "DR_OZNAKA",
                     "type": "varchar",
-                    "length": 1024,
-                    "primaryKey": false,
-                    "mandatory": false
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PR_SIFRA",
+                    "type": "varchar",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PRO_PR_SIFRA",
+                    "type": "varchar",
+                    "length": 16,
+                    "primaryKey": true,
+                    "mandatory": true
                 }
             ],
             "relations": [
                 {
                     "referencedAttributes": [
-                        "proizvodni_pogon\/pogon_id"
+                        "PROIZVOD\/DR_OZNAKA2",
+                        "PROIZVOD\/DR_OZNAKA2",
+                        "PROIZVOD\/ATTRIBUTE_2",
+                        "PROIZVOD\/ATTRIBUTE_2",
+                        "PROIZVOD\/PR_SIFRA",
+                        "PROIZVOD\/PR_SIFRA"
                     ],
                     "referringAttributes": [
-                        "pogon_id"
+                        "DR_OZNAKA",
+                        "DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "ATTRIBUTE_2",
+                        "PR_SIFRA",
+                        "PRO_PR_SIFRA"
                     ]
                 }
             ]
         },
         {
-            "name": "tip_zaposlenog",
-            "url": "tip_zaposlenog",
+            "name": "TIPZAPOSLENOG",
+            "url": "TIPZAPOSLENOG",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "tip_zaposlenog_oznaka",
+                    "name": "TZ_OZNAKA",
                     "type": "char",
                     "length": 2,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "naziv",
+                    "name": "TZ_NAZIV",
                     "type": "varchar",
                     "length": 256,
                     "primaryKey": false,
@@ -511,56 +1364,42 @@
             ]
         },
         {
-            "name": "zaposleni",
-            "url": "zaposleni",
+            "name": "ZAPOSLENI",
+            "url": "ZAPOSLENI",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "zaposleni_jmbg",
+                    "name": "JMBG",
                     "type": "char",
                     "length": 13,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "nadredjeni_id",
+                    "name": "NADREDJENI_JMBG",
                     "type": "char",
                     "length": 13,
                     "primaryKey": false,
                     "mandatory": false
                 },
                 {
-                    "name": "pogon_id",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": false,
-                    "mandatory": false
-                },
-                {
-                    "name": "serija_id",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": false,
-                    "mandatory": false
-                },
-                {
-                    "name": "tip_zaposlenog_oznaka",
+                    "name": "TZ_OZNAKA",
                     "type": "char",
                     "length": 2,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "ime",
+                    "name": "ZA_IME",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "plata",
+                    "name": "PLATA",
                     "type": "numeric",
-                    "length": 18,
+                    "length": 19,
                     "primaryKey": false,
                     "mandatory": true
                 }
@@ -568,54 +1407,87 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "tip_zaposlenog\/tip_zaposlenog_oznaka"
+                        "ZAPOSLENI\/JMBG"
                     ],
                     "referringAttributes": [
-                        "tip_zaposlenog_oznaka"
+                        "NADREDJENI_JMBG"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "proizvodnja_serije\/serija_id"
+                        "TIPZAPOSLENOG\/TZ_OZNAKA"
                     ],
                     "referringAttributes": [
-                        "serija_id"
-                    ]
-                },
-                {
-                    "referencedAttributes": [
-                        "proizvodni_pogon\/pogon_id"
-                    ],
-                    "referringAttributes": [
-                        "pogon_id"
-                    ]
-                },
-                {
-                    "referencedAttributes": [
-                        "zaposleni\/zaposleni_jmbg"
-                    ],
-                    "referringAttributes": [
-                        "nadredjeni_id"
+                        "TZ_OZNAKA"
                     ]
                 }
             ]
         },
         {
-            "name": "zaposlenje",
-            "url": "zaposlenje",
+            "name": "ZAPOSLENI_KOJI_UCESTVUJU",
+            "url": "ZAPOSLENI_KOJI_UCESTVUJU",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "zaposleni_jmbg",
-                    "type": "char",
-                    "length": 13,
+                    "name": "NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "pogon_id",
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PRO_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PRO_ATTRIBUTE_2",
                     "type": "numeric",
                     "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PH_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PG_OD",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NP_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "JMBG",
+                    "type": "char",
+                    "length": 13,
                     "primaryKey": true,
                     "mandatory": true
                 }
@@ -623,18 +1495,121 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "zaposleni\/zaposleni_jmbg"
+                        "ZAPOSLENI\/JMBG"
                     ],
                     "referringAttributes": [
-                        "zaposleni_jmbg"
+                        "JMBG"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "proizvodni_pogon\/pogon_id"
+                        "NALOG_ZA_PROIZVODNJU\/NAS_DR_OZNAKA",
+                        "NALOG_ZA_PROIZVODNJU\/NM_OZNAKA",
+                        "NALOG_ZA_PROIZVODNJU\/PRO_DR_OZNAKA",
+                        "NALOG_ZA_PROIZVODNJU\/PRO_ATTRIBUTE_2",
+                        "NALOG_ZA_PROIZVODNJU\/PO_ID",
+                        "NALOG_ZA_PROIZVODNJU\/PH_ID",
+                        "NALOG_ZA_PROIZVODNJU\/PG_OD",
+                        "NALOG_ZA_PROIZVODNJU\/NP_ID"
                     ],
                     "referringAttributes": [
-                        "pogon_id"
+                        "NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "PRO_DR_OZNAKA",
+                        "PRO_ATTRIBUTE_2",
+                        "PO_ID",
+                        "PH_ID",
+                        "PG_OD",
+                        "NP_ID"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "ZAPOSLENI_NA_POGONU",
+            "url": "ZAPOSLENI_NA_POGONU",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "NAS_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "NM_OZNAKA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ZP_DR_OZNAKA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ATTRIBUTE_2",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "PO_ID",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "JMBG",
+                    "type": "char",
+                    "length": 13,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ZP_OD",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ZP_DO",
+                    "type": "datetime",
+                    "length": 23,
+                    "primaryKey": false,
+                    "mandatory": false
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "ZAPOSLENI\/JMBG"
+                    ],
+                    "referringAttributes": [
+                        "JMBG"
+                    ]
+                },
+                {
+                    "referencedAttributes": [
+                        "PROIZVODNIPOGON\/PP_NAS_DR_OZNAKA",
+                        "PROIZVODNIPOGON\/NM_OZNAKA",
+                        "PROIZVODNIPOGON\/PP_DR_OZNAKA",
+                        "PROIZVODNIPOGON\/ATTRIBUTE_2",
+                        "PROIZVODNIPOGON\/PO_ID"
+                    ],
+                    "referringAttributes": [
+                        "NAS_DR_OZNAKA",
+                        "NM_OZNAKA",
+                        "ZP_DR_OZNAKA",
+                        "ATTRIBUTE_2",
+                        "PO_ID"
                     ]
                 }
             ]
