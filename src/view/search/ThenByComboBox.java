@@ -34,6 +34,6 @@ class ThenByComboBox extends JComboBox<String> implements ExpressionComponent {
 
 	@Override
 	public String getExpression() {
-		return ", ";
+		return this.getSelectedItem().equals(" ") ? "" : ", ";
 	}
 }

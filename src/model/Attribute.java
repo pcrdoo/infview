@@ -1,6 +1,8 @@
 package model;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import model.datatypes.CharType;
 import model.datatypes.DateType;
@@ -79,10 +81,18 @@ public class Attribute extends InfResource {
 			}
 			return i;
 		} else if (a.valueClass == DateType.class) {
-			java.sql.Date d;
+			java.util.Date d;
 			if (value instanceof java.sql.Timestamp) {
 				java.sql.Timestamp ts = (java.sql.Timestamp)value;
-				d = new java.sql.Date(ts.getYear(), ts.getMonth(), ts.getDay());
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				String dateAsStringBecauseJavaStandardLibraryIsRetarded = sdf.format(ts);
+				try {
+					d = sdf.parse(dateAsStringBecauseJavaStandardLibraryIsRetarded);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
 			} else {
 				d = (java.sql.Date)value;
 			}

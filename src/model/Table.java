@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,7 +37,9 @@ public class Table extends Entity {
 			stmt.setString(idx, ((VarCharType) obj).get());
 		} else if (obj instanceof DateType) {
 			Date date = ((DateType) obj).getDate();
-			stmt.setTimestamp(idx, new Timestamp(date.getTime()));
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String dateAsStringBecauseJavaStandardLibraryIsRetarded = sdf.format(date);
+			stmt.setTimestamp(idx, java.sql.Timestamp.valueOf(dateAsStringBecauseJavaStandardLibraryIsRetarded));
 		} else if (obj instanceof Boolean) {
 			stmt.setBoolean(idx, (Boolean) obj);
 		} else if (obj instanceof Integer) {
