@@ -8,19 +8,19 @@
     ],
     "entities": [
         {
-            "name": "JEDINICAMERE",
-            "url": "JEDINICAMERE",
+            "name": "JEDINICA_MERE",
+            "url": "JEDINICA_MERE",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "JM_OZNAKA",
+                    "name": "OZNAKA",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "JM_NAZIV",
+                    "name": "NAZIV",
                     "type": "varchar",
                     "length": 64,
                     "primaryKey": false,
@@ -37,14 +37,14 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "KA_OZNAKA",
+                    "name": "KATEGORIJA_OZNAKA",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "KA_NAZIV",
+                    "name": "NAZIV",
                     "type": "varchar",
                     "length": 256,
                     "primaryKey": false,
@@ -56,47 +56,47 @@
             ]
         },
         {
-            "name": "KOLICINAMATERIJALA",
-            "url": "KOLICINAMATERIJALA",
+            "name": "KOLICINA_MATERIJALA",
+            "url": "KOLICINA_MATERIJALA",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "MAT_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MAT_ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_SIFRA",
+                    "name": "SIFRA_MATERIJALA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_SIFRA",
+                    "name": "SIFRA_PROIZVODA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "JM_OZNAKA",
+                    "name": "OZNAKA_JM",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "MS_KOLICINA",
+                    "name": "KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -106,73 +106,73 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "JEDINICAMERE\/JM_OZNAKA"
+                        "PROIZVOD\/DRZAVA_PS",
+                        "PROIZVOD\/KOD_PS",
+                        "PROIZVOD\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "JM_OZNAKA"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "SIFRA_PROIZVODA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "PROIZVOD\/DR_OZNAKA2",
-                        "PROIZVOD\/ATTRIBUTE_2",
-                        "PROIZVOD\/PR_SIFRA"
+                        "MATERIJAL\/DRZAVA_PS",
+                        "MATERIJAL\/KOD_PS",
+                        "MATERIJAL\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "MAT_DR_OZNAKA",
-                        "MAT_ATTRIBUTE_2",
-                        "PR_SIFRA"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "SIFRA_MATERIJALA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "MATERIJAL\/DR_OZNAKA",
-                        "MATERIJAL\/ATTRIBUTE_2",
-                        "MATERIJAL\/MA_SIFRA"
+                        "JEDINICA_MERE\/OZNAKA"
                     ],
                     "referringAttributes": [
-                        "MAT_DR_OZNAKA",
-                        "MAT_ATTRIBUTE_2",
-                        "MA_SIFRA"
+                        "OZNAKA_JM"
                     ]
                 }
             ]
         },
         {
-            "name": "KOMADASKLOPA",
-            "url": "KOMADASKLOPA",
+            "name": "KOMADA_SKLOPA",
+            "url": "KOMADA_SKLOPA",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "SKL_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "SKL_ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "SK_SIFRA",
+                    "name": "SIFRA_SKLOPA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_SIFRA",
+                    "name": "SIFRA_PROIZVODA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "KS_KOLICINA",
+                    "name": "KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -182,26 +182,26 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "SKLOP\/DR_OZNAKA",
-                        "SKLOP\/ATTRIBUTE_2",
-                        "SKLOP\/SK_SIFRA"
+                        "SKLOP\/DRZAVA_PS",
+                        "SKLOP\/KOD_PS",
+                        "SKLOP\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "SKL_DR_OZNAKA",
-                        "SKL_ATTRIBUTE_2",
-                        "SK_SIFRA"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "SIFRA_SKLOPA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "PROIZVOD\/DR_OZNAKA2",
-                        "PROIZVOD\/ATTRIBUTE_2",
-                        "PROIZVOD\/PR_SIFRA"
+                        "PROIZVOD\/DRZAVA_PS",
+                        "PROIZVOD\/KOD_PS",
+                        "PROIZVOD\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "SKL_DR_OZNAKA",
-                        "SKL_ATTRIBUTE_2",
-                        "PR_SIFRA"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "SIFRA_PROIZVODA"
                     ]
                 }
             ]
@@ -212,56 +212,56 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "OZNAKA_MESTA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_ID",
+                    "name": "ID_MAGACINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_KAPACITET",
+                    "name": "KAPACITET",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "PH_ADRESA",
+                    "name": "ADRESA",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
@@ -271,18 +271,18 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "PROIZVODNIPOGON\/PP_NAS_DR_OZNAKA",
-                        "PROIZVODNIPOGON\/NM_OZNAKA",
-                        "PROIZVODNIPOGON\/PP_DR_OZNAKA",
-                        "PROIZVODNIPOGON\/ATTRIBUTE_2",
-                        "PROIZVODNIPOGON\/PO_ID"
+                        "PROIZVODNI_POGON\/DRZAVA",
+                        "PROIZVODNI_POGON\/OZNAKA_MESTA",
+                        "PROIZVODNI_POGON\/DRZAVA_PS",
+                        "PROIZVODNI_POGON\/KOD_PS",
+                        "PROIZVODNI_POGON\/ID"
                     ],
                     "referringAttributes": [
-                        "NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "PO_ID"
+                        "DRZAVA_POGONA",
+                        "OZNAKA_MESTA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA"
                     ]
                 }
             ]
@@ -293,49 +293,49 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_SIFRA",
+                    "name": "SIFRA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "JM_OZNAKA",
+                    "name": "OZNAKA_POD_JM",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "KA_NAZIV",
+                    "name": "NAZIV",
                     "type": "varchar",
                     "length": 256,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_TIP",
+                    "name": "TIP",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_OPIS",
+                    "name": "OPIS",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
@@ -345,77 +345,77 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "JEDINICAMERE\/JM_OZNAKA"
+                        "JEDINICA_MERE\/OZNAKA"
                     ],
                     "referringAttributes": [
-                        "JM_OZNAKA"
+                        "OZNAKA_POD_JM"
                     ]
                 }
             ]
         },
         {
-            "name": "MATERIJALNASTANJU",
-            "url": "MATERIJALNASTANJU",
+            "name": "MATERIJAL_NA_STANJU",
+            "url": "MATERIJAL_NA_STANJU",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_SIFRA",
+                    "name": "SIFRA_MATERIJALA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "OZNAKA_MESTA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_ID",
+                    "name": "ID_MAGACINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "JM_OZNAKA",
+                    "name": "OZNAKA_JM",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "MS_KOLICINA",
+                    "name": "KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -425,40 +425,40 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "JEDINICAMERE\/JM_OZNAKA"
+                        "MATERIJAL\/DRZAVA_PS",
+                        "MATERIJAL\/KOD_PS",
+                        "MATERIJAL\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "JM_OZNAKA"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "SIFRA_MATERIJALA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "MATERIJAL\/DR_OZNAKA",
-                        "MATERIJAL\/ATTRIBUTE_2",
-                        "MATERIJAL\/MA_SIFRA"
+                        "MAGACIN\/DRZAVA_POGONA",
+                        "MAGACIN\/OZNAKA_MESTA",
+                        "MAGACIN\/DRZAVA_PS",
+                        "MAGACIN\/KOD_PS",
+                        "MAGACIN\/ID_POGONA",
+                        "MAGACIN\/ID_MAGACINA"
                     ],
                     "referringAttributes": [
-                        "DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "MA_SIFRA"
+                        "DRZAVA_POGONA",
+                        "OZNAKA_MESTA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA",
+                        "ID_MAGACINA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "MAGACIN\/NAS_DR_OZNAKA",
-                        "MAGACIN\/NM_OZNAKA",
-                        "MAGACIN\/DR_OZNAKA",
-                        "MAGACIN\/ATTRIBUTE_2",
-                        "MAGACIN\/PO_ID",
-                        "MAGACIN\/MA_ID"
+                        "JEDINICA_MERE\/OZNAKA"
                     ],
                     "referringAttributes": [
-                        "NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "PO_ID",
-                        "MA_ID"
+                        "OZNAKA_JM"
                     ]
                 }
             ]
@@ -469,70 +469,70 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "MESTO_POGONA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PRO_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PRO_ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PH_ID",
+                    "name": "ID_HALE",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PG_OD",
+                    "name": "POS_GODINA_OD",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NP_ID",
+                    "name": "ID_NALOGA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NP_VREME_POCETKA",
+                    "name": "VREME_POCETKA",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "NP_VREME_ZAVRSETKA",
+                    "name": "VREME_ZAVRSETKA",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": false,
@@ -542,32 +542,32 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "POSLOVNA_GODINA\/DR_OZNAKA",
-                        "POSLOVNA_GODINA\/ATTRIBUTE_2",
-                        "POSLOVNA_GODINA\/PG_OD"
+                        "POSLOVNA_GODINA\/DRZAVA_PS",
+                        "POSLOVNA_GODINA\/KOD_PS",
+                        "POSLOVNA_GODINA\/OD"
                     ],
                     "referringAttributes": [
-                        "PRO_DR_OZNAKA",
-                        "PRO_ATTRIBUTE_2",
-                        "PG_OD"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "POS_GODINA_OD"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "PROIZVODNAHALA\/PR_NAS_DR_OZNAKA",
-                        "PROIZVODNAHALA\/NM_OZNAKA",
-                        "PROIZVODNAHALA\/PR_DR_OZNAKA",
-                        "PROIZVODNAHALA\/ATTRIBUTE_2",
-                        "PROIZVODNAHALA\/PO_ID",
-                        "PROIZVODNAHALA\/PH_ID"
+                        "PROIZVODNA_HALA\/DRZAVA_POGONA",
+                        "PROIZVODNA_HALA\/MESTO_POGONA",
+                        "PROIZVODNA_HALA\/DRZAVA_PS",
+                        "PROIZVODNA_HALA\/KOD_PS",
+                        "PROIZVODNA_HALA\/ID_POGONA",
+                        "PROIZVODNA_HALA\/ID_HALE"
                     ],
                     "referringAttributes": [
-                        "NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "PRO_DR_OZNAKA",
-                        "PRO_ATTRIBUTE_2",
-                        "PO_ID",
-                        "PH_ID"
+                        "DRZAVA_POGONA",
+                        "MESTO_POGONA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA",
+                        "ID_HALE"
                     ]
                 }
             ]
@@ -578,28 +578,28 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PG_OD",
+                    "name": "OD",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ZP_DO",
+                    "name": "DO",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": false,
@@ -616,56 +616,56 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "DR_OZNAKA2",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_SIFRA",
+                    "name": "SIFRA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "KA_OZNAKA",
+                    "name": "OZNAKA_KAT",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "JM_OZNAKA",
+                    "name": "OZNAKA_POD_JM",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_NAZIV",
+                    "name": "NAZIV",
                     "type": "varchar",
                     "length": 256,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_OPIS",
+                    "name": "OPIS",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
                     "mandatory": false
                 },
                 {
-                    "name": "PR_CENA",
+                    "name": "JEDINICNA_CENA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": false,
@@ -675,180 +675,99 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "KATEGORIJA\/KA_OZNAKA"
+                        "KATEGORIJA\/KATEGORIJA_OZNAKA"
                     ],
                     "referringAttributes": [
-                        "KA_OZNAKA"
+                        "OZNAKA_KAT"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "JEDINICAMERE\/JM_OZNAKA"
+                        "JEDINICA_MERE\/OZNAKA"
                     ],
                     "referringAttributes": [
-                        "JM_OZNAKA"
+                        "OZNAKA_POD_JM"
                     ]
                 }
             ]
         },
         {
-            "name": "PROIZVODNAHALA",
-            "url": "PROIZVODNAHALA",
+            "name": "PROIZVOD_NA_NALOGU",
+            "url": "PROIZVOD_NA_NALOGU",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "PR_NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "MESTO_POGONA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PH_ID",
+                    "name": "ID_HALE",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PH_ADRESA",
-                    "type": "varchar",
-                    "length": 1024,
-                    "primaryKey": false,
-                    "mandatory": true
-                },
-                {
-                    "name": "PH_POVRSINA",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": false,
-                    "mandatory": true
-                }
-            ],
-            "relations": [
-                {
-                    "referencedAttributes": [
-                        "PROIZVODNIPOGON\/PP_NAS_DR_OZNAKA",
-                        "PROIZVODNIPOGON\/NM_OZNAKA",
-                        "PROIZVODNIPOGON\/PP_DR_OZNAKA",
-                        "PROIZVODNIPOGON\/ATTRIBUTE_2",
-                        "PROIZVODNIPOGON\/PO_ID"
-                    ],
-                    "referringAttributes": [
-                        "PR_NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "PR_DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "PO_ID"
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "PROIZVODNANALOGU",
-            "url": "PROIZVODNANALOGU",
-            "type": "sqlTable",
-            "attributes": [
-                {
-                    "name": "PN_NAS_DR_OZNAKA",
-                    "type": "varchar",
-                    "length": 4,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "NM_OZNAKA",
-                    "type": "numeric",
-                    "length": 19,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "NAL_PRO_DR_OZNAKA",
-                    "type": "varchar",
-                    "length": 4,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "NAL_PRO_ATTRIBUTE_2",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "PO_ID",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "PH_ID",
-                    "type": "numeric",
-                    "length": 10,
-                    "primaryKey": true,
-                    "mandatory": true
-                },
-                {
-                    "name": "PG_OD",
+                    "name": "POS_GODINA_OD",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NP_ID",
+                    "name": "ID_NALOGA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_SIFRA",
+                    "name": "SIFRA_PROIZVODA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "JM_OZNAKA",
+                    "name": "OZNAKA_JM",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "PN_KOLICINA",
+                    "name": "KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -858,111 +777,111 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "JEDINICAMERE\/JM_OZNAKA"
+                        "NALOG_ZA_PROIZVODNJU\/DRZAVA_POGONA",
+                        "NALOG_ZA_PROIZVODNJU\/MESTO_POGONA",
+                        "NALOG_ZA_PROIZVODNJU\/DRZAVA_PS",
+                        "NALOG_ZA_PROIZVODNJU\/KOD_PS",
+                        "NALOG_ZA_PROIZVODNJU\/ID_POGONA",
+                        "NALOG_ZA_PROIZVODNJU\/ID_HALE",
+                        "NALOG_ZA_PROIZVODNJU\/POS_GODINA_OD",
+                        "NALOG_ZA_PROIZVODNJU\/ID_NALOGA"
                     ],
                     "referringAttributes": [
-                        "JM_OZNAKA"
+                        "DRZAVA_POGONA",
+                        "MESTO_POGONA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA",
+                        "ID_HALE",
+                        "POS_GODINA_OD",
+                        "ID_NALOGA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "NALOG_ZA_PROIZVODNJU\/NAS_DR_OZNAKA",
-                        "NALOG_ZA_PROIZVODNJU\/NM_OZNAKA",
-                        "NALOG_ZA_PROIZVODNJU\/PRO_DR_OZNAKA",
-                        "NALOG_ZA_PROIZVODNJU\/PRO_ATTRIBUTE_2",
-                        "NALOG_ZA_PROIZVODNJU\/PO_ID",
-                        "NALOG_ZA_PROIZVODNJU\/PH_ID",
-                        "NALOG_ZA_PROIZVODNJU\/PG_OD",
-                        "NALOG_ZA_PROIZVODNJU\/NP_ID"
+                        "PROIZVOD\/DRZAVA_PS",
+                        "PROIZVOD\/KOD_PS",
+                        "PROIZVOD\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "PN_NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "NAL_PRO_DR_OZNAKA",
-                        "NAL_PRO_ATTRIBUTE_2",
-                        "PO_ID",
-                        "PH_ID",
-                        "PG_OD",
-                        "NP_ID"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "SIFRA_PROIZVODA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "PROIZVOD\/DR_OZNAKA2",
-                        "PROIZVOD\/ATTRIBUTE_2",
-                        "PROIZVOD\/PR_SIFRA"
+                        "JEDINICA_MERE\/OZNAKA"
                     ],
                     "referringAttributes": [
-                        "NAL_PRO_DR_OZNAKA",
-                        "NAL_PRO_ATTRIBUTE_2",
-                        "PR_SIFRA"
+                        "OZNAKA_JM"
                     ]
                 }
             ]
         },
         {
-            "name": "PROIZVODNASTANJU",
-            "url": "PROIZVODNASTANJU",
+            "name": "PROIZVOD_NA_STANJU",
+            "url": "PROIZVOD_NA_STANJU",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "PS_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_SIFRA",
+                    "name": "SIFRA_PROIZVODA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PS_NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "OZNAKA_MESTA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_ID",
+                    "name": "ID_MAGACINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "JM_OZNAKA",
+                    "name": "OZNAKA_JM",
                     "type": "varchar",
                     "length": 8,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "PS_KOLICINA",
+                    "name": "KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -972,79 +891,160 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "JEDINICAMERE\/JM_OZNAKA"
+                        "PROIZVOD\/DRZAVA_PS",
+                        "PROIZVOD\/KOD_PS",
+                        "PROIZVOD\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "JM_OZNAKA"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "SIFRA_PROIZVODA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "PROIZVOD\/DR_OZNAKA2",
-                        "PROIZVOD\/ATTRIBUTE_2",
-                        "PROIZVOD\/PR_SIFRA"
+                        "MAGACIN\/DRZAVA_POGONA",
+                        "MAGACIN\/OZNAKA_MESTA",
+                        "MAGACIN\/DRZAVA_PS",
+                        "MAGACIN\/KOD_PS",
+                        "MAGACIN\/ID_POGONA",
+                        "MAGACIN\/ID_MAGACINA"
                     ],
                     "referringAttributes": [
-                        "PS_DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "PR_SIFRA"
+                        "DRZAVA_POGONA",
+                        "OZNAKA_MESTA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA",
+                        "ID_MAGACINA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "MAGACIN\/NAS_DR_OZNAKA",
-                        "MAGACIN\/NM_OZNAKA",
-                        "MAGACIN\/DR_OZNAKA",
-                        "MAGACIN\/ATTRIBUTE_2",
-                        "MAGACIN\/PO_ID",
-                        "MAGACIN\/MA_ID"
+                        "JEDINICA_MERE\/OZNAKA"
                     ],
                     "referringAttributes": [
-                        "PS_NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "PS_DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "PO_ID",
-                        "MA_ID"
+                        "OZNAKA_JM"
                     ]
                 }
             ]
         },
         {
-            "name": "PROIZVODNIPOGON",
-            "url": "PROIZVODNIPOGON",
+            "name": "PROIZVODNA_HALA",
+            "url": "PROIZVODNA_HALA",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "PP_NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "MESTO_POGONA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PP_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ID_HALE",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ADRESA",
+                    "type": "varchar",
+                    "length": 1024,
+                    "primaryKey": false,
+                    "mandatory": true
+                },
+                {
+                    "name": "POVRSINA",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": false,
+                    "mandatory": true
+                }
+            ],
+            "relations": [
+                {
+                    "referencedAttributes": [
+                        "PROIZVODNI_POGON\/DRZAVA",
+                        "PROIZVODNI_POGON\/OZNAKA_MESTA",
+                        "PROIZVODNI_POGON\/DRZAVA_PS",
+                        "PROIZVODNI_POGON\/KOD_PS",
+                        "PROIZVODNI_POGON\/ID"
+                    ],
+                    "referringAttributes": [
+                        "DRZAVA_POGONA",
+                        "MESTO_POGONA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "PROIZVODNI_POGON",
+            "url": "PROIZVODNI_POGON",
+            "type": "sqlTable",
+            "attributes": [
+                {
+                    "name": "DRZAVA",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "OZNAKA_MESTA",
+                    "type": "numeric",
+                    "length": 19,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "DRZAVA_PS",
+                    "type": "varchar",
+                    "length": 4,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "KOD_PS",
+                    "type": "numeric",
+                    "length": 10,
+                    "primaryKey": true,
+                    "mandatory": true
+                },
+                {
+                    "name": "ID",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
@@ -1061,35 +1061,35 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "MESTO_POGONA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
@@ -1103,14 +1103,14 @@
                     "mandatory": true
                 },
                 {
-                    "name": "RP_OD",
+                    "name": "OD",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ZP_DO",
+                    "name": "DO",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": false,
@@ -1128,18 +1128,18 @@
                 },
                 {
                     "referencedAttributes": [
-                        "PROIZVODNIPOGON\/PP_NAS_DR_OZNAKA",
-                        "PROIZVODNIPOGON\/NM_OZNAKA",
-                        "PROIZVODNIPOGON\/PP_DR_OZNAKA",
-                        "PROIZVODNIPOGON\/ATTRIBUTE_2",
-                        "PROIZVODNIPOGON\/PO_ID"
+                        "PROIZVODNI_POGON\/DRZAVA",
+                        "PROIZVODNI_POGON\/OZNAKA_MESTA",
+                        "PROIZVODNI_POGON\/DRZAVA_PS",
+                        "PROIZVODNI_POGON\/KOD_PS",
+                        "PROIZVODNI_POGON\/ID"
                     ],
                     "referringAttributes": [
-                        "NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "PO_ID"
+                        "DRZAVA_POGONA",
+                        "MESTO_POGONA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA"
                     ]
                 }
             ]
@@ -1150,35 +1150,35 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "SK_SIFRA",
+                    "name": "SIFRA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "KA_NAZIV",
+                    "name": "NAZIV",
                     "type": "varchar",
                     "length": 256,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_OPIS",
+                    "name": "OPIS",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
@@ -1190,61 +1190,61 @@
             ]
         },
         {
-            "name": "SKLOPNASTANJU",
-            "url": "SKLOPNASTANJU",
+            "name": "SKLOP_NA_STANJU",
+            "url": "SKLOP_NA_STANJU",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "OZNAKA_MESTA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MAG_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MAG_ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "MA_ID",
+                    "name": "ID_MAGACINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "SK_SIFRA",
+                    "name": "SIFRA_SKLOPA",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "SS_KOLICINA",
+                    "name": "KOLICINA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": false,
@@ -1254,32 +1254,32 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "SKLOP\/DR_OZNAKA",
-                        "SKLOP\/ATTRIBUTE_2",
-                        "SKLOP\/SK_SIFRA"
+                        "SKLOP\/DRZAVA_PS",
+                        "SKLOP\/KOD_PS",
+                        "SKLOP\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "MAG_DR_OZNAKA",
-                        "MAG_ATTRIBUTE_2",
-                        "SK_SIFRA"
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "SIFRA_SKLOPA"
                     ]
                 },
                 {
                     "referencedAttributes": [
-                        "MAGACIN\/NAS_DR_OZNAKA",
-                        "MAGACIN\/NM_OZNAKA",
-                        "MAGACIN\/DR_OZNAKA",
-                        "MAGACIN\/ATTRIBUTE_2",
-                        "MAGACIN\/PO_ID",
-                        "MAGACIN\/MA_ID"
+                        "MAGACIN\/DRZAVA_POGONA",
+                        "MAGACIN\/OZNAKA_MESTA",
+                        "MAGACIN\/DRZAVA_PS",
+                        "MAGACIN\/KOD_PS",
+                        "MAGACIN\/ID_POGONA",
+                        "MAGACIN\/ID_MAGACINA"
                     ],
                     "referringAttributes": [
-                        "NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "MAG_DR_OZNAKA",
-                        "MAG_ATTRIBUTE_2",
-                        "PO_ID",
-                        "MA_ID"
+                        "DRZAVA_POGONA",
+                        "OZNAKA_MESTA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA",
+                        "ID_MAGACINA"
                     ]
                 }
             ]
@@ -1290,28 +1290,28 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PR_SIFRA",
+                    "name": "OBJEKAT_U_SASTAVU",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PRO_PR_SIFRA",
+                    "name": "SLOZEN_OBJEKAT",
                     "type": "varchar",
                     "length": 16,
                     "primaryKey": true,
@@ -1321,38 +1321,38 @@
             "relations": [
                 {
                     "referencedAttributes": [
-                        "PROIZVOD\/DR_OZNAKA2",
-                        "PROIZVOD\/DR_OZNAKA2",
-                        "PROIZVOD\/ATTRIBUTE_2",
-                        "PROIZVOD\/ATTRIBUTE_2",
-                        "PROIZVOD\/PR_SIFRA",
-                        "PROIZVOD\/PR_SIFRA"
+                        "PROIZVOD\/DRZAVA_PS",
+                        "PROIZVOD\/DRZAVA_PS",
+                        "PROIZVOD\/KOD_PS",
+                        "PROIZVOD\/KOD_PS",
+                        "PROIZVOD\/SIFRA",
+                        "PROIZVOD\/SIFRA"
                     ],
                     "referringAttributes": [
-                        "DR_OZNAKA",
-                        "DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "ATTRIBUTE_2",
-                        "PR_SIFRA",
-                        "PRO_PR_SIFRA"
+                        "DRZAVA_PS",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "KOD_PS",
+                        "OBJEKAT_U_SASTAVU",
+                        "SLOZEN_OBJEKAT"
                     ]
                 }
             ]
         },
         {
-            "name": "TIPZAPOSLENOG",
-            "url": "TIPZAPOSLENOG",
+            "name": "TIP_ZAPOSLENOG",
+            "url": "TIP_ZAPOSLENOG",
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "TZ_OZNAKA",
+                    "name": "OZNAKA",
                     "type": "char",
                     "length": 2,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "TZ_NAZIV",
+                    "name": "NAZIV",
                     "type": "varchar",
                     "length": 256,
                     "primaryKey": false,
@@ -1383,14 +1383,14 @@
                     "mandatory": false
                 },
                 {
-                    "name": "TZ_OZNAKA",
+                    "name": "TIP_ZAPOSLENOG",
                     "type": "char",
                     "length": 2,
                     "primaryKey": false,
                     "mandatory": true
                 },
                 {
-                    "name": "ZA_IME",
+                    "name": "IME",
                     "type": "varchar",
                     "length": 1024,
                     "primaryKey": false,
@@ -1415,10 +1415,10 @@
                 },
                 {
                     "referencedAttributes": [
-                        "TIPZAPOSLENOG\/TZ_OZNAKA"
+                        "TIP_ZAPOSLENOG\/OZNAKA"
                     ],
                     "referringAttributes": [
-                        "TZ_OZNAKA"
+                        "TIP_ZAPOSLENOG"
                     ]
                 }
             ]
@@ -1429,56 +1429,56 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "MESTO_POGONA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PRO_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PRO_ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PH_ID",
+                    "name": "ID_HALE",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PG_OD",
+                    "name": "POS_GODINA_OD",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NP_ID",
+                    "name": "ID_NALOGA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
@@ -1503,24 +1503,24 @@
                 },
                 {
                     "referencedAttributes": [
-                        "NALOG_ZA_PROIZVODNJU\/NAS_DR_OZNAKA",
-                        "NALOG_ZA_PROIZVODNJU\/NM_OZNAKA",
-                        "NALOG_ZA_PROIZVODNJU\/PRO_DR_OZNAKA",
-                        "NALOG_ZA_PROIZVODNJU\/PRO_ATTRIBUTE_2",
-                        "NALOG_ZA_PROIZVODNJU\/PO_ID",
-                        "NALOG_ZA_PROIZVODNJU\/PH_ID",
-                        "NALOG_ZA_PROIZVODNJU\/PG_OD",
-                        "NALOG_ZA_PROIZVODNJU\/NP_ID"
+                        "NALOG_ZA_PROIZVODNJU\/DRZAVA_POGONA",
+                        "NALOG_ZA_PROIZVODNJU\/MESTO_POGONA",
+                        "NALOG_ZA_PROIZVODNJU\/DRZAVA_PS",
+                        "NALOG_ZA_PROIZVODNJU\/KOD_PS",
+                        "NALOG_ZA_PROIZVODNJU\/ID_POGONA",
+                        "NALOG_ZA_PROIZVODNJU\/ID_HALE",
+                        "NALOG_ZA_PROIZVODNJU\/POS_GODINA_OD",
+                        "NALOG_ZA_PROIZVODNJU\/ID_NALOGA"
                     ],
                     "referringAttributes": [
-                        "NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "PRO_DR_OZNAKA",
-                        "PRO_ATTRIBUTE_2",
-                        "PO_ID",
-                        "PH_ID",
-                        "PG_OD",
-                        "NP_ID"
+                        "DRZAVA_POGONA",
+                        "MESTO_POGONA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA",
+                        "ID_HALE",
+                        "POS_GODINA_OD",
+                        "ID_NALOGA"
                     ]
                 }
             ]
@@ -1531,35 +1531,35 @@
             "type": "sqlTable",
             "attributes": [
                 {
-                    "name": "NAS_DR_OZNAKA",
+                    "name": "DRZAVA_POGONA",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "NM_OZNAKA",
+                    "name": "MESTO_POGONA",
                     "type": "numeric",
                     "length": 19,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ZP_DR_OZNAKA",
+                    "name": "DRZAVA_PS",
                     "type": "varchar",
                     "length": 4,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ATTRIBUTE_2",
+                    "name": "KOD_PS",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "PO_ID",
+                    "name": "ID_POGONA",
                     "type": "numeric",
                     "length": 10,
                     "primaryKey": true,
@@ -1573,14 +1573,14 @@
                     "mandatory": true
                 },
                 {
-                    "name": "ZP_OD",
+                    "name": "OD",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": true,
                     "mandatory": true
                 },
                 {
-                    "name": "ZP_DO",
+                    "name": "DO",
                     "type": "datetime",
                     "length": 23,
                     "primaryKey": false,
@@ -1598,18 +1598,18 @@
                 },
                 {
                     "referencedAttributes": [
-                        "PROIZVODNIPOGON\/PP_NAS_DR_OZNAKA",
-                        "PROIZVODNIPOGON\/NM_OZNAKA",
-                        "PROIZVODNIPOGON\/PP_DR_OZNAKA",
-                        "PROIZVODNIPOGON\/ATTRIBUTE_2",
-                        "PROIZVODNIPOGON\/PO_ID"
+                        "PROIZVODNI_POGON\/DRZAVA",
+                        "PROIZVODNI_POGON\/OZNAKA_MESTA",
+                        "PROIZVODNI_POGON\/DRZAVA_PS",
+                        "PROIZVODNI_POGON\/KOD_PS",
+                        "PROIZVODNI_POGON\/ID"
                     ],
                     "referringAttributes": [
-                        "NAS_DR_OZNAKA",
-                        "NM_OZNAKA",
-                        "ZP_DR_OZNAKA",
-                        "ATTRIBUTE_2",
-                        "PO_ID"
+                        "DRZAVA_POGONA",
+                        "MESTO_POGONA",
+                        "DRZAVA_PS",
+                        "KOD_PS",
+                        "ID_POGONA"
                     ]
                 }
             ]
