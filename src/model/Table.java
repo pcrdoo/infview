@@ -74,7 +74,6 @@ public class Table extends Entity {
 			
 			for (Attribute attr : attributes) {
 				Object value = results.getObject(attr.getName());
-				System.out.println(attr + " " + value);
 				record.addAttribute(attr, Attribute.fromValue(attr, value));
 			}
 			records.add(record);
@@ -102,7 +101,6 @@ public class Table extends Entity {
 		}
 		stmtBuilder.deleteCharAt(stmtBuilder.length() - 1);
 		stmtBuilder.append(")");
-		System.out.println(stmtBuilder.toString());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
@@ -132,8 +130,6 @@ public class Table extends Entity {
 		}
 		stmtBuilder.delete(stmtBuilder.length() - 5, stmtBuilder.length());
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(stmtBuilder.toString());
-		System.out.println("Query");
-		System.out.println(stmtBuilder.toString());
 		for (int i = 0; i < attributes.size(); i++) {
 			Attribute attr = attributes.get(i);
 			setByType(stmt, i + 1, newRecord.getAttributes().get(attr));
@@ -153,7 +149,6 @@ public class Table extends Entity {
 		ArrayList<Record> records = new ArrayList<>();
 		//System.out.println(sql);
 		String fullQuery = filterParams.getQuery() + " " + orderBy;
-		System.out.println(fullQuery);
 		PreparedStatement stmt = Warehouse.getInstance().getDbConnection().prepareStatement(fullQuery);
 		//System.out.println(stmt.getParameterMetaData().getParameterCount());
 		for(int i = 0; i < filterParams.getObjects().size(); i++) {
@@ -201,13 +196,11 @@ public class Table extends Entity {
 	}
 
 	public void sortRecords(String orderBy) throws SQLException {
-		System.out.println(orderBy + " " + lastParams);
 		if(lastParams == null) {
 			return;
 		}
 		try {
 			ArrayList<Record> records = filterRecords(lastParams, orderBy);
-			System.out.println(records.size() + "vrlo bitno");
 			fireUpdateBlockPerformed(records); // ozvezavanje
 		} catch (InvalidLengthException e) {
 			// TODO Auto-generated catch block

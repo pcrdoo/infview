@@ -160,12 +160,10 @@ public class Record implements Comparable<Record> {
 			Attribute attr = entity.getAttributes().get(i);
 			Object valMe = attributes.get(attr);
 			Object valOther = record.getAttributes().get(attr);
-			System.out.println(valMe.getClass() + " " + valOther + "! " + valMe.equals(valOther));
 			if(!valMe.equals(valOther)) {
 				return false; // ovo nece da radi
 			}
 		}
-		System.out.println("TRUE JEE");
 		return true;
 	}
 	

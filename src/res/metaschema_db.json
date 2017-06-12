@@ -1,7 +1,7 @@
 {
-    "location": "nzm",
-    "name": "nzm",
-    "description": "nzm tbr!",
+    "location": "ui-2016-tim201.5:ui-2015-tim201.5.MuY991@jdbc:jtds:sqlserver://147.91.175.155/ui-2016-tim201.5",
+    "name": "Proizvodnja",
+    "description": "MPS za proizvodnju.",
     "type": "mssql",
     "packages": [
 

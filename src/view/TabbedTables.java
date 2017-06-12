@@ -281,10 +281,8 @@ public class TabbedTables extends JPanel {
 				}
 			}
 		}
-		System.out.println(mainTable + " je da li je main");
 		TablePanel panel = new TablePanel(entity, mainTable); //
 		TabComponent tabComponent = new TabComponent(tabs, entity);
-		System.out.println("DODAT TAB");
 		tabs.addTab(entity.getName(), panel);
 		tabs.setTabComponentAt(tabs.indexOfComponent(panel), tabComponent);
 		tabs.setSelectedComponent(panel);

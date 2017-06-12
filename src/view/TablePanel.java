@@ -44,7 +44,6 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		if (autoRefresh) {
-			System.out.println(entity.getName() + "registered");
 			entity.addUpdateBlockListener(this);
 		}
 		add(new JScrollPane(table), "grow");
@@ -57,7 +56,6 @@ public class TablePanel extends JPanel implements UpdateBlockListener {
 	}
 
 	public void blockUpdated(ArrayList<Record> currentBlock) {
-		System.out.println("block updated!");
 		tableModel.setCurrentBlock(currentBlock);
 		tableModel.fireTableDataChanged();
 	}

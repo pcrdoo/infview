@@ -52,7 +52,6 @@ public class Entity extends InfResource {
 	}
 
 	public void fireUpdateBlockPerformed(ArrayList<Record> currentBlock) {
-		System.out.println("Ispali promenu");
 		for (UpdateBlockListener listener : updateBlockListeners) {
 			listener.blockUpdated(currentBlock);
 		}

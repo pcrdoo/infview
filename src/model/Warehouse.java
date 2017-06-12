@@ -60,7 +60,6 @@ public class Warehouse extends InfResource {
 
 		MetaschemaDeserializer d = new MetaschemaDeserializer();
 		MetaschemaValidator v = new MetaschemaValidator();
-		System.out.println(metaschemaString);
 		v.validate(metaschemaString);
 		d.deserialize(metaschemaString, this);
 	}
@@ -120,7 +119,6 @@ public class Warehouse extends InfResource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String location = "ui-2016-tim201.5:ui-2015-tim201.5.MuY991@jdbc:jtds:sqlserver://147.91.175.155/ui-2016-tim201.5";
 		String[] parts = location.split("@");
 		String loc = parts[1];
 		String[] unpw = parts[0].split(":");
